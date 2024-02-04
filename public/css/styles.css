@@ -1,13 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
+:root {
+    --dark-blue:#234e6b;
+    --light-blue:rgb(59, 118, 167);
+    --button-green:#2ecc71;
+    --ponder-font: 'Montserrat', sans-serif;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background: rgb(59, 118, 167);
+    background: var(--light-blue);
+    font-family: var(--ponder-font);
 }
 
 /* top bar styling */
 #top-bar {
-    background-color: #234e6b;
-    padding: 10px;
+    background-color: var(--dark-blue);
+    padding: 1vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +30,7 @@ body {
 /* search bar styling */
 #top-search-bar {
     flex-grow: 1;
-    margin: 0 10px;
+    margin: 0 10em;
 }
 
 #top-search-bar form {
@@ -32,15 +42,20 @@ body {
     padding: 5px;
     width: 100%;
     box-sizing: border-box;
+    border-radius:5px;
+    border: var(--dark-blue);
+    font-family: var(--ponder-font);
 }
 
 #top-search-bar button {
     padding: 5px 10px;
     margin-left: 5px;
-    background-color: #2ecc71;
+    background-color: var(--button-green);
     color: #fff;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-family: var(--ponder-font);
 }
 
 /* register button styling */
@@ -48,12 +63,12 @@ body {
     padding: 10px;
     text-decoration: none;
     color: #fff;
-    background-color: #51e091;
+    background-color: var(--button-green);
     margin-left: 10px;
     border-radius: 5px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 650px) {
     #top-bar {
         flex-direction: column;
         align-items: stretch;
@@ -67,4 +82,13 @@ body {
     .link-button {
         margin: 10px 0;
     }
+}
+
+/* form container styling (login & register for now) */
+.form-container {
+    margin:auto;
+    text-align:center;
+    width: 30%;
+    background:var(--dark-blue);
+    border-radius:5px;
 }
