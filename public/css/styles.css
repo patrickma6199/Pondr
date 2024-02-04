@@ -1,8 +1,10 @@
 body {
     margin: 0;
     padding: 0;
+    background: rgb(59, 118, 167);
 }
 
+/* top bar styling */
 #top-bar {
     background-color: #234e6b;
     padding: 10px;
@@ -11,12 +13,11 @@ body {
     align-items: center;
 }
 
-/* Style the logo */
 #top-bar img {
     max-width: 100px;
 }
 
-/* Style the search bar */
+/* search bar styling */
 #top-search-bar {
     flex-grow: 1;
     margin: 0 10px;
@@ -42,7 +43,7 @@ body {
     cursor: pointer;
 }
 
-
+/* register button styling */
 .link-button {
     padding: 10px;
     text-decoration: none;
