@@ -154,7 +154,7 @@ input {
     font-family: var(--ponder-font);
 }
 
-/* Discussion Post Container */
+/* Discussion Post Container (for home page discussion thread list */
 .discussion-container {
     width: 80%;
     background: var(--dark-blue);
@@ -162,26 +162,47 @@ input {
     padding: 1em 2em;
 }
 
-.thread {
+.mini-thread {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.thread article {
+.mini-thread article {
     flex-grow:1;
     margin-right: 1em;
 }
 
-.thread a {
+.mini-thread a {
     color: white;
-}
-
-.discussion-container article.thread {
-    
 }
 
 .discussion-container img {
     max-width: 200px;
-    max-height: 200px;
 }
+
+.thread-img {
+    float: right;
+    max-width: 300px;
+}
+
+.thread-comment-container img {
+    float:left;
+    max-width: 100px;
+}
+
+.thread-comment-container {
+    border-top: white solid 0.1em;
+    padding: 1em 0em;
+    display: flex;
+    align-items: center;
+}
+
+.thread-container {
+    width: 80%;
+    background: var(--dark-blue);
+    border-radius:5px;
+    padding: 1em 2em;
+}
+
+
