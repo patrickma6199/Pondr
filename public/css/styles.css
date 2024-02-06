@@ -193,6 +193,7 @@ input {
 }
 .profile-text{
     margin-left:20px;
+    
 }
 
 .profile-img{
@@ -211,4 +212,18 @@ input {
     font-weight:bold;
     border: 0px;
 
+}
+.edit-container{
+    margin:auto;
+    text-align:left;
+    display:flex;
+    flex-direction: column;
+    font-weight: bold;
+    
+}
+
+.edit-container div{
+    margin:10px;
+  
+    
 }
