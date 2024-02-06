@@ -8,21 +8,38 @@
         <link rel="stylesheet" href="../css/styles.css">
     </head>
     <body>
-        <div class="form-container">
-            <form action="POST">
-                <caption>Login</caption>
-                <br>
-                <label for="username">Username: </label>
-                <input type="text" placeholder="Enter your username" name="username"/>
-                <br>
-                <label for="password">Password: </label>
-                <input type="password" placeholder="Enter your password" name="password"/>
-                <br>
-                <button type="submit">Login</button>
-                <button type="submit">Reset Password</button>
-                <br>
-                <button type="submit"> Register</button>
-            </form>
+        <nav id="top-bar">
+            <a href="./index.html"><img src="" alt="Pondr Logo"></a>
+            <div id="top-search-bar">
+                <form method="GET" action="index.html">
+                    <input type="text" name="search" placeholder="Search for Ponds or Threads" />
+                    <button type="submit" class="button">Search</button>
+                </form>
+            </div>
+            <a href="login.html" class="link-button">Login</a>
+            <a href="register.html" class="link-button">Sign Up</a>
+        </nav>
+        <div class="center-container">
+            <div class="form-container">
+                <form action="POST">
+                    <legend>Login</legend>
+                    <div class="form-item">
+                        <label for="username">Username: </label>
+                        <input type="text" placeholder="Enter your username" name="username"/>
+                    </div>
+                    <div class="form-item">
+                        <label for="password">Password: </label>
+                        <input type="password" placeholder="Enter your password" name="password"/>
+                    </div>
+                    <div class="form-item">
+                        <button type="submit" class="form-button">Login</button>
+                        <button type="submit" class="form-button">Register</button>
+                    </div>
+                    <div class="form-item">
+                        <button type="submit" class="form-button">Reset Password</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
 </html>

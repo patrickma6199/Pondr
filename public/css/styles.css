@@ -13,7 +13,19 @@ body {
     background: var(--light-blue);
     font-family: var(--ponder-font);
     background: url(./cool-background.png) no-repeat;
-    background-size: cover;
+    background-size:cover;
+    color: white;
+}
+
+input {
+    font-family: var(--ponder-font);
+}
+
+.center-container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
 }
 
 /* top bar styling */
@@ -46,11 +58,10 @@ body {
     box-sizing: border-box;
     border-radius:5px;
     border: var(--dark-blue);
-    font-family: var(--ponder-font);
 }
 
 #top-search-bar button {
-    padding: 5px 10px;
+    padding: 1em;
     margin-left: 5px;
     background-color: var(--button-green);
     color: #fff;
@@ -69,6 +80,7 @@ body {
     margin-left: 10px;
     border-radius: 5px;
     font-weight:bold;
+    border: 0px;
 }
 
 @media (max-width: 650px) {
@@ -91,7 +103,47 @@ body {
 .form-container {
     margin:auto;
     text-align:center;
-    width: 30%;
     background:var(--dark-blue);
     border-radius:5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container form {
+    padding: 2em 2.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-item {
+    margin:0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-flow: wrap;
+}
+
+.form-item > input {
+    flex-grow: 1; /* still making this work */
+    margin-left: 1em;
+}
+
+.form-container legend {
+    font-weight:bold;
+    padding-top: 0.5em;
+    font-size: 1.8em;
+}
+
+.form-button {
+    padding: 0.5em;
+    margin-left: 5px;
+    background-color: var(--button-green);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--ponder-font);
 }
