@@ -2,7 +2,7 @@
 
 :root {
     --dark-blue: rgba(35, 78, 107, 0.9);
-    --light-blue:rgb(59, 118, 167);
+    --light-blue:rgb(59, 118, 167, 0.5);
     --button-green:#86daa9;
     --ponder-font: 'Montserrat', sans-serif;
 }
@@ -10,7 +10,6 @@
 body {
     margin: 0;
     padding: 0;
-    background: var(--light-blue);
     font-family: var(--ponder-font);
     background: url(../img/background.png) left repeat;
     color: white;
@@ -66,20 +65,20 @@ input {
 }
 
 #top-search-bar input {
-    padding: 5px;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    border-radius:5px;
+    border-radius:10px;
     border: var(--dark-blue);
 }
 
 #top-search-bar button {
     padding: 1em;
-    margin-left: 5px;
+    margin-left: 10px;
     background-color: var(--button-green);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-family: var(--ponder-font);
 }
@@ -91,7 +90,7 @@ input {
     color: #fff;
     background-color: var(--button-green);
     margin-left: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-weight:bold;
     border: 0px;
 }
@@ -117,7 +116,7 @@ input {
     margin:auto;
     text-align:center;
     background:var(--dark-blue);
-    border-radius:5px;
+    border-radius:10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,11 +152,11 @@ input {
 
 .form-button {
     padding: 0.5em;
-    margin-left: 5px;
+    margin-left: 10px;
     background-color: var(--button-green);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-family: var(--ponder-font);
 }
@@ -166,7 +165,7 @@ input {
 .discussion-container {
     width: 80%;
     background: var(--dark-blue);
-    border-radius:5px;
+    border-radius:10px;
     padding: 1em 2em;
 }
 
@@ -196,8 +195,8 @@ input {
 
 .thread-comments {
     width: 80%;
+    border-radius: 10px;
     background: var(--dark-blue);
-    border-radius: 5px;
     padding: 1em 2em;
     margin-top: 2em;
 }
@@ -205,15 +204,23 @@ input {
 .thread-container {
     width: 80%;
     background: var(--dark-blue);
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 1em 2em;
 }
 
 .thread-comment-container {
-    border-top: white solid 0.1em;
-    padding: 1em 0em;
+    margin: 0.3em;
+    padding: 1em;
+    background:var(--light-blue);
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
+    font-size: 0.9em;
+}
+
+/* for sub comments to be indented */
+.thread-comment-container .thread-comment-container {
+    margin-left: 5em;
 }
 
 /* For the profile photo and metadata of comments to be displayed in threads */
