@@ -23,7 +23,7 @@ input {
 .center-container {
     display:flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     height: 94vh;
 }
 
@@ -32,6 +32,13 @@ input {
     margin-top: 5em;
     align-items:baseline;
     margin-bottom: 5em;
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 94vh;
 }
 
 /* top bar styling */
@@ -130,10 +137,11 @@ input {
     flex-direction: row;
     justify-content: space-around;
     flex-flow: wrap;
+    width: 100%;
 }
 
 .form-item > input {
-    flex-grow: 1; /* still making this work */
+    max-width: 80%;
     margin-left: 1em;
 }
 
@@ -186,23 +194,37 @@ input {
     max-width: 300px;
 }
 
-.thread-comment-container img {
-    float:left;
-    max-width: 100px;
+.thread-comments {
+    width: 80%;
+    background: var(--dark-blue);
+    border-radius: 5px;
+    padding: 1em 2em;
+    margin-top: 2em;
+}
+
+.thread-container {
+    width: 80%;
+    background: var(--dark-blue);
+    border-radius: 5px;
+    padding: 1em 2em;
 }
 
 .thread-comment-container {
     border-top: white solid 0.1em;
     padding: 1em 0em;
     display: flex;
+    flex-direction: column;
+}
+
+/* For the profile photo and metadata of comments to be displayed in threads */
+
+.thread-comment-profile {
+    display: flex;
     align-items: center;
 }
 
-.thread-container {
-    width: 80%;
-    background: var(--dark-blue);
-    border-radius:5px;
-    padding: 1em 2em;
+.thread-comment-profile img {
+    max-width: 50px;
+    margin: 0.5em;
 }
-
 
