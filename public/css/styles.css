@@ -12,7 +12,22 @@ body {
     padding: 0;
     font-family: var(--ponder-font);
     background: url(../img/background.png) left repeat;
+    animation: bg-animation 10s infinite;
     color: white;
+}
+
+@keyframes bg-animation {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 50% 50%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
 }
 
 input {
