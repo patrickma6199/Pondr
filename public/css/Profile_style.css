@@ -1,30 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat');
 
-/* global variables to keep colors and fonts consistent */
 :root {
     --dark-blue: rgba(35, 78, 107, 0.9);
-    --light-blue:rgb(59, 118, 167, 0.5);
-    --button-green:rgb(134, 218, 169);
+    --light-blue:rgb(59, 118, 167);
+    --button-green:#86daa9;
     --ponder-font: 'Montserrat', sans-serif;
 }
 
 body {
     margin: 0;
     padding: 0;
+    background: var(--light-blue);
     font-family: var(--ponder-font);
     background: url(../img/background.png) left repeat;
-    animation: bg-animation 10s linear infinite;
     color: white;
-}
-
-@keyframes bg-animation {
-    from {
-        background-position: 0% 0%;
-    }
-
-    to {
-        background-position: 100% 100%;
-    }
 }
 
 input {
@@ -34,22 +23,15 @@ input {
 .center-container {
     display:flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     height: 94vh;
 }
 
 /* for containers that require scrolling */
 .margin-down {
-    margin-top: 5vw;
+    margin-top: 5em;
     align-items:baseline;
     margin-bottom: 5em;
-}
-
-.column-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 94vh;
 }
 
 /* top bar styling */
@@ -61,19 +43,14 @@ input {
     align-items: center;
 }
 
-#top-bar-logo {
-
-}
-
-#top-bar-profile {
-    width: 50px;
-    margin: 0em 1rem;
+#top-bar img {
+    max-width: 100px;
 }
 
 /* search bar styling */
 #top-search-bar {
     flex-grow: 1;
-    margin: 0 5em;
+    margin: 0 10em;
 }
 
 #top-search-bar form {
@@ -82,22 +59,28 @@ input {
 }
 
 #top-search-bar input {
-    padding: 10px;
+    padding: 5px;
     width: 100%;
     box-sizing: border-box;
-    border-radius:10px;
+    border-radius:5px;
     border: var(--dark-blue);
 }
 
 #top-search-bar button {
     padding: 1em;
-    margin-left: 10px;
+    margin-left: 5px;
     background-color: var(--button-green);
     color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     font-family: var(--ponder-font);
+}
+#top-search-bar-pfp{
+    max-width: 50px;
+    max-height: 50px;
+    
+
 }
 
 /* register button styling on top bar */
@@ -106,21 +89,17 @@ input {
     text-decoration: none;
     color: #fff;
     background-color: var(--button-green);
-    border-radius: 10px;
-    margin: 0em 0.5em;
+    margin-left: 10px;
+    border-radius: 5px;
     font-weight:bold;
     border: 0px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 650px) {
     #top-bar {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         text-align: center;
-    }
-
-    #top-bar > *{
-        width: 90%;
     }
 
     #top-search-bar {
@@ -137,7 +116,7 @@ input {
     margin:auto;
     text-align:center;
     background:var(--dark-blue);
-    border-radius:10px;
+    border-radius:5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -157,11 +136,10 @@ input {
     flex-direction: row;
     justify-content: space-around;
     flex-flow: wrap;
-    width: 100%;
 }
 
 .form-item > input {
-    max-width: 80%;
+    flex-grow: 1; /* still making this work */
     margin-left: 1em;
 }
 
@@ -173,43 +151,46 @@ input {
 
 .form-button {
     padding: 0.5em;
-    margin-left: 10px;
+    margin-left: 5px;
     background-color: var(--button-green);
     color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     font-family: var(--ponder-font);
 }
 
-/* Discussion Post Container (for home page discussion thread list) */
+/* Discussion Post Container */
 .discussion-container {
     width: 80%;
     background: var(--dark-blue);
-    border-radius:10px;
+    border-radius:5px;
     padding: 1em 2em;
 }
 
-.mini-thread {
+.thread {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.mini-thread article {
+.thread article {
     flex-grow:1;
     margin-right: 1em;
 }
 
-.mini-thread a {
+.thread a {
     color: white;
+}
+
+.discussion-container article.thread {
+    
 }
 
 .discussion-container img {
     max-width: 200px;
+    max-height: 200px;
 }
-
-/* For the Profile Pages */
 .profile-container{
     width: 80%;
     background: var(--dark-blue);
@@ -226,6 +207,8 @@ input {
     float: left;
     margin-right: 20px;
     margin-left:20px;
+    max-width: 200px;
+    
 }
 .edit-button{
     padding: 10px;
@@ -251,53 +234,4 @@ input {
     margin:10px;
   
     
-}
-
-/* For thread page */
-
-.thread-img {
-    float: right;
-    max-width: 400px;
-}
-
-.thread-comments {
-    width: 80%;
-    border-radius: 10px;
-    background: var(--dark-blue);
-    padding: 1em 2em;
-    margin-top: 2em;
-}
-
-.thread-container {
-    width: 80%;
-    background: var(--dark-blue);
-    border-radius: 10px;
-    padding: 1em 2em;
-}
-
-.thread-comment-container {
-    margin: 0.3em;
-    padding: 1em;
-    background:var(--light-blue);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    font-size: 0.9rem;
-}
-
-/* for sub comments to be indented */
-.thread-comment-container .thread-comment-container {
-    margin-left: 5em;
-}
-
-/* For the profile photo and metadata of comments to be displayed in threads */
-
-.thread-comment-profile {
-    display: flex;
-    align-items: center;
-}
-
-.thread-comment-profile img {
-    max-width: 50px;
-    margin: 0.5em;
 }
