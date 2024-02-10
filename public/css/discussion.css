@@ -1,0 +1,26 @@
+/* Discussion Post Container (for home page discussion thread list) */
+.discussion-container {
+    width: 80%;
+    background: var(--dark-blue);
+    border-radius:10px;
+    padding: 1em 2em;
+}
+
+.mini-thread {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mini-thread article {
+    flex-grow:1;
+    margin-right: 1em;
+}
+
+.mini-thread a {
+    color: white;
+}
+
+.discussion-container img {
+    max-width: 200px;
+}
