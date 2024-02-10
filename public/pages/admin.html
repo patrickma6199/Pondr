@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Admin Dashboard - Pondr</title>
+</head>
+<body>
+    <nav id="top-bar">
+        <a href="./admin.html"><img src="../img/newlogo.png" alt="Pondr Admin Logo"></a>
+        <div id="admin-search-bar">
+            <form method="GET">
+                <input type="text" name="search" placeholder="Search Users, Posts, or Threads" />
+                <button type="submit" class="button">Search</button>
+            </form>
+        </div>
+        <a href="admin_settings.html" class="link-button">Settings</a>
+        <a href="logout.html" class="link-button">Logout</a>
+    </nav>
+
+    <div class="admin-container">
+        <section class="user-management">
+            <h2>User Management</h2>
+            <button onclick="location.href='manage_users.html'">Manage Users</button>
+        </section>
+
+        <section class="content-moderation">
+            <h2>Content Moderation</h2>
+            <button onclick="location.href='content_moderation.html'">Moderate Content</button>
+        </section>
+
+        <section class="data-analytics">
+            <h2>Data Analytics</h2>
+            <div id="analytics-dashboard">
+                <!-- Placeholder for charts (Chart.js or Google Charts) -->
+                <p>Charts tracking the number of accounts created, posts made, etc.</p>
+            </div>
+        </section>
+
+        <section class="advanced-search">
+            <h2>Search</h2>
+            <form method="POST" action="search_results.html">
+                <input type="text" name="user_search" placeholder="Search by name, email" />
+                <button type="submit" class="button">Search Users</button>
+            </form>
+            <form method="POST" action="content_search_results.html">
+                <input type="text" name="content_search" placeholder="Search posts, threads" />
+                <button type="submit" class="button">Search Content</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
