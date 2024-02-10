@@ -2,7 +2,6 @@
 .form-container {
     margin:auto;
     text-align:center;
-    background:var(--dark-blue);
     border-radius:10px;
     display: flex;
     align-items: center;
@@ -40,10 +39,7 @@
 .form-button {
     padding: 0.5em;
     margin-left: 10px;
-    background-color: var(--button-green);
     color: #fff;
-    border: none;
-    border-radius: 10px;
     cursor: pointer;
     font-family: var(--ponder-font);
 }
