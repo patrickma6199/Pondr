@@ -29,7 +29,7 @@ body {
 }
 
 /*Styling for inputs, buttons links */
-input[type="text"], input[type="password"], button, .link-button, .form-button {
+input[type="text"]:focus, input[type="password"]:focus, button, .link-button, .form-button {
     font-family: var(--pondr-font);
     background-color: var(--input-background); /* Transparent bg to fit any section */
     color: var(--text-color);
