@@ -1,0 +1,43 @@
+/* For the Profile Pages */
+.profile-container{
+    width: 80%;
+    background: var(--dark-blue);
+    border-radius:5px;
+    padding: 1em 2em;
+}
+.profile-text{
+    margin-left:20px;
+    
+}
+
+.profile-img{
+   
+    float: left;
+    margin-right: 20px;
+    margin-left:20px;
+}
+.edit-button{
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--button-green);
+    /* margin-left: 5px; */
+    border-radius: 5px;
+    font-weight:bold;
+    border: 0px;
+
+}
+.edit-container{
+    margin:auto;
+    text-align:left;
+    display:flex;
+    flex-direction: column;
+    font-weight: bold;
+    
+}
+
+.edit-container div{
+    margin:10px;
+  
+    
+}
