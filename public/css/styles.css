@@ -29,7 +29,7 @@ body {
 }
 
 /*Styling for inputs, buttons links */
-input[type="text"], input[type="password"], button, .link-button, .form-button {
+input[type="text"], input[type="password"], button, .link-button, .form-button, .form-container textarea {
     font-family: var(--pondr-font);
     background-color: var(--input-background);
     color: var(--text-color);
@@ -43,7 +43,7 @@ input[type="text"], input[type="password"], button, .link-button, .form-button {
     outline: none;
 }
 
-input[type="text"]:hover, input[type="password"]:hover, button:hover, .link-button:hover, .form-button:hover { 
+input[type="text"]:hover, input[type="password"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover { 
     background-color: var(--button-hover-bg);
     border-color: var(--highlight-color);
 }
@@ -54,15 +54,28 @@ input[type="text"]:focus, input[type="password"]:focus {
     border-color:var(--input-hover);
 }
 
+.form-button {
+    cursor: pointer;
+}
+
 /* Top bar and container styling */
 #top-bar {
     background-color: var(--navbar-dark);
-    padding: 1vh 2vh;
+    padding: 2vh 0vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--box-shadow);
-    cursor: pointer;
+}
+
+#top-search-bar {
+    flex-grow: 1;
+    margin: 0 5em;
+}
+
+#top-search-bar form {
+    display: flex;
+    align-items: center;
 }
 
 /* Updated search bar input to match new styling */
@@ -70,6 +83,10 @@ input[type="text"]:focus, input[type="password"]:focus {
     background-color: var(--input-background);
     border: 1px solid var(--input-border);
     color: var(--text-color);
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius:10px;
 }
 
 /* Adjusting button styles to fit the new design */
@@ -88,8 +105,8 @@ input[type="text"]:focus, input[type="password"]:focus {
 
 /* for containers that require scrolling */
 .margin-down {
-    margin-top: 5vw;
-    align-items:baseline;
+    margin-top: 2vw;
+    align-items:flex-start;
     margin-bottom: 5em;
 }
 
@@ -100,56 +117,13 @@ input[type="text"]:focus, input[type="password"]:focus {
     height: 94vh;
 }
 
-/* top bar styling */
-#top-bar {
-    background-color: var(--dark-blue);
-    padding: 1vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#top-bar-logo {
-
+#top-search-bar-pfp {
+    width: 40px;
 }
 
 #top-bar-profile {
-    width: 50px;
+    width: 40px;
     margin: 0em 1rem;
-}
-
-/* search bar styling */
-#top-search-bar {
-    flex-grow: 1;
-    margin: 0 5em;
-}
-
-#top-search-bar form {
-    display: flex;
-    align-items: center;
-}
-
-#top-search-bar input {
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius:10px;
-    border: var(--dark-blue);
-}
-
-#top-search-bar button {
-    padding: 1em;
-    margin-left: 10px;
-    background-color: var(--button-green);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-family: var(--ponder-font);
-}
-
-#top-search-bar-pfp {
-    max-width: 50px;
-    max-height: 50px;
 }
 
 @media (max-width: 700px) {

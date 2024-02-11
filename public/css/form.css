@@ -1,8 +1,6 @@
 /* form container styling (login & register for now) */
 .form-container {
-    margin:auto;
     text-align:center;
-    border-radius:10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,9 +35,5 @@
 }
 
 .form-button {
-    padding: 0.5em;
-    margin-left: 10px;
-    color: #fff;
-    cursor: pointer;
-    font-family: var(--pondr-font);
+    font-size: 1em;
 }
