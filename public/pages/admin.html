@@ -4,38 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <!-- <link rel="stylesheet" href="../css/admin.css"> -->
-    <style>
-        .admin-container{
-            display:grid;
-            grid-gap: 20px;
-            grid-template-columns: auto auto;
-            grid-template-rows: auto auto;
-            margin-top: 10px;
-            border-radius: 10px;
-            padding: 20px;
-            width: 90%;
-            
-            
-            
-        }
-        .advanced-search, .user-management, .content-moderation{
-            grid-row:1;
-        }
-
-
-
-        #analytics-dashboard {
-        background-color: #1a1a1b; /* Matching the sections for consistency */
-        padding: 20px;
-        border-radius: 10px;
-        grid-row:-1;
-        max-width: 1000px;
-        }
-        
-
-     
-    </style>
+    <link rel="stylesheet" href="../css/admin.css">
+    
     <title>Admin Dashboard - Pondr</title>
 </head>
 <body>
@@ -55,27 +25,25 @@
 
     <div class="admin-container">
 
-        <section class="advanced-search">
-            <h2>Search</h2>
-            <form method="POST" action="search_results.html">
-                <input type="text" name="user_search" placeholder="Search by name, email" />
-                <button type="submit" class="button">Search Users</button>
-            </form>
-            
-            <form method="POST" action="content_search_results.html">
-                <input type="text" name="content_search" placeholder="Search posts, threads" />
-                <button type="submit" class="button">Search Content</button>
-            </form>
-        </section>
+        
 
         <section class="user-management">
             <h2>User Management</h2>
             <button onclick="location.href='manage_users.html'">Manage Users</button>
+            <form method="POST" action="search_results.html">
+                <input type="text" name="user_search" placeholder="Search by name, email" />
+                <button type="submit" class="button">Search Users</button>
+            </form>
         </section>
 
         <section class="content-moderation">
             <h2>Content Moderation</h2>
+
             <button onclick="location.href='content_moderation.html'">Moderate Content</button>
+            <form method="POST" action="content_search_results.html">
+                <input type="text" name="content_search" placeholder="Search posts, threads" />
+                <button type="submit" class="button">Search Content</button>
+            </form>
         </section>
 
         <section class="data-analytics">
