@@ -4,7 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/discussion.css">
     <title>Pondr</title>
+    <style>
+
+        /* overwriting */
+
+        .margin-down {
+            margin-top: 1vw;
+            align-items:flex-start;
+            margin-bottom: 5em;
+            justify-content: space-around;
+        }
+
+        .center-container {
+            .center-container {
+            display:flex;
+            justify-content: center;
+            align-items:center;
+            height: 94vh;
+            margin: 0 2em;
+}
+        }
+
+        /* styles for category box of home page */
+        .side-container {
+           background: var(--dark-blue);
+           border-radius: 10px;
+           flex-grow: 1;
+           margin: 0 2em;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           margin-top: 2.6vw;
+           position: relative;
+        }
+
+        .side-container::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0; 
+            bottom: 0;
+            width: 4px; 
+            background: #fff; 
+            border-radius: 2px; 
+        }
+
+        .side-container ul {
+            padding-left: 0;
+            list-style-type: none;
+            width:100%;
+        }
+
+        .side-container li {
+            margin: 1em 0;
+            width:100%;
+            display:flex;
+            justify-content: center;
+        }
+
+        .side-container a {
+            color: white;
+            display: block;
+            background: var(--button-green);
+            box-sizing: border-box;
+            text-align: center;
+            width: 90%;
+            text-decoration: none;
+            transition: background-color 0.1s ease-in;
+        }
+
+        .side-container a:hover {
+            background: rgb(73, 108, 88);
+        }
+    </style>    
 </head>
 <body>
     <nav id="top-bar">
@@ -18,8 +92,21 @@
         <a href="login.html" class="link-button">Login</a>
         <a href="register.html" class="link-button">Sign Up</a>
     </nav>
-    <div class="center-container margin-down">
-        <div class="discussion-container">
+    <main class="center-container margin-down ">
+        <section class="side-container">
+            <h3>Filter by Category: </h3>
+            <ul>
+                <li><a href="#">Category 1</a></li>
+                <li><a href="#">Category 2</a></li>
+                <li><a href="#">Category 3</a></li>
+                <li><a href="#">Category 4</a></li>
+                <li><a href="#">Category 5</a></li>
+                <li><a href="#">Category 6</a></li>
+                <li><a href="#">Category 7</a></li>
+            </ul>
+        </section>
+
+        <section class="discussion-container">
             <div class="mini-thread">
                 <article>
                     <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
@@ -68,7 +155,7 @@
                 </article>
                 <img src="../img/logo.png">
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </body>
 </html>
