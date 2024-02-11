@@ -9,15 +9,14 @@
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./index.html"><img src="" alt="Pondr Logo" id="top-bar-logo"></a>
+        <a href="./index.html"><img src="" alt="Pondr Logo"></a>
         <div id="top-search-bar">
             <form method="GET" action="index.html">
                 <input type="text" name="search" placeholder="Search for Ponds or Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="index.html" class="link-button">Log Out</a>
-        <img src="../img/stock_profile_photo.png" alt="Your Profile Photo" id="top-bar-profile">
+        <a href="profile.html"><img src="../img/pfp.png" id="top-search-bar-pfp"> </a>
     </nav>
     <main class="center-container">
         <section class="form-container">
@@ -32,12 +31,12 @@
                     <textarea name="post_text" cols="30" rows="10" required placeholder="Enter Post Text Here"></textarea>
                 </div>
                 <div class="form-item">
-                    <label for="post_image">Any Images to your post? (Optional)</label>
-                    <input type="file" name="post_image" accept="image/*" >
-                </div>
-                <div class="form-item">
                     <label for="post_link">Any link? (Optional)</label>
                     <input type="text" name="post_link" placeholder="Enter Link Here"/>
+                </div>
+                <div class="form-item">
+                    <label for="post_image">Any Images to your post? (Optional)</label>
+                    <input type="file" name="post_image" accept="image/*" >
                 </div>
                 <div class="form-item">
                     <button type="submit" class="form-button">Post</button>
