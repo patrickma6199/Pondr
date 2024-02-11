@@ -56,6 +56,11 @@
 .mini-thread a {
     color: white;
 }
+.mini-thread img{
+    width: 150px;
+    height: 150px;
+    object-fit:cover;
+}
 
 .discussion-container img {
     max-width: 200px;
