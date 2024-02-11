@@ -4,26 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <!-- <link rel="stylesheet" href="../css/admin.css"> -->
     <style>
         .admin-container{
-            display:flex;
-            flex-direction: column;
-            position:relative;
+            display:grid;
+            grid-gap: 20px;
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
             margin-top: 10px;
-            margin-left: 444px;
-            background:rgba(35, 78, 107, 0.9) ;
-            border-radius:10px;
-            padding: 20px; 
-            width: 90%; 
-            text-align: left;
-            max-width: 600px;
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            
             
             
         }
-       
+        .advanced-search, .user-management, .content-moderation{
+            grid-row:1;
+        }
+
+
+
+        #analytics-dashboard {
+        background-color: #1a1a1b; /* Matching the sections for consistency */
+        padding: 20px;
+        border-radius: 10px;
+        grid-row:-1;
+        max-width: 1000px;
+        }
         
 
+     
     </style>
     <title>Admin Dashboard - Pondr</title>
 </head>
@@ -40,7 +51,23 @@
         <a href="logout.html" class="link-button">Logout</a>
     </nav>
 
+    
+
     <div class="admin-container">
+
+        <section class="advanced-search">
+            <h2>Search</h2>
+            <form method="POST" action="search_results.html">
+                <input type="text" name="user_search" placeholder="Search by name, email" />
+                <button type="submit" class="button">Search Users</button>
+            </form>
+            
+            <form method="POST" action="content_search_results.html">
+                <input type="text" name="content_search" placeholder="Search posts, threads" />
+                <button type="submit" class="button">Search Content</button>
+            </form>
+        </section>
+
         <section class="user-management">
             <h2>User Management</h2>
             <button onclick="location.href='manage_users.html'">Manage Users</button>
@@ -54,7 +81,7 @@
         <section class="data-analytics">
             <h2>Data Analytics</h2>
             <div id="analytics-dashboard">
-                <!-- Placeholder for charts (Chart.js or Google Charts) -->
+               
                 <div>
                     <canvas id="myChart"></canvas>
                   </div>
@@ -100,21 +127,11 @@
                         }
                     });
                 </script>
-                <p>Charts tracking the number of accounts created, posts made, etc.</p>
+                
             </div>
         </section>
 
-        <section class="advanced-search">
-            <h2>Search</h2>
-            <form method="POST" action="search_results.html">
-                <input type="text" name="user_search" placeholder="Search by name, email" />
-                <button type="submit" class="button">Search Users</button>
-            </form>
-            <form method="POST" action="content_search_results.html">
-                <input type="text" name="content_search" placeholder="Search posts, threads" />
-                <button type="submit" class="button">Search Content</button>
-            </form>
-        </section>
+        
     </div>
 </body>
 </html>
