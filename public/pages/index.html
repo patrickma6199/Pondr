@@ -31,7 +31,6 @@
            background: var(--dark-blue);
            border-radius: 10px;
            flex-grow: 1;
-           margin: 0 2em;
            display: flex;
            flex-direction: column;
            align-items: center;
@@ -39,7 +38,7 @@
            position: relative;
         }
 
-        .side-container::after{
+        /* .side-container::after{
             content: '';
             position: absolute;
             top: 0;
@@ -48,7 +47,7 @@
             width: 4px; 
             background: #fff; 
             border-radius: 2px; 
-        }
+        } */
 
         .side-container ul {
             padding-left: 0;
@@ -75,7 +74,9 @@
         }
 
         .side-container a:hover {
-            background: rgb(73, 108, 88);
+            background: var(--input-hover);
+            border-radius: 0.5em;
+
         }
     </style>    
 </head>
