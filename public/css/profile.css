@@ -36,7 +36,8 @@
     width: 80%;
     background: var(--dark-blue);
     padding: 1em 2em;
-    border-left: var(--button-border) solid 0.1em; 
+    border-top: var(--button-border) solid 0.1em;
+    margin-top: 1em;
 }
 
 .mini-thread {

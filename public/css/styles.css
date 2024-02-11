@@ -56,6 +56,7 @@ input[type="text"]:focus, input[type="password"]:focus, button:focus, .link-butt
 
 .form-button {
     cursor: pointer;
+    font-size: 1em;
 }
 
 /* Top bar and container styling */
@@ -112,11 +113,12 @@ input[type="text"]:focus, input[type="password"]:focus, button:focus, .link-butt
 
 #top-search-bar-pfp {
     width: 40px;
+    margin: 0 1rem;
 }
 
 #top-bar-profile {
     width: 40px;
-    margin: 0em 1rem;
+    margin: 0 1rem;
 }
 
 @media (max-width: 700px) {
