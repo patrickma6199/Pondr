@@ -4,6 +4,7 @@
     background: var(--dark-blue);
     border-radius:5px;
     padding: 1em 2em;
+    background-color: #1c1c1c;
 }
 .profile-text{
     margin-left:20px;
@@ -34,10 +35,11 @@
 
 .discussion-container {
     width: 80%;
-    background: var(--dark-blue);
+    /* background: var(--dark-blue); */
     padding: 1em 2em;
     border-top: var(--button-border) solid 0.1em;
     margin-top: 1em;
+    
 }
 
 .mini-thread {
