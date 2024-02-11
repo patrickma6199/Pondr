@@ -5,80 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/discussion.css">
-    <title>Pondr</title>
-    <style>
-
-        /* overwriting */
-
-        .center-container {
-            display:flex;
-            justify-content: center;
-            align-items:center;
-            height: 94vh;
-            margin: 0 2em;
-        }
-
-        .margin-down {
-            margin-top: 1vw;
-            align-items:flex-start;
-            margin-bottom: 5em;
-            justify-content: space-around;
-        }
-        
-
-        /* styles for category box of home page */
-        .side-container {
-           background: var(--dark-blue);
-           border-radius: 10px;
-           flex-grow: 1;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           margin-top: 2.6vw;
-           position: relative;
-        }
-
-        /* .side-container::after{
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0; 
-            bottom: 0;
-            width: 4px; 
-            background: #fff; 
-            border-radius: 2px; 
-        } */
-
-        .side-container ul {
-            padding-left: 0;
-            list-style-type: none;
-            width:100%;
-        }
-
-        .side-container li {
-            margin: 1em 0;
-            width:100%;
-            display:flex;
-            justify-content: center;
-        }
-
-        .side-container a {
-            color: white;
-            display: block;
-            background: var(--button-green);
-            box-sizing: border-box;
-            text-align: center;
-            width: 90%;
-            text-decoration: none;
-            transition: background-color 0.1s ease-in;
-        }
-
-        .side-container a:hover {
-            background: var(--input-hover);
-            border-radius: 0.5em;
-
-        }
-    </style>    
+    <title>Pondr</title>  
 </head>
 <body>
     <nav id="top-bar">
@@ -86,7 +13,7 @@
         <div id="top-search-bar">
             <form method="GET">
                 <input type="text" name="search" placeholder="Search for Ponds or Mini-Threads" />
-                <button type="submit" class="button">Search</button>
+                <button type="submit" class="form-button">Search</button>
             </form>
         </div>
         <a href="login.html" class="link-button">Login</a>
