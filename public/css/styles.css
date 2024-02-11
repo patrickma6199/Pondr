@@ -48,7 +48,7 @@ input[type="text"]:hover, input[type="password"]:hover, button:hover, .link-butt
     border-color: var(--highlight-color);
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
+input[type="text"]:focus, input[type="password"]:focus, button:focus, .link-button:focus, .form-button:focus, .form-container textarea:focus {
     outline: 0.1em solid white;
     background-color: var(--button-hover-bg);
     border-color:var(--input-hover);
@@ -87,13 +87,6 @@ input[type="text"]:focus, input[type="password"]:focus {
     width: 100%;
     box-sizing: border-box;
     border-radius:10px;
-}
-
-/* Adjusting button styles to fit the new design */
-#top-search-bar button, .link-button, .form-button {
-    background-color: transparent; /* Adjusted to transparent for a sleek look */
-    color: var(--text-color);
-    border: 1px solid var(--button-border);
 }
 
 .center-container {
@@ -135,6 +128,10 @@ input[type="text"]:focus, input[type="password"]:focus {
 
     #top-bar > *{
         width: 90%;
+    }
+
+    #top-bar .link-button {
+        margin: 0.5em 0;
     }
 
     #top-search-bar {

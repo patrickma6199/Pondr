@@ -20,18 +20,7 @@
     width: 100%;
 }
 
-.edit-button{
-    padding: 10px;
-    text-decoration: none;
-    color: #fff;
-    background-color: var(--button-green);
-    /* margin-left: 5px; */
-    border-radius: 5px;
-    font-weight:bold;
-    border: 0px;
-}
-
-.edit-container{
+.edit-container {
     margin:auto;
     text-align:left;
     display:flex;
@@ -39,7 +28,7 @@
     font-weight: bold;
 }
 
-.edit-container div{
+.edit-container div {
     margin:10px;   
 }
 
