@@ -1,161 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/discussion.css">
-    <title>Pondr</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login/Sign Up</title>
+        <link rel="stylesheet" href="../css/styles.css">
+        <style>
+            body{
+                animation: fadeBg 3s ease-in;
+                background-image: url(../img/background-2.png);
+                background-position: center center; 
+                background-repeat: no-repeat; 
+                background-attachment: fixed; 
+                background-size: cover; 
+            }
 
-        /* overwriting */
-
-        .margin-down {
-            margin-top: 1vw;
-            align-items:flex-start;
-            margin-bottom: 5em;
-            justify-content: space-around;
+            @keyframes fadeBg {
+                from {
+                    background-color: 0;}
+                to {
+                    background-image: 1;
+            }
         }
+            .logo-container {
+                display: flex;
+                flex-direction: column; 
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                text-align: center;
+            }
+          
+            .explore-button {
+                display: inline-block; 
+                width: 150px;
+                margin: 2em auto 0;
+                text-align: center;
+                background-color: transparent; /* Transparent background */
+                border: 2px solid white; /* White border */
+                padding: 0.5em 1em;
+                color: white; /* Text color */
+                text-decoration: none; /* Removes underline from link */
+                transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+            }
 
-        .center-container {
-            .center-container {
-            display:flex;
-            justify-content: center;
-            align-items:center;
-            height: 94vh;
-            margin: 0 2em;
-}
-        }
-
-        /* styles for category box of home page */
-        .side-container {
-           background: var(--dark-blue);
-           border-radius: 10px;
-           flex-grow: 1;
-           margin: 0 2em;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           margin-top: 2.6vw;
-           position: relative;
-        }
-
-        .side-container::after{
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0; 
-            bottom: 0;
-            width: 4px; 
-            background: #fff; 
-            border-radius: 2px; 
-        }
-
-        .side-container ul {
-            padding-left: 0;
-            list-style-type: none;
-            width:100%;
-        }
-
-        .side-container li {
-            margin: 1em 0;
-            width:100%;
-            display:flex;
-            justify-content: center;
-        }
-
-        .side-container a {
-            color: white;
-            display: block;
-            background: var(--button-green);
-            box-sizing: border-box;
-            text-align: center;
-            width: 90%;
-            text-decoration: none;
-            transition: background-color 0.1s ease-in;
-        }
-
-        .side-container a:hover {
-            background: rgb(73, 108, 88);
-        }
-    </style>    
-</head>
+                .explore-button:hover {
+                background-color: white; 
+                color: var(--background-color); 
+            }
+          </style>
+    </head>
 <body>
-    <nav id="top-bar">
-        <a href="./index.html"><img src="" alt="Pondr Logo"></a>
-        <div id="top-search-bar">
-            <form method="GET">
-                <input type="text" name="search" placeholder="Search for Ponds or Mini-Threads" />
-                <button type="submit" class="button">Search</button>
-            </form>
-        </div>
-        <a href="login.html" class="link-button">Login</a>
-        <a href="register.html" class="link-button">Sign Up</a>
-    </nav>
-    <main class="center-container margin-down ">
-        <section class="side-container">
-            <h3>Filter by Category: </h3>
-            <ul>
-                <li><a href="#">Category 1</a></li>
-                <li><a href="#">Category 2</a></li>
-                <li><a href="#">Category 3</a></li>
-                <li><a href="#">Category 4</a></li>
-                <li><a href="#">Category 5</a></li>
-                <li><a href="#">Category 6</a></li>
-                <li><a href="#">Category 7</a></li>
-            </ul>
-        </section>
 
-        <section class="discussion-container">
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. </p>
-                </article>
-                <img src="../img/logo.png">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. </p>
-                </article>
-                <img src="../img/logo.png">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. </p>
-                </article>
-                <img src="../img/logo.png">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. </p>
-                </article>
-                <img src="../img/logo.png">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. </p>
-                </article>
-                <img src="../img/logo.png">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. </p>
-                </article>
-                <img src="../img/logo.png">
-            </div>
-        </section>
-    </main>
+<div class="logo-container">
+    <img src="../img/logo.png" alt="Pondr Logo" class="logo" style="width: 400px; height: auto;"> 
+    <a href="discussion.html" class="link-button explore-button">Explore Ponds</a> 
+</div>
+
 </body>
 </html>
