@@ -24,21 +24,17 @@
     <div class="admin-container">
         <section class="user-management">
             <h2>User Management</h2>
-            <button onclick="location.href='manage_users.html'">Manage Users</button>
             <form method="POST" action="search_results.html">
                 <input type="text" name="user_search" placeholder="Search by name, email" />
                 <button type="submit" class="button">Search Users</button>
             </form>
-        </section>
+            <div id="user-list">
+                <div class="admin-list-user">
+                    <h3>John Doe</h3>
+                    <img src="../img/pfp-2.png">
 
-        <section class="content-moderation">
-            <h2>Content Moderation</h2>
-
-            <button onclick="location.href='content_moderation.html'">Moderate Content</button>
-            <form method="POST" action="content_search_results.html">
-                <input type="text" name="content_search" placeholder="Search posts, threads" />
-                <button type="submit" class="button">Search Content</button>
-            </form>
+                </div>
+            </div>
         </section>
 
         <section class="data-analytics">
