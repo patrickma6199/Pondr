@@ -29,7 +29,7 @@ body {
 }
 
 /*Styling for inputs, buttons links */
-input[type="text"], input[type="password"], button, .link-button, .form-button, .form-container textarea {
+input[type="text"], input[type="password"], button, .link-button, .form-button, .form-container textarea, .form-container select {
     font-family: var(--pondr-font);
     background-color: var(--input-background);
     color: var(--text-color);
@@ -43,12 +43,12 @@ input[type="text"], input[type="password"], button, .link-button, .form-button, 
     outline: none;
 }
 
-input[type="text"]:hover, input[type="password"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover { 
+input[type="text"]:hover, input[type="password"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover, .form-container select { 
     background-color: var(--button-hover-bg);
     border-color: var(--highlight-color);
 }
 
-input[type="text"]:focus, input[type="password"]:focus, button:focus, .link-button:focus, .form-button:focus, .form-container textarea:focus {
+input[type="text"]:focus, input[type="password"]:focus, button:focus, .link-button:focus, .form-button:focus, .form-container textarea:focus, .form-container select:focus {
     outline: 0.1em solid white;
     background-color: var(--button-hover-bg);
     border-color:var(--input-hover);
