@@ -4,78 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <!-- <link rel="stylesheet" href="../css/admin.css"> -->
-    <style>
-        .admin-container{
-            display:grid;
-            grid-gap: 20px;
-            grid-template-columns: auto auto;
-            grid-template-rows: auto auto;
-            margin-top: 10px;
-            border-radius: 10px;
-            padding: 20px;
-            width: 90%;
-            
-            
-            
-        }
-        .advanced-search, .user-management, .content-moderation{
-            grid-row:1;
-        }
-
-
-
-        #analytics-dashboard {
-        background-color: #1a1a1b; /* Matching the sections for consistency */
-        padding: 20px;
-        border-radius: 10px;
-        grid-row:-1;
-        max-width: 1000px;
-        }
-        
-
-     
-    </style>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <title>Admin Dashboard - Pondr</title>
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./admin.html"><img src="../img/newlogo.png" alt="Pondr Admin Logo"></a>
+        <a href="./admin.html"><img src="../img/logo.png" alt="Pondr Admin Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
             <form method="GET">
-                <input type="text" name="search" placeholder="Search Users, Posts, or Threads" />
-                <button type="submit" class="button">Search</button>
+                <input type="text" name="search" placeholder="Search for Users and Threads" />
+                <button type="submit" class="form-button">Search</button>
             </form>
         </div>
         <a href="admin_settings.html" class="link-button">Settings</a>
         <a href="logout.html" class="link-button">Logout</a>
     </nav>
 
-    
-
     <div class="admin-container">
-
-        <section class="advanced-search">
-            <h2>Search</h2>
+        <section class="user-management">
+            <h2>User Management</h2>
             <form method="POST" action="search_results.html">
                 <input type="text" name="user_search" placeholder="Search by name, email" />
                 <button type="submit" class="button">Search Users</button>
             </form>
-            
-            <form method="POST" action="content_search_results.html">
-                <input type="text" name="content_search" placeholder="Search posts, threads" />
-                <button type="submit" class="button">Search Content</button>
-            </form>
-        </section>
-
-        <section class="user-management">
-            <h2>User Management</h2>
-            <button onclick="location.href='manage_users.html'">Manage Users</button>
-        </section>
-
-        <section class="content-moderation">
-            <h2>Content Moderation</h2>
-            <button onclick="location.href='content_moderation.html'">Moderate Content</button>
+            <div id="user-list">
+                <div class="list-user">
+                    <div>
+                        <h3>John Doe <i class = "fas fa-trash-alt" style="margin-left: 10px;" onclick=""></i></h3>
+                        <p>Username: JohnDoe1234</p>
+                    </div>
+                    <img src="../img/pfp-3.jpg">
+                </div>
+                <div class="list-user">
+                    <div>
+                        <h3>Egg Fella <i class = "fas fa-trash-alt" style="margin-left: 10px;" onclick=""></i></h3>
+                        <p>Username: EggFella1234</p>
+                    </div>
+                    <img src="../img/pfp-2.png">
+                </div>
+                <div class="list-user">
+                    <div>
+                        <h3>User Name <i class = "fas fa-trash-alt" style="margin-left: 10px;" onclick="g
+                        t"></i></h3>
+                        <p>Username: username</p>
+                    </div>
+                    <img src="../img/pfp.png">
+                </div>
+            </div>
         </section>
 
         <section class="data-analytics">

@@ -2,14 +2,20 @@
 .discussion-container {
     width: 80%;
     background: var(--dark-blue);
-    border-radius:10px;
     padding: 1em 2em;
+    border-left: var(--button-border) solid 0.1em; 
 }
 
 .mini-thread {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+}
+.mini-thread img{
+    width: 100px;
+    height: 100px;
+    object-fit:cover;
 }
 
 .mini-thread article {
@@ -23,4 +29,55 @@
 
 .discussion-container img {
     max-width: 200px;
+}
+
+
+/* overwriting */
+
+.margin-down {
+    justify-content: space-around;
+}
+
+
+/* styles for category box of home page */
+.side-container {
+    background: var(--dark-blue);
+    border-radius: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2.6vw;
+    position: relative;
+}
+
+
+.side-container ul {
+    padding-left: 0;
+    list-style-type: none;
+    width:100%;
+}
+
+.side-container li {
+    margin: 1em 0;
+    width:100%;
+    display:flex;
+    justify-content: center;
+}
+
+.side-container a {
+    color: white;
+    display: block;
+    background: var(--button-green);
+    box-sizing: border-box;
+    text-align: center;
+    width: 90%;
+    text-decoration: none;
+    padding: 0.2em 0;
+    transition: background-color 0.1s ease-in;
+    border-radius: 0.5em;
+}
+
+.side-container a:hover {
+    background: var(--input-hover);
 }

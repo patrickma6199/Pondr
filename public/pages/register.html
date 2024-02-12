@@ -12,11 +12,11 @@
 
 <body>
     <nav id="top-bar">
-        <a href="./index.html"><img src="" alt="Pondr Logo"></a>
+        <a href="./discussion.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
-            <form method="GET" action="index.html">
-                <input type="text" name="search" placeholder="Search for Ponds or Threads" />
-                <button type="submit" class="button">Search</button>
+            <form method="GET" action="discussion.html">
+                <input type="text" name="search" placeholder="Search for Users and Threads" />
+                <button type="submit" class="form-button">Search</button>
             </form>
         </div>
         <a href="login.html" class="link-button">Login</a>
@@ -28,32 +28,28 @@
                 <legend>Register</legend>
                 <div class="form-item">
                     <label for="firstName">First Name: </label>
-                    <input type="text" placeholder="Enter your First Name" name="firstName"/>
+                    <input type="text" placeholder="Enter your First Name" name="firstName" required>
                 </div>
                 <div class="form-item">
                     <label for="lastName">Last Name: </label>
-                    <input type="text" placeholder="Enter your Last Name" name="lastName"/>
+                    <input type="text" placeholder="Enter your Last Name" name="lastName" required>
                 </div>
                 <div class="form-item">
                     <label for="username">Username: </label>
-                    <input type="text" placeholder="Enter your username" name="username"/>
+                    <input type="text" placeholder="Enter your username" name="username" required>
                 </div>
-                <br>
                 <div class="form-item">
                     <label for="password">Password: </label>
-                    <input type="password" placeholder="Enter your password" name="password"/>
+                    <input type="password" placeholder="Enter your password" name="password" required>
                 </div>
-                <br>
                 <div class="form-item">
-                    <label for="re-password"> Re-enter Your Password: </label>
-                    <input type="password" placeholder="Re-enter your password" name="re-password"/>
+                    <label for="re-password"> Re-enter Password: </label>
+                    <input type="password" placeholder="Re-enter your password" name="re-password" required>
                 </div>
-                <br>
                 <div class="form-item">
                     <label for="pfp">Upload your profile picture: </label>
-                    <input type="file"  name="pfp" accept="image/*" />
+                    <input type="file"  name="pfp" accept="image/*">
                 </div>
-                <br>
                 <div class="form-item">
                     <button type="submit" class="form-button"> Register</button>
                     <button type="reset" class="form-button">Reset</button>

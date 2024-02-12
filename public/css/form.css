@@ -1,11 +1,11 @@
 /* form container styling (login & register for now) */
 .form-container {
-    margin:auto;
     text-align:center;
-    border-radius:10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 0.1em solid var(--button-border);
+    border-radius: 0.5em;
 }
 
 .form-container form {
@@ -20,26 +20,23 @@
     margin:0.5em;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     flex-flow: wrap;
     width: 100%;
 }
 
-.form-item > input {
+.form-item > label {
+    min-width: 10em;
+}
+
+.form-item > input, .form-item > textarea {
     max-width: 80%;
     margin-left: 1em;
+    flex-grow: 1;
 }
 
 .form-container legend {
     font-weight:bold;
-    padding-top: 0.5em;
+    margin-bottom: 0.5em;
     font-size: 1.8em;
-}
-
-.form-button {
-    padding: 0.5em;
-    margin-left: 10px;
-    color: #fff;
-    cursor: pointer;
-    font-family: var(--pondr-font);
 }
