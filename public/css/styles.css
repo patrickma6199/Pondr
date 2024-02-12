@@ -68,8 +68,8 @@ input[type="text"]:focus, input[type="password"]:focus, button:focus, .link-butt
     align-items: center;
     box-shadow: var(--box-shadow);
 }
-#top-bar img{
-    width: 200px;
+#top-bar-logo{
+    width: 150px;
     margin: 0 1rem;
 }
 
