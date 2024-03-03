@@ -14,13 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "SELECT userId, utype, pass FROM users WHERE uName = ?";
         $prstmt = $conn->prepare($sql);
-        $prstmt->bind_param($username);
+        $prstmt->bind_param('s',$username);
         $prstmt->execute();
 
         $prstmt->bind_result($uid, $utype, $pass);
 
         //if query only returns one user and user's password matches entered password
-        if ($prstmt->num_rows == 1 && $$password == $pass) {
+        if ($prstmt->num_rows == 1 && $password == $pass) {
             //fetch() next available row
             $prstmt->fetch();
 
