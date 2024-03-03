@@ -1,8 +1,13 @@
-$('textarea').keyup(function(){
-    var charCount = $(this).val().length;
+$(document).ready(function(){
+    var maxLen = 3000;
+    $('#max').text('/ ' + maxLen) ;
 
-    curr = $('#curr');
-    max = $('#max');
-    count = $('#char-count') ;
-    current.text(charCount);
-})
+    $('textarea[name="post_text"]').keyup(function(){
+        var curLen = $(this).val().length ;
+        
+        $('#curr').text(curLen) ;
+
+       
+    });
+
+});
