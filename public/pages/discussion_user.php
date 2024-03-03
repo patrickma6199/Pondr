@@ -13,18 +13,18 @@ require_once 'public/scripts/dbconfig.php';
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./discussionLoggedIn.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+        <a href="./discussionLoggedIn.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
-            <form method="GET" action="discussionLoggedIn.html">
+            <form method="GET" action="discussionLoggedIn.php">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="profile.html"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
+        <a href="profile.php"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
     </nav>
     <main class="center-container margin-down">
         <section class="side-container">
-            <a href="new_post.html" class="link-button" style="padding: 1em 0em;">Make a New Post</a>
+            <a href="new_post.php" class="link-button" style="padding: 1em 0em;">Make a New Post</a>
             <div>
                 <h3>Filter by Category: </h3>
                 <ul>
@@ -42,7 +42,7 @@ require_once 'public/scripts/dbconfig.php';
         <section class="discussion-container">
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
+                    <a href="./thread.php"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
                     <i>Posted by: username on <time>January 1, 1970</time></i>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar e arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </article>
@@ -50,7 +50,7 @@ require_once 'public/scripts/dbconfig.php';
             </div>
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>Highly excited for the #Deadpool3 teaser</h2></a>
+                    <a href="./thread.php"><h2>Highly excited for the #Deadpool3 teaser</h2></a>
                     <i>Posted by: JohnDoe1234 on <time>January 1, 1970</time></i>
                     <p>Marvel, please don't disappoint this time ! </p>
                 </article>
@@ -58,7 +58,7 @@ require_once 'public/scripts/dbconfig.php';
             </div>
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>Sources tell me you can anticipate the #NHL DOPS to offer up some stern discipline to #LeafsForever Dman Morgan Reilly.</h2></a>
+                    <a href="./thread.php"><h2>Sources tell me you can anticipate the #NHL DOPS to offer up some stern discipline to #LeafsForever Dman Morgan Reilly.</h2></a>
                     <i>Posted by: JohnDoe1234 on <time>January 1, 1970</time></i>
                     <p>Reilly should get suspended whatever. But for these last few weeks with blatant predatory head hits to get only phone hearings and then Reilly gets an in person is objectively wrong. It’s obviously because of the market attention and having to send a message </p>
                 </article>
@@ -66,7 +66,7 @@ require_once 'public/scripts/dbconfig.php';
             </div>
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>It's incredible to think that today the world will get to see, on live television, Taylor Swift win her first Super Bowl ring</h2></a>
+                    <a href="./thread.php"><h2>It's incredible to think that today the world will get to see, on live television, Taylor Swift win her first Super Bowl ring</h2></a>
                     <i>Posted by: JohnDoe1234 on <time>January 1, 1970</time></i>
                     <p>An accomplishment never achieved by any other artist. This feat will forever enshrine her as the greatest musician in the history of music.</p>
                 </article>
@@ -74,7 +74,7 @@ require_once 'public/scripts/dbconfig.php';
             </div>
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>I love eating eggs!</h2></a>
+                    <a href="./thread.php"><h2>I love eating eggs!</h2></a>
                     <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
                     <p>Eggs are so nutritious, and tasty I just want to eat eggs for every meal. </p>
                 </article>
@@ -83,7 +83,7 @@ require_once 'public/scripts/dbconfig.php';
            
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
+                    <a href="./thread.php"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
                     <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
                     <p>Eggs just are the most perfect shape, I love how nice and smooth an egg feels on my hand!! It's just so cute and round.</p>
                 </article>
@@ -92,7 +92,7 @@ require_once 'public/scripts/dbconfig.php';
 
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
+                    <a href="./thread.php"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
                     <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
                     <p>Eggs just are the most perfect shape, I love how nice and smooth an egg feels on my hand!! It's just so cute and round.</p>
                 </article>
