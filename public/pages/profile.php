@@ -15,14 +15,14 @@ require_once 'public/scripts/dbconfig.php';
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./discussionLoggedIn.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+        <a href="./discussionLoggedIn.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
             <form method="GET" action="discussionLoggedIn.html">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="profile.html"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
+        <a href="profile.php"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
     </nav>
     <main class="column-container margin-down">
         <section class="profile-container">
@@ -40,7 +40,7 @@ require_once 'public/scripts/dbconfig.php';
             <h2>Their Threads</h2>
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>I love eating eggs!</h2></a>
+                    <a href="./thread.php"><h2>I love eating eggs!</h2></a>
                     <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
                     <p>Eggs are so nutritious, and tasty I just want to eat eggs for every meal. </p>
                 </article>
@@ -49,7 +49,7 @@ require_once 'public/scripts/dbconfig.php';
            
             <div class="mini-thread">
                 <article>
-                    <a href="./thread.html"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
+                    <a href="./thread.php"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
                     <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
                     <p>Eggs just are the most perfect shape, I love how nice and smooth an egg feels on my hand!! It's just so cute and round.</p>
                 </article>

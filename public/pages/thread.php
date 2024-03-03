@@ -14,22 +14,22 @@ require_once 'public/scripts/dbconfig.php';
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./discussion.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+        <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
-            <form method="GET" action="discussion.html">
+            <form method="GET" action="discussion.php">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="login.html" class="link-button">Login</a>
-        <a href="register.html" class="link-button">Sign Up</a>
+        <a href="login.php" class="link-button">Login</a>
+        <a href="register.php" class="link-button">Sign Up</a>
     </nav>
     <main class="column-container margin-down">
         <div class="thread-container">
             <article>
                 <img src="../img/cat.jpg" class="thread-img">
                 <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
-                <i>Posted by: <a href="./secondaryProfile.html">username</a> on <time>January 1, 1970</time> under Sports</i>
+                <i>Posted by: <a href="./secondaryProfile.php">username</a> on <time>January 1, 1970</time> under Sports</i>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. 
                     Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar

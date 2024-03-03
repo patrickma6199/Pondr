@@ -15,15 +15,15 @@ require_once 'public/scripts/dbconfig.php';
     </head>
     <body>
         <nav id="top-bar">
-            <a href="./discussion.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+            <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
             <div id="top-search-bar">
                 <form method="GET" action="discussion.html">
                     <input type="text" name="search" placeholder="Search for Ponds or Threads" />
                     <button type="submit" class="form-button">Search</button>
                 </form>
             </div>
-            <a href="login.html" class="link-button">Login</a>
-            <a href="register.html" class="link-button">Sign Up</a>
+            <a href="login.php" class="link-button">Login</a>
+            <a href="register.php" class="link-button">Sign Up</a>
         </nav>
         <main class="center-container">
             <section class="form-container">
@@ -39,10 +39,10 @@ require_once 'public/scripts/dbconfig.php';
                     </div>
                     <div class="form-item">
                         <button type="submit" class="form-button">Login</button>
-                        <a href="register.html" class="form-button">Register</a>
+                        <a href="register.php" class="form-button">Register</a>
                     </div>
                     <div class="form-item">
-                        <a href="forget_password.html" class="form-button">Reset Password</a>
+                        <a href="forget_password.php" class="form-button">Reset Password</a>
                     </div>
                 </form>
             </section>

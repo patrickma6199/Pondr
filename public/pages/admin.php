@@ -15,21 +15,21 @@ require_once 'public/scripts/dbconfig.php';
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./admin.html"><img src="../img/logo.png" alt="Pondr Admin Logo" id="top-bar-logo"></a>
+        <a href="./admin.php"><img src="../img/logo.png" alt="Pondr Admin Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
             <form method="GET">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="admin_settings.html" class="link-button">Settings</a>
-        <a href="logout.html" class="link-button">Logout</a>
+        <a href="admin_settings.php" class="link-button">Settings</a>
+        <a href="logout.php" class="link-button">Logout</a>
     </nav>
 
     <div class="admin-container">
         <section class="user-management">
             <h2>User Management</h2>
-            <form method="POST" action="search_results.html">
+            <form method="POST" action="search_results.php">
                 <input type="text" name="user_search" placeholder="Search by name, email" />
                 <button type="submit" class="button">Search Users</button>
             </form>
@@ -112,9 +112,7 @@ require_once 'public/scripts/dbconfig.php';
                 
 
             </div>
-        </section>
-
-        
+        </section>    
     </div>
 </body>
 </html>
