@@ -1,5 +1,5 @@
 <?php
-require_once 'public/scripts/dbconfig.php';
+require_once '../scripts/dbconfig.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
