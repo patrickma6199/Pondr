@@ -5,7 +5,7 @@
     $utype = $_SESSION['utype'];
     $uid = $_SESSION['uid'];
 
-if (!isset($utype)) {
+if (!isset($uid)) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
