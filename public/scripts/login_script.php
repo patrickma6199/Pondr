@@ -33,7 +33,12 @@ if (!isset($uid)) {
             $conn->close();
 
             //redirect to discussions router
-            header('Location: ../index.php');
+            exit(header('Location: ../index.php'));
+        } else {
+            //if no user exists or password doesn't match
+            //set up message to inform user of incorrect login info
+            $_SESSION['loginMessage'] = '<p>Invalid username or password.</p>';
+            exit(header('Location: ../pages/login.php'));
         }
     }
 } else {
