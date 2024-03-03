@@ -28,6 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['utype'] = $utype;
             $_SESSION['uid'] = $uid;
 
+            $prstmt->close();
+            $conn->close();
+
             //redirect to discussions router
             header('Location: ../index.php');
         }
