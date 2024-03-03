@@ -40,6 +40,14 @@ require_once 'public/scripts/dbconfig.php';
                     <input type="text" placeholder="Enter your Last Name" name="lastName" required>
                 </div>
                 <div class="form-item">
+                    <label for="email">Email: </label>
+                    <input type="text" placeholder="Enter your Email" name="email" required>
+                </div>
+                <div class="form-item">
+                    <label for="re-email">Re-enter Email: </label>
+                    <input type="text" placeholder="Enter your Last Name" name="re-email" required>
+                </div>
+                <div class="form-item">
                     <label for="username">Username: </label>
                     <input type="text" placeholder="Enter your username" name="username" required>
                 </div>
@@ -48,7 +56,7 @@ require_once 'public/scripts/dbconfig.php';
                     <input type="password" placeholder="Enter your password" name="password" required>
                 </div>
                 <div class="form-item">
-                    <label for="re-password"> Re-enter Password: </label>
+                    <label for="re-password">Re-enter Password: </label>
                     <input type="password" placeholder="Re-enter your password" name="re-password" required>
                 </div>
                 <div class="form-item">
