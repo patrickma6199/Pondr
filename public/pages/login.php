@@ -1,3 +1,7 @@
+<?php
+require_once 'public/scripts/dbconfig.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
