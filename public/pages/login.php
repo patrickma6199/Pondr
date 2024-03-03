@@ -23,7 +23,7 @@
         </nav>
         <main class="center-container">
             <section class="form-container">
-                <form action="POST">
+                <form action="../login_script.php" method="POST">
                     <legend>Login</legend>
                     <div class="form-item">
                         <label for="username">Username: </label>
