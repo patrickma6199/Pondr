@@ -8,7 +8,9 @@
 if (!isset($utype)) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
+        //grab form information
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
         $username = $_POST['username'];
         $password = $_POST['password'];
 
