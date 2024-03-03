@@ -4,7 +4,7 @@
 */
 
 CREATE DATABASE pondr; -- Use only in the first iteration to generate the database
-USE ponder;
+USE pondr;
 
 CREATE TABLE users (
     userId INT AUTO_INCREMENT,
