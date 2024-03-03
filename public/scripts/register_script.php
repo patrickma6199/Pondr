@@ -5,8 +5,9 @@
     $utype = $_SESSION['utype'];
     $uid = $_SESSION['uid'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!isset($utype)) {
+if (!isset($utype)) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
         //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -34,11 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //redirect to discussions router
             header('Location: ../index.php');
         }
-
-    } else {
-        //reroutes user to discussion page router if they are logged in already
-        header('Location: ../index.php');
     }
+} else {
+    //reroutes user to discussion page router if they are logged in already
+    header('Location: ../index.php');
 }
 
 ?>
