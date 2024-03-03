@@ -19,6 +19,7 @@ if (!isset($utype)) {
         $pfp = (isset($_FILES['image'])) ? file_get_contents($_FILES['pfp']['tmp_name']):file_get_contents('../img/pfp.png');
         //TODO: resize images to be standard size.
 
+        //TODO: recovery key functionality
 
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "INSERT INTO users(utype, fName, lName, uName, email, pass, bio, pfp) VALUES (0, ?, ?, ?, ?, ?, 'No Bio Provided.', ?);";
