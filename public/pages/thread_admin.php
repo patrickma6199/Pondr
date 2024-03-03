@@ -15,15 +15,15 @@ require_once 'public/scripts/dbconfig.php';
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./admin.html"><img src="../img/logo.png" alt="Pondr Admin Logo" id="top-bar-logo"></a>
+        <a href="./admin.php"><img src="../img/logo.png" alt="Pondr Admin Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
             <form method="GET">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="admin_settings.html" class="link-button">Settings</a>
-        <a href="logout.html" class="link-button">Logout</a>
+        <a href="admin_settings.php" class="link-button">Settings</a>
+        <a href="logout.php" class="link-button">Logout</a>
     </nav>
 
         <main class="column-container margin-down">
@@ -31,7 +31,7 @@ require_once 'public/scripts/dbconfig.php';
             <article>
                 <img src="../img/cat.jpg" class="thread-img">
                 <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
-                <i>Posted by: <a href="./secondaryProfile.html">username</a> on <time>January 1, 1970</time> under Sports</i>
+                <i>Posted by: <a href="./secondaryProfile.php">username</a> on <time>January 1, 1970</time> under Sports</i>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. 
                     Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar

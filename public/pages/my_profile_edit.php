@@ -16,14 +16,14 @@ require_once 'public/scripts/dbconfig.php';
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./discussionLoggedIn.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+        <a href="./discussionLoggedIn.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
             <form method="GET" action="discussionLoggedIn.html">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="profile.html"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
+        <a href="profile.php"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
     </nav>
 
     <main class="center-container">
