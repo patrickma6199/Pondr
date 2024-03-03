@@ -29,6 +29,12 @@ require_once 'public/scripts/dbconfig.php';
             <section class="form-container">
                 <form action="../login_script.php" method="POST">
                     <legend>Login</legend>
+                    <?php
+                    if (isset($_SESSION['loginMessage'])) {
+                        echo $_SESSION['loginMessage'];
+                        unset($_SESSION['loginMessage']);
+                    }
+                    ?>
                     <div class="form-item">
                         <label for="username">Username: </label>
                         <input type="text" placeholder="Enter your username" name="username" required>
