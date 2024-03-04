@@ -56,7 +56,7 @@
 
 <div class="logo-container">
     <img src="../img/logo.png" alt="Pondr Logo" class="logo" style="width: 400px; height: auto;"> 
-    <a href="discussion.html" class="link-button explore-button">Explore Ponds</a> 
+    <a href="discussion.php" class="link-button explore-button">Explore Ponds</a> 
 </div>
 
 </body>

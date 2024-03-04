@@ -5,13 +5,16 @@
     $utype = $_SESSION['utype'];
     $uid = $_SESSION['uid'];
 
-    switch ($utype) {
-    case 0:
-        header('Location: pages/thread_user.php');
-        break;
-    case 1:
-        header('Location: pages/thread_admin.php');
-    default:
-        header('Location: pages/thread.php');
+    if (isset($utype)) {
+        switch ($utype) {
+            case 0:
+                exit(header('Location: pages/thread_user.php'));
+            case 1:
+                exit(header('Location: pages/thread_admin.php'));
+            default:
+                exit(header('Location: pages/landing.php'));
+        }
+    } else {
+        exit(header('Location: pages/landing.php'));
     }
 ?>
