@@ -20,8 +20,8 @@ if (!isset($uid)) {
 
         $prstmt->bind_result($uid, $utype, $pass);
 
-        //if query only returns one user and user's password matches entered password
-        if ($prstmt->num_rows == 1 && $password == $pass) {
+        //if query only returns one user and user's password hashed matches entered password hashed
+        if ($prstmt->num_rows == 1 && password_verify($password, $pass)) {
             //fetch() next available row
             $prstmt->fetch();
 
