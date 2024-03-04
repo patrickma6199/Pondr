@@ -16,10 +16,20 @@ CREATE TABLE users (
     pass VARCHAR(255) NOT NULL,
     bio VARCHAR(1000) NOT NULL, -- will be "No Bio Made" by default
     pfp BLOB,
-    PRIMARY KEY(id)
+    PRIMARY KEY(userId)
 ) ENGINE = InnoDB;
 
 -- Create new admin account
+
+CREATE TABLE categories (
+    catId INT AUTO_INCREMENT,
+    userId INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    count INT NOT NULL DEFAULT(0), -- Count of posts under each category
+    PRIMARY KEY(catId),
+    FOREIGN KEY(userId) REFERENCES users(userId)
+        ON DELETE CASCADE
+) ENGINE = InnoDB;
 
 CREATE TABLE posts (
     postId INT AUTO_INCREMENT,
@@ -30,21 +40,11 @@ CREATE TABLE posts (
     img BLOB,
     link VARCHAR(255) NOT NULL,
     catId INT NOT NULL,
-    likes INT NOT NULL DEFAULT(0);
+    likes INT NOT NULL DEFAULT(0),
     PRIMARY KEY(postId,userId),
     FOREIGN KEY(userId) REFERENCES users(userId)
         ON DELETE CASCADE,
     FOREIGN KEY(catId) REFERENCES categories(catId)
-        ON DELETE CASCADE
-) ENGINE = InnoDB;
-
-CREATE TABLE categories (
-    catId INT AUTO_INCREMENT,
-    userId INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    count INT NOT NULL DEFAULT(0), -- Count of posts under each category
-    PRIMARY KEY(catId),
-    FOREIGN KEY(userId) REFERENCES users(userId)
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
