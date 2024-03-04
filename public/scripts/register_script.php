@@ -32,7 +32,7 @@ if (!isset($utype)) {
         if ($prstmt->execute()) {
             $_SESSION['registerMessage'] = "<p>Registration Successful! Login to start your Pondr journey!</p>";
         } else {
-            $_SESSION['registerMessage'] = "<p>Registration Successful! Login to start your Pondr journey!</p>";
+            $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
             echo "<script>console.log($prstmt->error);</script>";
         }
         exit(header('Location: ../pages/register.php'));
