@@ -1,5 +1,6 @@
 <?php
-require_once 'public/scripts/dbconfig.php';
+session_start();
+require_once '../scripts/dbconfig.php';
 ?>
 
 <!DOCTYPE html>
