@@ -16,6 +16,7 @@ if (!isset($utype)) {
         $password = $_POST['password'];
 
         //gets the string representation of the pfp sent through post request using temp filename stored on server from request
+        //if no pfp is provided, use the stock profile photo
         $pfp = (isset($_FILES['image'])) ? file_get_contents($_FILES['pfp']['tmp_name']):file_get_contents('../img/pfp.png');
         //TODO: resize images to be standard size.
 
@@ -24,12 +25,17 @@ if (!isset($utype)) {
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "INSERT INTO users(utype, fName, lName, uName, email, pass, bio, pfp) VALUES (0, ?, ?, ?, ?, ?, 'No Bio Provided.', ?);";
         $prstmt = $conn->prepare($sql);
-        $prstmt->bind_param('sssssb',$firstName,$lastName,$username,$email,$pass,$pfp);
+        $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
+        $prstmt->bind_param('sssssb',$firstName,$lastName,$username,$email,$hashedPass,$pfp);
 
         //if query successful
         if ($prstmt->execute()) {
-            //TODO: upload was successful
+            $_SESSION['registerMessage'] = "<p>Registration Successful! Login to start your Pondr journey!</p>";
+        } else {
+            $_SESSION['registerMessage'] = "<p>Registration Successful! Login to start your Pondr journey!</p>";
+            echo "<script>console.log($prstmt->error);</script>";
         }
+        exit(header('Location: ../pages/register.php'));
     }
 } else {
     //reroutes user to discussion page router if they are logged in already

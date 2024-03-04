@@ -32,6 +32,12 @@ require_once '../scripts/dbconfig.php';
         <div class="form-container">
             <form action="POST">
                 <legend>Register</legend>
+                <?php
+                if (isset($_SESSION['registerMessage'])) {
+                    echo $_SESSION['registerMessage'];
+                    unset($_SESSION['registerMessage']);
+                }
+                ?>
                 <div class="form-item">
                     <label for="firstName">First Name: </label>
                     <input type="text" placeholder="Enter your First Name" name="firstName" required>
