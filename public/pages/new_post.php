@@ -1,8 +1,3 @@
-<?php
-session_start();
-require_once '../scripts/dbconfig.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,17 +7,20 @@ require_once '../scripts/dbconfig.php';
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery-3.1.1.min.js"> </script>
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/char_count.js"></script>
 </head>
 <body>
     <nav id="top-bar">
-        <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+        <a href="./discussion.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
         <div id="top-search-bar">
-            <form method="GET" action="discussionLoggedIn.php">
+            <form method="GET" action="discussionLoggedIn.html">
                 <input type="text" name="search" placeholder="Search for Users and Threads" />
                 <button type="submit" class="form-button">Search</button>
             </form>
         </div>
-        <a href="profile.php"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
+        <a href="profile.html"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
     </nav>
     <main class="center-container">
         <section class="form-container">
@@ -35,6 +33,10 @@ require_once '../scripts/dbconfig.php';
                 <div class="form-item">
                     <label for="post_text">Post Text</label>
                     <textarea name="post_text" cols="30" rows="10" required placeholder="Enter Post Text Here"></textarea>
+                    <div id="char-count">
+                        <span id="curr">0</span>
+                        <span id="max">3000</span>
+                    </div>
                 </div>
                 <div class="form-item">
                     <label for="post_link">Any link? (Optional)</label>
