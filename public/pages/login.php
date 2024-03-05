@@ -1,5 +1,6 @@
 <?php
-require_once 'public/scripts/dbconfig.php';
+session_start();
+require_once '../scripts/dbconfig.php';
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +28,14 @@ require_once 'public/scripts/dbconfig.php';
         </nav>
         <main class="center-container">
             <section class="form-container">
-                <form action="../login_script.php" method="POST">
+                <form action="../scripts/login_script.php" method="POST">
                     <legend>Login</legend>
+                    <?php
+                    if (isset($_SESSION['loginMessage'])) {
+                        echo $_SESSION['loginMessage'];
+                        unset($_SESSION['loginMessage']);
+                    }
+                    ?>
                     <div class="form-item">
                         <label for="username">Username: </label>
                         <input type="text" placeholder="Enter your username" name="username" required>

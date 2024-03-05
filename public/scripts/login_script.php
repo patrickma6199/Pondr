@@ -5,8 +5,9 @@
     $utype = $_SESSION['utype'];
     $uid = $_SESSION['uid'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!isset($utype)) {   // if (empty($_SESSION['utype'])) {
+if (!isset($uid)) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
         //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -19,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $prstmt->bind_result($uid, $utype, $pass);
 
-        //if query only returns one user and user's password matches entered password
-        if ($prstmt->num_rows == 1 && $password == $pass) {
+        //if query only returns one user and user's password hashed matches entered password hashed
+        if ($prstmt->num_rows == 1 && password_verify($password, $pass)) {
             //fetch() next available row
             $prstmt->fetch();
 
@@ -32,13 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $conn->close();
 
             //redirect to discussions router
-            header('Location: ../index.php');
+            exit(header('Location: ../index.php'));
+        } else {
+            //if no user exists or password doesn't match
+            //set up message to inform user of incorrect login info
+            $_SESSION['loginMessage'] = '<p>Invalid username or password.</p>';
+            exit(header('Location: ../pages/login.php'));
         }
-
-    } else {
-        //reroutes user to discussion page router if they are logged in already
-        header('Location: ../index.php');
     }
+} else {
+    //reroutes user to discussion page router if they are logged in already
+    header('Location: ../index.php');
 }
 
 ?>
