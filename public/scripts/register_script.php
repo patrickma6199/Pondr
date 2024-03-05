@@ -35,6 +35,10 @@ if (!isset($utype)) {
             $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
             echo "<script>console.log($prstmt->error);</script>";
         }
+
+        $prstmt->close();
+        $conn->close();
+
         exit(header('Location: ../pages/register.php'));
     }
 } else {
