@@ -30,7 +30,8 @@ require_once '../scripts/dbconfig.php';
     </nav>
     <div class="center-container">
         <div class="form-container">
-            <form action="POST">
+            <!-- check if enctype can be done with file and text data -->
+            <form method="POST" action="../scripts/register_script.php" enctype="multipart/form-data">
                 <legend>Register</legend>
                 <?php
                 if (isset($_SESSION['registerMessage'])) {
