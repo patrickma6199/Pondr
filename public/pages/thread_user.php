@@ -1,10 +1,22 @@
 <?php
 session_start();
 require_once '../scripts/dbconfig.php';
+$pid = $_SESSION['pid'];
+$uid = $_SESSION['uid'] ;
+
+
+
+if(!isset($uid)){
+
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
+    // pid
+    // uid is set, send to javascript which can send it to likes.php
+    
 
 
+
+}
 }
 else {
     header('Location: ../pages/register.php')
