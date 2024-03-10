@@ -6,7 +6,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
 
 }
-else 
+else {
+    header('Location: ../pages/register.php')
+}
 
 ?>
 
