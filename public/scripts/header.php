@@ -1,7 +1,14 @@
 <?php
-    session_start();
-    require_once 'dbconfig.php';
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
+
+require_once 'dbconfig.php';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+$catId = (isset($_GET['catId'])) ? $_GET['catId'] : null;
 
     $utype = $_SESSION["utype"];
 ?>
@@ -10,6 +17,11 @@
     <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
     <div id="top-search-bar">
         <form method="GET" action="discussion.php">
+            <?php
+            if (isset($_GET['catId'])) {
+                echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";                     //if category was selected, send category into get request to discussion.php
+            }
+            ?>
             <input type="text" name="search" placeholder="Search for Users and Threads" />
             <button type="submit" class="form-button">Search</button>
         </form>
