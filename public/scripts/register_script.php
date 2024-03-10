@@ -1,6 +1,7 @@
 <?php
     session_start();
-    require_once('dbconfig.php');
+    require_once 'dbconfig.php';
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     $utype = $_SESSION['utype'];
     $uid = $_SESSION['uid'];
@@ -17,25 +18,60 @@ if (!isset($utype)) {
 
         //gets the string representation of the pfp sent through post request using temp filename stored on server from request
         //if no pfp is provided, use the stock profile photo
-        $pfp = (isset($_FILES['image'])) ? file_get_contents($_FILES['pfp']['tmp_name']):file_get_contents('../img/pfp.png');
+        //$pfp = (isset($_FILES['pfp'])) ? file_get_contents($_FILES['pfp']['tmp_name']):file_get_contents('../img/pfp.png');
+
+        // Check if 'pfp' file was uploaded and is not empty
+        $pfp = file_get_contents('../img/pfp.png');
+
         //TODO: resize images to be standard size.
 
-        //TODO: recovery key functionality
+        //Generates recovery key
+        $newKey = bin2hex(random_bytes(16));
+        $unique = false;
 
-        //this is the sql query using prepared statements for sanitization of requests
-        $sql = "INSERT INTO users(utype, fName, lName, uName, email, pass, bio, pfp) VALUES (0, ?, ?, ?, ?, ?, 'No Bio Provided.', ?);";
-        $prstmt = $conn->prepare($sql);
-        $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
-        $prstmt->bind_param('sssssb',$firstName,$lastName,$username,$email,$hashedPass,$pfp);
-
-        //if query successful
-        if ($prstmt->execute()) {
-            $_SESSION['registerMessage'] = "<p>Registration Successful! Login to start your Pondr journey!</p>";
-        } else {
-            $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
-            echo "<script>console.log($prstmt->error);</script>";
+        while(!$unique) {
+            //check if key exists already for another user
+            $sql = "SELECT * FROM users WHERE recoveryKey = ?;";
+            $prstmt = $conn->prepare($sql);
+            $prstmt->bind_param("s",$newKey);
+            
+            try{
+                $prstmt->execute();
+                // if already used, regenerate
+                if ($prstmt->fetch()) {
+                    $newKey = bin2hex(random_bytes(16));
+                } else {
+                    $prstmt->close();
+                    $unique = true;
+                }
+            } catch(mysqli_sql_exception $e){
+                $_SESSION['registerMessage'] = "<p>An error occurred while trying to generate your recovery key. Please try again.</p>";
+                $prstmt->close();
+                $conn->close();
+                exit(header("Location: ../pages/register.php"));
+            }
         }
 
+
+        //this is the sql query using prepared statements for sanitization of requests
+        $sql = "INSERT INTO users(utype, fName, lName, uName, email, pass, bio, pfp, recoveryKey) VALUES (0, ?, ?, ?, ?, ?, 'No Bio Provided.', ?, ?);";
+        $prstmt = $conn->prepare($sql);
+        $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+        $prstmt->bind_param('sssssbs',$firstName,$lastName,$username,$email,$hashedPass,$pfp,$newKey);
+
+        //if query successful
+        try {
+            $prstmt->execute();
+            $_SESSION['registerMessage'] = "<p>Registration Successful! Login to start your Pondr journey!</p>";
+            $_SESSION['recovery'] = "<p>Here is your recovery key: $newKey</p>";
+                
+        } catch (mysqli_sql_exception $e) {
+            if($e->getCode() == 1062){      #duplicate values for unique fields (email or username)
+                $_SESSION['registerMessage'] = "<p>Email or Username are already taken.</p>";
+            } else {
+                $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
+            }
+        }
         $prstmt->close();
         $conn->close();
 
