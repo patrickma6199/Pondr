@@ -1,19 +1,22 @@
-$(document).ready(function(){
-    var count = 0 ;
+function increaseLikeCount(e) {
+    e.preventDefault(); // Prevent the default anchor action
 
-    $("#like-button").on("click",function(e){
-        e.preventDefault();
-        count += 1;
+    // Assuming you have an identifier for the content. Here, we use a placeholder.
+    var postId = 'YOUR_CONTENT_ID';
 
-        $.ajax({
-            url: 'scripts/likes.php', // The PHP file that updates the likes in the database
-            type: 'POST',
-            data: {postId: postId},
-            success: function(data){
-                // Assuming the PHP script returns the new like count
-                $('#like-count-' + postId).text(data);
+    $.ajax({
+        type: 'POST',
+        url: 'likes.php',
+        data: { postId: postId },
+        success: function(data) {
+            var result = JSON.parse(data);
+            if(result.success) {
+                // Update the like count display
+                $('#like-count').text(result.newCount);
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
     });
-    
-});
+}
