@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconfig.php'; // Adjust the path as needed
+require_once 'dbconfig.php'; 
 
 if (isset($_POST['postId'])) {
     $postId = $_POST['postId'];
