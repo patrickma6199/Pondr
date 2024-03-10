@@ -10,7 +10,7 @@
             case 0:
                 exit(header('Location: pages/discussion_user.php'));
             case 1:
-                exit(header('Location: pages/discussion_admin.php'));
+                exit(header('Location: pages/admin.php'));
             default:
                 exit(header('Location: pages/landing.php'));
         }
