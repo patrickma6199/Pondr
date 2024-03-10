@@ -16,12 +16,18 @@ if (isset($_POST['postId'])) {
     $stmt->bind_param("i", $postId);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        echo $row['likes']; // Return the new like count
-    } else {
-        echo "Error"; // Handle errors appropriately in a real application
-    }
+    try{
 
+        if ($row = $result->fetch_assoc()) {
+            echo $row['likes']; // Return the new like count
+        }
+
+    }
+    catch(mysqli_sql_exception $e){
+        echo $e
+    }
+    
+    
     $stmt->close();
 }
 $conn->close();
