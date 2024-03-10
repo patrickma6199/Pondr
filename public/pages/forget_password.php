@@ -1,6 +1,9 @@
 <?php
 session_start();
-require_once '../scripts/dbconfig.php';
+
+if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
+    exit(header("../index.php"));
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,19 +30,25 @@ require_once '../scripts/dbconfig.php';
     </nav>
     <main class="center-container">
         <div class="form-container">
-            <form action="POST" method="">
+            <form action="../scripts/forget_password_script.php" method="POST">
                 <legend>Forgot Password?</legend>
+                <?php
+                    if (isset($_SESSION['forgetPassMessage'])) {
+                        echo $_SESSION['forgetPassMessage'];
+                        unset($_SESSION['forgetPassMessage']);
+                    }
+                ?>
                 <div class="form-item">
                     <label for="email">Email:</label>
                     <input type="text" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="form-item">
                     <label for="new-pass">New Password:</label>
-                    <input type="password" name="new-pass" placeholder="Enter your New Password">
+                    <input type="password" name="new-pass" placeholder="Enter your New Password" required>
                 </div>
                 <div class="form-item">
-                    <label for="recovery-token">Recovery Token:</label>
-                    <input type="text" name="recovery-token" placeholder="Enter your Recovery Token">
+                    <label for="recovery-token">Recovery Key:</label>
+                    <input type="text" name="recovery-key" placeholder="Enter your Recovery Token" required>
                 </div>
                 <div class="form-item">
                     <button type="submit" class="form-button">Change Password</button>

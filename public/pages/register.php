@@ -1,6 +1,9 @@
 <?php
 session_start();
-require_once '../scripts/dbconfig.php';
+
+if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
+    exit(header("../index.php"));
+}
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +78,12 @@ require_once '../scripts/dbconfig.php';
                     <button type="submit" class="form-button"> Register</button>
                     <button type="reset" class="form-button">Reset</button>
                 </div>
+                <?php
+                    if (isset($_SESSION['recovery'])) {
+                        echo $_SESSION['recovery'];
+                        unset($_SESSION['recovery']);
+                    }
+                ?>
             </form>
         </div>
     </div>
