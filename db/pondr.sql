@@ -61,3 +61,15 @@ CREATE TABLE comments (
     FOREIGN KEY(parentComId) REFERENCES comments(comId)
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
+
+CREATE TABLE likes (
+    likesId INT AUTO_INCREMENT,
+    userId INT NOT NULL,
+    postId INT NOT NULL,
+    PRIMARY KEY(likesId),
+    FOREIGN KEY(postId) REFERENCES posts(postId)
+        ON DELETE CASCADE,
+    FOREIGN KEY(userId) REFERENCES users(userId)
+        ON DELETE CASCADE
+
+)ENGINE = InnoDB;
