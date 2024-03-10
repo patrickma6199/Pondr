@@ -1,6 +1,9 @@
 <?php
 session_start();
-require_once '../scripts/dbconfig.php';
+
+if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
+    exit(header("../index.php"));
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +52,7 @@ require_once '../scripts/dbconfig.php';
                         <a href="register.php" class="form-button">Register</a>
                     </div>
                     <div class="form-item">
-                        <a href="forget_password.php" class="form-button">Reset Password</a>
+                        <a href="forget_password.php" class="form-button">Forgot Password?</a>
                     </div>
                 </form>
             </section>
