@@ -12,10 +12,11 @@ if(!isset($uid)){
 if($_SERVER["REQUEST_METHOD"] == "GET"){
     // pid
     // uid is set, send to javascript which can send it to likes.php
+    $data_arr[] = array("uid" => $uid,
+                        "pid => $pid");
+
+    echo json_encode($data_arr);
     
-
-
-
 }
 }
 else {
