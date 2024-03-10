@@ -67,7 +67,7 @@ if (!isset($utype)) {
                 
         } catch (mysqli_sql_exception $e) {
             if($e->getCode() == 1062){      #duplicate values for unique fields (email or username)
-                $_SESSION['registerMessage'] = "<p>Email or Username are already taken.</p>";
+                $_SESSION['registerMessage'] = "<p>Email or Username is already taken.</p>";
             } else {
                 $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
             }
