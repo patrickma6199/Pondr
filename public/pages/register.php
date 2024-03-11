@@ -17,6 +17,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
+    <script src = "../js/jquery-3.1.1.min.js"></script>
     <script src = "../js/register_verification.js"></script>
 </head>
 
@@ -35,7 +36,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <div class="center-container">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
-            <form method="POST" action="../scripts/register_script.php" enctype="multipart/form-data">
+            <form method="POST" action="../scripts/register_script.php" enctype="multipart/form-data" id="regform">
                 <legend>Register</legend>
                 <?php
                 if (isset($_SESSION['registerMessage'])) {
