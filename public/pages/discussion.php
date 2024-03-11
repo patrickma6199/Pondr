@@ -78,6 +78,14 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        while ($prstmt->fetch()) {
+                            echo "<article>";
+                            echo "<a href=\"./thread.php\"><h2>$title</h2></a>";
+                            echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                            echo "<p>$text</p>";
+                            echo "</article>";
+                            if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        }
                     } else {
                         echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
                     }
