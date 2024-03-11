@@ -58,9 +58,10 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
             <div class="mini-thread">
                 <?php
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
-                $sql = "SELECT p.title, p.postDate, p.text, u.uName, c.name, p.img 
-                FROM posts as p JOIN users as u ON p.userId = u.userId JOIN categories as c ON p.catId = c.catId 
-                WHERE" . ((isset($catId)) ? "p.catId = ? AND ":"") . "CASE WHEN ? <> '' THEN (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) ELSE TRUE END;";
+                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
+                FROM posts as p JOIN users as u ON p.userId = u.userId 
+                JOIN categories as c ON p.catId = c.catId 
+                WHERE" . (isset($catId) ? "p.catId = ? AND ":"") . "CASE WHEN ? <> '' THEN (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) ELSE TRUE END;";
                 $prstmt = $conn->prepare($sql);
                 $searchString = (isset($search)) ? $search : "";
                 if (isset($catId)) {
@@ -80,7 +81,7 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                         while ($prstmt->fetch()) {
                             echo "<article>";
-                            echo "<a href=\"./thread.php\"><h2>$title</h2></a>";
+                            echo "<a href=\"./thread.php?pid\"><h2>$title</h2></a>";
                             echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                             echo "<p>$text</p>";
                             echo "</article>";
