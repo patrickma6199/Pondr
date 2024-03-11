@@ -57,14 +57,16 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
         <section class="discussion-container">
             <div class="mini-thread">
                 <?php
-                // query depends on if catId is set
-                $sql = "SELECT p.title, p.postDate, p.text, u.uName, c.name, p.img FROM posts as p JOIN users as u ON p.userId = u.userId JOIN categories as c ON p.catId = c.catId WHERE" . ((isset($catId)) ? "p.catId = ? AND":"") . "(p.title LIKE ? OR p.text LIKE ? or u.uName LIKE ?);";
+                // query depends on if catId is set and if search string is empty (return all discussion posts)
+                $sql = "SELECT p.title, p.postDate, p.text, u.uName, c.name, p.img 
+                FROM posts as p JOIN users as u ON p.userId = u.userId JOIN categories as c ON p.catId = c.catId 
+                WHERE" . ((isset($catId)) ? "p.catId = ? AND ":"") . "CASE WHEN ? <> '' THEN (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) ELSE TRUE END;";
                 $prstmt = $conn->prepare($sql);
                 $searchString = (isset($search)) ? $search : "";
                 if (isset($catId)) {
-                    $prstmt->bind_param("ssss",$catId,$searchString,$searchString,$searchString);
+                    $prstmt->bind_param("ssss",$catId,$searchString,$searchString,$searchString,$searchString);
                 } else {
-                    $prstmt->bind_param("sss",$searchString,$searchString,$searchString);
+                    $prstmt->bind_param("sss",$searchString,$searchString,$searchString,$searchString);
                 }
                 try {
                     $prstmt->execute();
