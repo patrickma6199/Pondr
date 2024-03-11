@@ -17,6 +17,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
+    <script src = "../js/register_verification.js"></script>
 </head>
 
 <body>
@@ -52,23 +53,23 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                 </div>
                 <div class="form-item">
                     <label for="email">Email: </label>
-                    <input type="text" placeholder="Enter your Email" name="email" required>
+                    <input type="email" placeholder="Enter your Email" name="email" required>
                 </div>
                 <div class="form-item">
                     <label for="re-email">Re-enter Email: </label>
-                    <input type="text" placeholder="Enter your Last Name" name="re-email" required>
+                    <input type="email" placeholder="Re-enter your Email" name="re-email" required>
                 </div>
                 <div class="form-item">
                     <label for="username">Username: </label>
-                    <input type="text" placeholder="Enter your username" name="username" required>
+                    <input type="text" placeholder="Enter your Username" name="username" required>
                 </div>
                 <div class="form-item">
                     <label for="password">Password: </label>
-                    <input type="password" placeholder="Enter your password" name="password" required>
+                    <input type="password" placeholder="Enter your Password" name="password" required>
                 </div>
                 <div class="form-item">
                     <label for="re-password">Re-enter Password: </label>
-                    <input type="password" placeholder="Re-enter your password" name="re-password" required>
+                    <input type="password" placeholder="Re-enter your Password" name="re-password" required>
                 </div>
                 <div class="form-item">
                     <label for="pfp">Upload your profile picture: </label>
