@@ -71,10 +71,10 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                 }
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($title, $postDate, $text, $uName, $catName, $postImg);
+                    $prstmt->bind_result($postId,$title, $postDate, $text, $uName, $catName, $postImg);
                     if($prstmt->fetch()){
                         echo "<article>";
-                        echo "<a href=\"./thread.php\"><h2>$title</h2></a>";
+                        echo "<a href=\"./thread.php?pid=$postId\"><h2>$title</h2></a>";
                         echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                         echo "<p>$text</p>";
                         echo "</article>";
