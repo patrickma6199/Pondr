@@ -6,7 +6,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $utype = $_SESSION["utype"];
 $uid = $_SESSION["uid"];
 
-if (isset($_GET["search"])) {
+if (isset($_GET["search"])) {               //remove search if searched value is empty
     if ($_GET["search"] == "") {
         unset($_GET["search"]);
     }
@@ -50,7 +50,6 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                 } catch(mysqli_sql_exception $e) {
                     echo "<p>Error occurred: pulling categories.</p>";
                 }
-                $conn->close();
                 ?>
             </ul>
         </section>
@@ -58,14 +57,34 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
         <section class="discussion-container">
             <div class="mini-thread">
                 <?php
-                
+                // query depends on if catId is set
+                $sql = "SELECT p.title, p.postDate, p.text, u.uName, c.name, p.img FROM posts as p JOIN users as u ON p.userId = u.userId JOIN categories as c ON p.catId = c.catId WHERE" . ((isset($catId)) ? "p.catId = ? AND":"") . "(p.title LIKE ? OR p.text LIKE ? or u.uName LIKE ?);";
+                $prstmt = $conn->prepare($sql);
+                $searchString = (isset($search)) ? $search : "";
+                if (isset($catId)) {
+                    $prstmt->bind_param("ssss",$catId,$searchString,$searchString,$searchString);
+                } else {
+                    $prstmt->bind_param("sss",$searchString,$searchString,$searchString);
+                }
+                try {
+                    $prstmt->execute();
+                    $prstmt->bind_result($title, $postDate, $text, $uName, $catName, $postImg);
+                    if($prstmt->fetch()){
+                        echo "<article>";
+                        echo "<a href=\"./thread.php\"><h2>$title</h2></a>";
+                        echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                        echo "<p>$text</p>";
+                        echo "</article>";
+                        if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                    } else {
+                        echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
+                    }
+                    $prstmt->close();
+                } catch (mysqli_sql_exception $e) {
+                    echo "<p>Error while loading discussion posts. Try again.</p>";
+                }
+                $conn->close();
                 ?>
-                <article>
-                    <a href="./thread.php"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar e arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </article>
-                <img src="../img/cat.jpg">
             </div>
         </section>
     </main>

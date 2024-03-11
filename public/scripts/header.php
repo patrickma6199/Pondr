@@ -21,8 +21,8 @@ $catId = (isset($_GET['catId'])) ? $_GET['catId'] : null;
             if (isset($_GET['catId'])) {
                 echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";                     //if category was selected, send category into get request to discussion.php
             }
+            echo "<input type=\"text\" name=\"search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset($search)) ? $search : "") . "\"/>";
             ?>
-            <input type="text" name="search" placeholder="Search for Users and Threads" />
             <button type="submit" class="form-button">Search</button>
         </form>
     </div>
