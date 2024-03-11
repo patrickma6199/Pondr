@@ -7,7 +7,7 @@
 ?>
 
 <nav id="top-bar">
-    <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+    <a href="./index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
     <div id="top-search-bar">
         <form method="GET" action="discussion.php">
             <input type="text" name="search" placeholder="Search for Users and Threads" />
@@ -20,6 +20,7 @@
                 case 0:
                 case 1:
                     echo "<a href=\"profile.php\"><img src=\"../img/pfp-3.jpg\" id=\"top-search-bar-pfp\"></a>";
+                    echo "<a href=\"./logout.php\" class=\"link-button\">Logout</a>";
                 default:
                     echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
                     echo "<a href=\"register.php\" class=\"link-button\">Sign Up</a>";
