@@ -15,16 +15,7 @@ require_once '../scripts/dbconfig.php';
     <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav id="top-bar">
-        <a href="./discussionLoggedIn.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
-        <div id="top-search-bar">
-            <form method="GET" action="discussionLoggedIn.php">
-                <input type="text" name="search" placeholder="Search for Users and Threads" />
-                <button type="submit" class="form-button">Search</button>
-            </form>
-        </div>
-        <a href="profile.php"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
-    </nav>
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="column-container margin-down">
         <div class="thread-container">
             <article>
