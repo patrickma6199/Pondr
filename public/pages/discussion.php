@@ -1,6 +1,19 @@
 <?php
 session_start();
 require_once '../scripts/dbconfig.php';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+$utype = $_SESSION["utype"];
+$uid = $_SESSION["uid"];
+
+if (isset($_GET["search"])) {               //remove search if searched value is empty
+    if ($_GET["search"] == "") {
+        unset($_GET["search"]);
+    }
+}
+$search = (isset($_GET["search"])) ? $_GET["search"] : null;
+$catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
+
 ?>
 
 <!DOCTYPE html>
@@ -14,82 +27,76 @@ require_once '../scripts/dbconfig.php';
     <title>Pondr</title>  
 </head>
 <body>
-    <nav id="top-bar">
-        <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
-        <div id="top-search-bar">
-            <form method="GET" action="discussion.php">
-                <input type="text" name="search" placeholder="Search for Users and Threads" />
-                <button type="submit" class="form-button">Search</button>
-            </form>
-        </div>
-        <a href="login.php" class="link-button">Login</a>
-        <a href="register.php" class="link-button">Sign Up</a>
-    </nav>
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="center-container margin-down">
         <section class="side-container">
             <h3>Filter by Category: </h3>
             <ul>
-                <li><a href="#">Category 1</a></li>
-                <li><a href="#">Category 2</a></li>
-                <li><a href="#">Category 3</a></li>
-                <li><a href="#">Category 4</a></li>
-                <li><a href="#">Category 5</a></li>
-                <li><a href="#">Category 6</a></li>
-                <li><a href="#">Category 7</a></li>
+                <?php
+                $sql = "SELECT catId, name FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
+                $prstmt = $conn->prepare($sql);
+                try {
+                    $prstmt->execute();
+                    $prstmt->bind_result($catId,$catName);
+                    if ($prstmt->fetch()) {
+                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
+                        while ($prstmt->fetch()) {
+                            echo "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
+                        }
+                    } else {
+                        echo "<p>No Categories have been made yet! make some.</p>";
+                    }
+                    $prstmt->close();
+                } catch(mysqli_sql_exception $e) {
+                    echo "<p>Error occurred: pulling categories.</p>";
+                }
+                ?>
             </ul>
         </section>
 
         <section class="discussion-container">
             <div class="mini-thread">
-                <article>
-                    <a href="./thread.php"><h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2></a>
-                    <i>Posted by: username on <time>January 1, 1970</time></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar e arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </article>
-                <img src="../img/cat.jpg">
+                <?php
+                // query depends on if catId is set and if search string is empty (return all discussion posts)
+                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
+                FROM posts as p JOIN users as u ON p.userId = u.userId 
+                JOIN categories as c ON p.catId = c.catId 
+                WHERE" . (isset($catId) ? "p.catId = ? AND ":"") . "CASE WHEN ? <> '' THEN (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) ELSE TRUE END;";
+                $prstmt = $conn->prepare($sql);
+                $searchString = (isset($search)) ? $search : "";
+                if (isset($catId)) {
+                    $prstmt->bind_param("ssss",$catId,$searchString,$searchString,$searchString,$searchString);
+                } else {
+                    $prstmt->bind_param("sss",$searchString,$searchString,$searchString,$searchString);
+                }
+                try {
+                    $prstmt->execute();
+                    $prstmt->bind_result($postId,$title, $postDate, $text, $uName, $catName, $postImg);
+                    if($prstmt->fetch()){
+                        echo "<article>";
+                        echo "<a href=\"./thread.php?pid=$postId\"><h2>$title</h2></a>";
+                        echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                        echo "<p>$text</p>";
+                        echo "</article>";
+                        if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        while ($prstmt->fetch()) {
+                            echo "<article>";
+                            echo "<a href=\"./thread.php?pid\"><h2>$title</h2></a>";
+                            echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                            echo "<p>$text</p>";
+                            echo "</article>";
+                            if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        }
+                    } else {
+                        echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
+                    }
+                    $prstmt->close();
+                } catch (mysqli_sql_exception $e) {
+                    echo "<p>Error while loading discussion posts. Try again.</p>";
+                }
+                $conn->close();
+                ?>
             </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.php"><h2>Highly excited for the #Deadpool3 teaser</h2></a>
-                    <i>Posted by: JohnDoe1234 on <time>January 1, 1970</time></i>
-                    <p>Marvel, please don't disappoint this time ! </p>
-                </article>
-                <img src="../img/deadpool.jpg">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.php"><h2>Sources tell me you can anticipate the #NHL DOPS to offer up some stern discipline to #LeafsForever Dman Morgan Reilly.</h2></a>
-                    <i>Posted by: JohnDoe1234 on <time>January 1, 1970</time></i>
-                    <p>Reilly should get suspended whatever. But for these last few weeks with blatant predatory head hits to get only phone hearings and then Reilly gets an in person is objectively wrong. It’s obviously because of the market attention and having to send a message </p>
-                </article>
-                <img src="../img/nhl.jpg">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.php"><h2>It's incredible to think that today the world will get to see, on live television, Taylor Swift win her first Super Bowl ring</h2></a>
-                    <i>Posted by: JohnDoe1234 on <time>January 1, 1970</time></i>
-                    <p>An accomplishment never achieved by any other artist. This feat will forever enshrine her as the greatest musician in the history of music.</p>
-                </article>
-                <img src="../img/taylor.jpg">
-            </div>
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.php"><h2>I love eating eggs!</h2></a>
-                    <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
-                    <p>Eggs are so nutritious, and tasty I just want to eat eggs for every meal. </p>
-                </article>
-                <img src="../img/egg-1.jpg">
-            </div>
-           
-            <div class="mini-thread">
-                <article>
-                    <a href="./thread.php"><h2>Have y'all ever noticed how eggs are the perfect shape?</h2></a>
-                    <i>Posted by: EggFella1234 on <time>January 1, 1970</time></i>
-                    <p>Eggs just are the most perfect shape, I love how nice and smooth an egg feels on my hand!! It's just so cute and round.</p>
-                </article>
-                <img src="../img/egg-2.jpg">
-            </div>
-
         </section>
     </main>
 </body>
