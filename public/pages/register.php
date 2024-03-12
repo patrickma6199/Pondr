@@ -20,17 +20,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
 </head>
 
 <body>
-    <nav id="top-bar">
-        <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
-        <div id="top-search-bar">
-            <form method="GET" action="discussion.html">
-                <input type="text" name="search" placeholder="Search for Users and Threads" />
-                <button type="submit" class="form-button">Search</button>
-            </form>
-        </div>
-        <a href="login.php" class="link-button">Login</a>
-        <a href="register.php" class="link-button">Sign Up</a>
-    </nav>
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <div class="center-container">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
