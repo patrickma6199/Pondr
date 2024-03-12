@@ -64,7 +64,7 @@ CREATE TABLE posts (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(1, 'Post Title 1', 'Post Text 1', 'www.link1.com', 1, 0, '20120618 10:34:09 AM');
+INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(1, 'Post Title 1', 'Post Text 1', 'www.link1.com', 1, 0, '2012-06-18 10:34:09');
 -- INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(2, 'Post Title 2', 'Post Text 2', 'www.link2.com', 2, 0, GETDATE());
 -- INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(3, 'Post Title 3', 'Post Text 3', 'www.link3.com', 3, 0, GETDATE());
 -- INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(4, 'Post Title 4', 'Post Text 4', 'www.link4.com', 4, 0, GETDATE());
