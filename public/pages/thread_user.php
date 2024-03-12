@@ -1,26 +1,26 @@
-<?php
-session_start();
-$pid = $_SESSION['pid'];    //TODO: will not be session variable, but will be from the get method
-$uid = $_SESSION['uid'] ;
+ <?php
+// session_start();
+// $pid = $_SESSION['pid'];    //TODO: will not be session variable, but will be from the get method
+// $uid = $_SESSION['uid'];
 
 
 
-if(!isset($uid)){
+// if(!isset($uid)){
 
 
-if($_SERVER["REQUEST_METHOD"] == "GET"){ // TODO: method will always be get need to check by some other means
-    // pid
-    // uid is set, send to javascript which can send it to likes.php
-    $data_arr[] = array("uid" => $uid,
-                        "pid => $pid");
+//     if($_SERVER["REQUEST_METHOD"] == "GET"){ // TODO: method will always be get need to check by some other means
+//         // pid
+//         // uid is set, send to javascript which can send it to likes.php
+//         $data_arr[] = array("uid" => $uid,"pid => $pid");
 
-    echo json_encode($data_arr);
-    
-}
-}
-else {
-    header('Location: ../pages/register.php')
-}
+//         echo json_encode($data_arr);
+        
+//     }
+//     else {
+//         header('Location: ../pages/register.php');
+//     }
+// }
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,12 +31,13 @@ else {
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/threads.css">
     <link rel="icon" href="../img/logo.png">
-    <script src="../scripts/like_button.js"></script>
+    <script src="../js/like_button.js"></script>
+    <script src = "../js/jquery-3.1.1.min.js"></script>
     <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
     
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php';  ?>//for dynamic header
     <main class="column-container margin-down">
         <div class="thread-container">
             <article>

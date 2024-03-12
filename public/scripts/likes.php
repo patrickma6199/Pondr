@@ -24,7 +24,8 @@ if (isset($_POST['postId'])) {
 
     }
     catch(mysqli_sql_exception $e){
-        echo $e
+        echo("FAILED LIKE");
+        echo $e;
     }
     
     
@@ -33,4 +34,3 @@ if (isset($_POST['postId'])) {
 $conn->close();
 ?>
 
-<!-- modify html : <button class="like-button" data-postid="1">Like</button> <span id="like-count-1">0</span>-->
