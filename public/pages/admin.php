@@ -1,6 +1,5 @@
 <?php
 session_start();
-require_once '../scripts/dbconfig.php';
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +15,6 @@ require_once '../scripts/dbconfig.php';
 </head>
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
-
     <div class="admin-container">
         <section class="user-management">
             <h2>User Management</h2>

@@ -1,7 +1,26 @@
 <?php
 session_start();
-require_once '../scripts/dbconfig.php';
-?>
+$pid = $_SESSION['pid'];    //TODO: will not be session variable, but will be from the get method
+$uid = $_SESSION['uid'] ;
+
+
+
+if(!isset($uid)){
+
+
+if($_SERVER["REQUEST_METHOD"] == "GET"){ // TODO: method will always be get need to check by some other means
+    // pid
+    // uid is set, send to javascript which can send it to likes.php
+    $data_arr[] = array("uid" => $uid,
+                        "pid => $pid");
+
+    echo json_encode($data_arr);
+    
+}
+}
+else {
+    header('Location: ../pages/register.php')
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +31,9 @@ require_once '../scripts/dbconfig.php';
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/threads.css">
     <link rel="icon" href="../img/logo.png">
+    <script src="../scripts/like_button.js"></script>
     <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
@@ -51,7 +72,7 @@ require_once '../scripts/dbconfig.php';
                 </p>
             </article>
             <div id="icon-buttons">
-                <a href="" class="link-button"><i class="fa-solid fa-heart"></i> Like</a>
+                <a href="" class="link-button" id="like-button" onclick="increaseLikeCount(event);"><i class="fa-regular fa-heart"></i> Like |  <span id="like-count"> 0 </span></a>
                 <a href="" class="link-button"><i class="fa-solid fa-comment"></i> Comment</a>
                 
             </div>
