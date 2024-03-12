@@ -16,16 +16,7 @@ require_once '../scripts/dbconfig.php';
     <script src="../js/char_count.js"></script>
 </head>
 <body>
-    <nav id="top-bar">
-        <a href="./discussion.html"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
-        <div id="top-search-bar">
-            <form method="GET" action="discussionLoggedIn.html">
-                <input type="text" name="search" placeholder="Search for Users and Threads" />
-                <button type="submit" class="form-button">Search</button>
-            </form>
-        </div>
-        <a href="profile.html"><img src="../img/pfp-3.jpg" id="top-search-bar-pfp"> </a>
-    </nav>
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="center-container">
         <section class="form-container">
             <form action="POST">
