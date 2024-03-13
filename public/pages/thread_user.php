@@ -1,26 +1,21 @@
- <?php
-// session_start();
-// $pid = $_SESSION['pid'];    //TODO: will not be session variable, but will be from the get method
-// $uid = $_SESSION['uid'];
+<!-- <?php
+    // session_start();
+    // $utype = $_SESSION['utype'];
+    // $uid = $_SESSION['uid'];
 
-
-
-// if(!isset($uid)){
-
-
-//     if($_SERVER["REQUEST_METHOD"] == "GET"){ // TODO: method will always be get need to check by some other means
-//         // pid
-//         // uid is set, send to javascript which can send it to likes.php
-//         $data_arr[] = array("uid" => $uid,"pid => $pid");
-
-//         echo json_encode($data_arr);
-        
-//     }
-//     else {
-//         header('Location: ../pages/register.php');
-//     }
-// }
-?> 
+    // if (isset($utype)) {
+    //     switch ($utype) {
+    //         case 0:
+    //             exit(header('Location: pages/thread_user.php'));
+    //         case 1:
+    //             exit(header('Location: pages/admin.php'));
+    //         default:
+    //             exit(header('Location: pages/landing.php'));
+    //     }
+    // } else {
+    //     // exit(header('Location: pages/landing.php'));
+    // }
+// ?> -->
 
 <!DOCTYPE html>
 <html lang="en">
