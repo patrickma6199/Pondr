@@ -33,6 +33,7 @@
     <link rel="icon" href="../img/logo.png">
     <script src="../js/like_button.js"></script>
     <script src = "../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/comment_count.js"></script>
     <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
     
 </head>
@@ -74,7 +75,7 @@
             </article>
             <div id="icon-buttons">
                 <a href="" class="link-button" id="like-button" onclick="increaseLikeCount(event);"><i class="fa-regular fa-heart"></i> Like |  <span id="like-count"> 0 </span></a>
-                <a href="" class="link-button"><i class="fa-solid fa-comment"></i> Comment</a>
+                <a href="" class="link-button"><i class="fa-regular fa-comment"></i> Comment | <span id="comment-count"> 0 </span> </a>
                 
             </div>
         </div>

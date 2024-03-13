@@ -84,6 +84,10 @@ CREATE TABLE comments (
     FOREIGN KEY(parentComId) REFERENCES comments(comId)
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
+INSERT INTO comments (userId, postId, parentComId, comDate, text) VALUES (1, 2, NULL, NOW(), 'This is a sample comment to test the comment count.');
+INSERT INTO comments (userId, postId, parentComId, comDate, text) VALUES (2, 2, NULL, NOW(), 'This is a sample comment to test the comment count123.');
+INSERT INTO comments (userId, postId, parentComId, comDate, text) VALUES (3, 2, NULL, NOW(), 'This is a sample comment to test the comment countwowowowow.');
+
 
 CREATE TABLE likes (
     likesId INT AUTO_INCREMENT,
