@@ -23,19 +23,20 @@ function increaseLikeCount(e) {
     });
 }
 
-// $(document).ready(function(){
-//     $.ajax({
-//         url: 'thread_user.php',
-//         type: 'get',
-//         dataType: 'JSON',
-//         success: function(data){
-//         var result = JSON.parse(data);
-//         alert(JSON.stringify(data));
-//         if(result.success){
+$(document).ready(function(){
+    
+    $.ajax({
+        url: 'thread_user.php',
+        type: 'get',
+        dataType: 'JSON',
+        success: function(data){
+        var result = JSON.parse(data);
+        alert(JSON.stringify(data));
+        if(result.success){
             
-//         }
+        }
           
 
-//         }
-//     });
-// });
+        }
+    });
+});
