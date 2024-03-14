@@ -2,8 +2,23 @@
     session_start();
     $utype = $_SESSION['utype'];
     $uid = $_SESSION['uid'];
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-  
+    if(isset($_GET['postId'])){
+        $postId = $_GET['postId'];
+
+        try{
+           echo $postId;
+        }
+        
+        catch(mysqli_sql_exception $e){
+            echo("FAILED POSTID");
+            echo $e;
+        }
+        $stmt->close();
+        
+    }
+   
 ?>
 
 <!DOCTYPE html>

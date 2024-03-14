@@ -1,9 +1,12 @@
 function increaseLikeCount(e) {
 
-    e.preventDefault(); // Prevent the default anchor action
-    console.log("RUNNING LIKE FUNCTION WIT", e)
-    // Assuming you have an identifier for the content. Here, we use a placeholder.
-    var postId = 2;
+    e.preventDefault(); // Prevent the default action
+    
+    const pid_param = new URLSearchParams(window.location.search);
+    pid_param.has('postId') ;
+    var postId = 
+    // pid_param.get('postId') ;    
+
 
     $.ajax({
         type: 'POST',
@@ -12,14 +15,14 @@ function increaseLikeCount(e) {
         success: function(data) {
             var result = JSON.parse(data);
             console.log("result :",result);
-            // if(result.success) {
-                // Update the like count display
+            
                 $('#like-count').text(result);
-            // }
+         
         },
         error: function(xhr, status, error) {
             console.error('Error:', error);
         }
     });
 }
+
 
