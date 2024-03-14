@@ -74,14 +74,14 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                     $prstmt->bind_result($postId,$title, $postDate, $text, $uName, $catName, $postImg);
                     if($prstmt->fetch()){
                         echo "<article>";
-                        echo "<a href=\"./thread.php?pid=$postId\"><h2>$title</h2></a>";
+                        echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
                         echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                         while ($prstmt->fetch()) {
                             echo "<article>";
-                            echo "<a href=\"./thread.php?pid\"><h2>$title</h2></a>";
+                            echo "<a href=\"./thread.php?postId\"><h2>$title</h2></a>";
                             echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                             echo "<p>$text</p>";
                             echo "</article>";
