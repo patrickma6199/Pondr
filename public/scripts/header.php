@@ -32,7 +32,8 @@ $catId = (isset($_GET['catId'])) ? $_GET['catId'] : null;
                 case 0:
                 case 1:
                     echo "<a href=\"profile.php\"><img src=\"../img/pfp-3.jpg\" id=\"top-search-bar-pfp\"></a>";
-                    echo "<a href=\"./logout.php\" class=\"link-button\">Logout</a>";
+                    echo "<a href=\"../scripts/logout.php\" class=\"link-button\">Logout</a>";
+                    break;
                 default:
                     echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
                     echo "<a href=\"register.php\" class=\"link-button\">Sign Up</a>";
