@@ -55,37 +55,40 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
         </section>
 
         <section class="discussion-container">
-            <div class="mini-thread">
                 <?php
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 JOIN categories as c ON p.catId = c.catId 
-                WHERE" . (isset($catId) ? "p.catId = ? AND ":"") . "CASE WHEN ? <> '' THEN (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) ELSE TRUE END;";
+                WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END;";
                 $prstmt = $conn->prepare($sql);
                 $searchString = (isset($search)) ? $search : "";
                 if (isset($catId)) {
-                    $prstmt->bind_param("ssss",$catId,$searchString,$searchString,$searchString,$searchString);
+                    $prstmt->bind_param("sssss",$catId,$searchString,$searchString,$searchString,$searchString);
                 } else {
-                    $prstmt->bind_param("sss",$searchString,$searchString,$searchString,$searchString);
+                    $prstmt->bind_param("ssss",$searchString,$searchString,$searchString,$searchString);
                 }
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($postId,$title, $postDate, $text, $uName, $catName, $postImg);
+                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg);
                     if($prstmt->fetch()){
+                        echo "<div class=\"mini-thread\">";
                         echo "<article>";
                         echo "<a href=\"./thread.php?pid=$postId\"><h2>$title</h2></a>";
                         echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        echo "</div>";
                         while ($prstmt->fetch()) {
+                            echo "<div class=\"mini-thread\">";
                             echo "<article>";
                             echo "<a href=\"./thread.php?pid\"><h2>$title</h2></a>";
                             echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                             echo "<p>$text</p>";
                             echo "</article>";
                             if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                            echo "</div>";
                         }
                     } else {
                         echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
@@ -96,7 +99,6 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                 }
                 $conn->close();
                 ?>
-            </div>
         </section>
     </main>
 </body>
