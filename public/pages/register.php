@@ -17,7 +17,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
-    <script src = "../js/jquery-3.1.1.min.js"></script>
+    <script src = "../js/jquery-3.1.1.min.js"> </script>
     <script src = "../js/register_verification.js"></script>
 </head>
 
