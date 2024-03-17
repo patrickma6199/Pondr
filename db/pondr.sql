@@ -44,7 +44,7 @@ INSERT INTO categories(userId,Name) VALUES(1,'Category 1');
 INSERT INTO categories(userId,Name) VALUES(2,'Category 2');
 INSERT INTO categories(userId,Name) VALUES(3,'Category 3');
 INSERT INTO categories(userId,Name) VALUES(4,'Category 4');
--- 5 deleted
+INSERT INTO categories(userId,Name) VALUES(5,'Category 5');
 
 CREATE TABLE posts (
     postId INT AUTO_INCREMENT,
@@ -64,11 +64,11 @@ CREATE TABLE posts (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(1, 'Post Title 1', 'Post Text 1', 'www.link1.com', 1, 0, '2012-06-18 10:34:09');
--- INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(2, 'Post Title 2', 'Post Text 2', 'www.link2.com', 2, 0, GETDATE());
--- INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(3, 'Post Title 3', 'Post Text 3', 'www.link3.com', 3, 0, GETDATE());
--- INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(4, 'Post Title 4', 'Post Text 4', 'www.link4.com', 4, 0, GETDATE());
--- INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(5, 'Post Title 5', 'Post Text 5', 'www.link5.com', 5, 0, GETDATE());
+INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(1, 'Post Title 1', 'Post Text 1', 'www.link1.com', 1, 0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(2, 'Post Title 2', 'Post Text 2', 'www.link2.com', 2, 0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(3, 'Post Title 3', 'Post Text 3', 'www.link3.com', 3, 0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(4, 'Post Title 4', 'Post Text 4', 'www.link4.com', 4, 0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(5, 'Post Title 5', 'Post Text 5', 'www.link5.com', 5, 0, NOW());
 
 
 CREATE TABLE comments (
