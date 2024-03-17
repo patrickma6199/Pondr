@@ -61,7 +61,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                     <input type="password" placeholder="Re-enter your password" name="re-password" required>
                 </div>
                 <div class="form-item">
-                    <label for="pfp">Upload your profile picture: </label>
+                    <label for="pfp">Upload your profile picture (will be made square): </label>
                     <!-- Max file size for profile photo is 10MB -->
                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
                     <input type="file"  name="pfp" accept="image/*">

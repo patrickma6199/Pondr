@@ -1,10 +1,10 @@
 <?php
-    session_start();
-    require_once 'dbconfig.php';
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+session_start();
+require_once 'dbconfig.php';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    $utype = $_SESSION['utype'];
-    $uid = $_SESSION['uid'];
+$utype = (isset($_SESSION['utype'])) ? $_SESSION['utype'] : null;
+$uid = (isset($_SESSION['uid'])) ? $_SESSION['uid'] : null;
 
 if (!isset($utype)) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -25,7 +25,7 @@ if (!isset($utype)) {
                 $filenameArray = explode(".", $_FILES['pfp']['name']);
                 $extension = end($filenameArray);
                 if (in_array($_FILES['pfp']['type'], $validMime) && in_array($extension,$validExt)) {
-                    if ($_FILES['pfp']['size'] <= 10485760) {
+                    if ($_FILES['pfp']['size'] <= 10485760) { // if they bypass the hidden form item
                         $pfp = "../img/pfps/$username.".$extension;
                     } else {
                         $_SESSION['registerMessage'] = "<p>Your profile photo must be a maximum of 10MB in size.</p>";
@@ -36,7 +36,11 @@ if (!isset($utype)) {
                     exit(header("Location: ../pages/register.php"));
                 }
             } else {
-                $_SESSION['registerMessage'] = "<p>An error occured while trying to retrieve your profile photo. Please try again.";
+                if ($_FILES['pfp']['error'] == UPLOAD_ERR_FORM_SIZE) {
+                    $_SESSION['registerMessage'] = "<p>Your profile photo must be a maximum of 10MB in size.</p>";
+                    exit(header("Location: ../pages/register.php"));
+                }
+                $_SESSION['registerMessage'] = "<p>An error occured while trying to retrieve your profile photo. Please try again.</p>";
                 exit(header("Location: ../pages/register.php"));
             }
         } else {
@@ -94,7 +98,25 @@ if (!isset($utype)) {
         $conn->close();
 
         // resizing and saving image (getting to this portion of the code means that the pfp was of valid size and type)
-        move_uploaded_file($_FILES['pfp']['tmp_name'],$pfp);
+        $original = $_FILES['pfp']['tmp_name'];
+        $oSize = getimagesize($original);
+        $oWidth = $oSize[0];
+        $oHeight = $oSize[1];
+        $resizeDim = 960; //to make it into a square (960pxx960px)
+
+        if ($extension == "jpeg" || $extension == "jpg") {
+            $oImage = imagecreatefromjpeg($original);
+            $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+            imagecopyresampled($rImage,$oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth,$oHeight);
+            imagejpeg($rImage, $pfp);
+        } else { // must be a png if not jpg
+            $oImage = imagecreatefrompng($original);
+            $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+            imagealphablending($rImage, false);
+            imagesavealpha($rImage, true);
+            imagecopyresampled($rImage,$oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth,$oHeight);
+            imagepng($rImage,$pfp);
+        }
 
         exit(header('Location: ../pages/register.php'));
     }
