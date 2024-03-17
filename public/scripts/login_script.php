@@ -24,9 +24,6 @@
                     $_SESSION['utype'] = $utype;
                     $_SESSION['uid'] = $uid;
 
-                    $prstmt->close();
-                    $conn->close();
-
                     //redirect to discussions router
                     exit(header('Location: ../index.php'));
                 } else {
