@@ -36,7 +36,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <div class="center-container">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
-            <form method="POST" action="../scripts/register_script.php" enctype="multipart/form-data" id="regform">
+            <form id="regform" method="POST" action="../scripts/register_script.php" enctype="multipart/form-data" >
                 <legend>Register</legend>
                 <?php
                 if (isset($_SESSION['registerMessage'])) {
