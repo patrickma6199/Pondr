@@ -43,7 +43,6 @@ $uid = (isset($_SESSION["uid"]))? $_SESSION["uid"] : null;
             $pfpPath = "../img/pfp.png";    // if error occurs, use default image
         } finally {
             $prstmt->close();
-            $conn->close();
         }
     }
 
