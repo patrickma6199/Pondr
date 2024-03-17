@@ -3,8 +3,8 @@ session_start();
 require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$utype = $_SESSION["utype"];
-$uid = $_SESSION["uid"];
+$utype = (isset($_SESSION["utype"]))? $_SESSION["utype"] : null;
+$uid = (isset($_SESSION["uid"]))? $_SESSION["uid"] : null;
 
 if (isset($_GET["search"])) {               //remove search if searched value is empty
     if ($_GET["search"] == "") {
@@ -38,9 +38,9 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                     $prstmt->execute();
                     $prstmt->bind_result($catListId,$catName);
                     if ($prstmt->fetch()) {
-                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
+                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
                         while ($prstmt->fetch()) {
-                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
+                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
                         }
                         echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
                     } else {
