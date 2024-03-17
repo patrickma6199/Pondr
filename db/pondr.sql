@@ -15,7 +15,7 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     pass VARCHAR(255) NOT NULL,
     bio VARCHAR(1000) NOT NULL, -- will be "No Bio Made" by default
-    pfp BLOB,
+    pfp VARCHAR(255),
     recoveryKey VARCHAR(32),
     PRIMARY KEY(userId)
 ) ENGINE = InnoDB;
@@ -52,8 +52,7 @@ CREATE TABLE posts (
     postDate DATETIME NOT NULL, -- use GETDATE() when inserting new posts
     title VARCHAR(255) NOT NULL,
     text VARCHAR(3000) NOT NULL, -- 3000 character cap on discussion text
-    img BLOB,
-
+    img VARCHAR(255),
     link VARCHAR(255),
     catId INT,
     likes INT NOT NULL DEFAULT(0),
