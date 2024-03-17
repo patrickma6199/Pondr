@@ -39,6 +39,12 @@
     <?php require_once '../scripts/header.php';  ?> 
     <main class="column-container margin-down">
         <div class="thread-container">
+            <?php 
+            $sql = "SELECT postId, userId, postDate, title,text,img FROM posts WHERE postId = ?";
+
+            
+
+            ?>
             <article>
                 <img src="../img/cat.jpg" class="thread-img">
                 <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
