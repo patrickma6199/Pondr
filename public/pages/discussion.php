@@ -29,6 +29,12 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="center-container margin-down">
         <section class="side-container">
+            <?php
+            // if logged in, add button for new posts
+            if (isset ($uid)) {
+                echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
+            }
+            ?>
             <h3>Filter by Category: </h3>
             <ul>
                 <?php

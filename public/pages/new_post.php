@@ -11,7 +11,7 @@ require_once '../scripts/dbconfig.php';
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery-3.1.1.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery-3.1.1.min.js"> </script>
     <script src="../js/jquery-3.1.1.min.js"></script>
     <script src="../js/char_count.js"></script>
 </head>
@@ -19,7 +19,7 @@ require_once '../scripts/dbconfig.php';
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="center-container">
         <section class="form-container">
-            <form action="POST">
+            <form action="../scripts/new_post_script.php" method="POST">
                 <legend>New Post</legend>
                 <div class="form-item">
                     <label for="post_title">Post Title</label>
