@@ -13,7 +13,6 @@ if (isset($_GET["search"])) {               //remove search if searched value is
 }
 $search = (isset($_GET["search"])) ? $_GET["search"] : null;
 $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
-
 ?>
 
 <!DOCTYPE html>
@@ -37,12 +36,13 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                 $prstmt = $conn->prepare($sql);
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($catId,$catName);
+                    $prstmt->bind_result($catListId,$catName);
                     if ($prstmt->fetch()) {
-                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
+                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
                         while ($prstmt->fetch()) {
-                            echo "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
+                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catId\">$catName</a></li>";
                         }
+                        echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
                     } else {
                         echo "<p>No Categories have been made yet! make some.</p>";
                     }
