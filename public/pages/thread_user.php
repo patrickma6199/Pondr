@@ -13,6 +13,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 <!DOCTYPE html>
 <html lang="en">
 
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,6 +71,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
             $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL";
             $prstmt = $conn->prepare($sql1);
+
             $prstmt->bind_param("i", $postId);
             $prstmt->execute();
             $prstmt->store_result();
@@ -122,6 +124,8 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 
             ?>
+
+
 
             </div>
         </main>
