@@ -9,9 +9,9 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     $dbPass = ''; 
     $dbName = 'pondr';
 } else {
-    $dbHost = 'school_server_host';
-    $dbUser = 'school_db_user';
-    $dbPass = 'school_db_password';
+    $dbHost = 'cosc360.ok.ubc.ca';
+    $dbUser = '68504364';
+    $dbPass = '68504364';
     $dbName = 'pondr'; 
 }
 
