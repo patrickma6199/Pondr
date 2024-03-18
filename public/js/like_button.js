@@ -1,11 +1,23 @@
+$(document).ready(function() {
+    
+    getLikeCount();
+
+    
+    $('#like-button').click(function(e) {
+        increaseLikeCount(e);
+        
+    });
+   
+    
+});
+
 function increaseLikeCount(e) {
 
     e.preventDefault(); // Prevent the default action
     
+    
     const pid_param = new URLSearchParams(window.location.search);
-    pid_param.has('postId') ;
-    var postId = 
-    // pid_param.get('postId') ;    
+    var postId = pid_param.get('postId');  
 
 
     $.ajax({
@@ -13,10 +25,12 @@ function increaseLikeCount(e) {
         url: '../scripts/likes.php',
         data: { postId: postId },
         success: function(data) {
-            var result = JSON.parse(data);
-            console.log("result :",result);
+            console.log("postId",postId);
+           
             
-                $('#like-count').text(result);
+            console.log("result :",data);
+            
+                $('#like-count').text(data.likes);
          
         },
         error: function(xhr, status, error) {
@@ -25,4 +39,30 @@ function increaseLikeCount(e) {
     });
 }
 
+async function getLikeCount(){
+    const pid_param = new URLSearchParams(window.location.search);
+    var postId = pid_param.get('postId');   
 
+    let serializedData = `postId=${postId}&action=fetch`;
+
+    $.ajax({
+        type: 'POST',
+        url: '../scripts/likes.php',
+        data: serializedData,
+        success: function(data) {
+            
+            
+            console.log("result :",data);
+            
+            
+                $('#like-count').text(data.likes);
+         
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            console.log("status:",status)
+        }
+    });
+
+
+}
