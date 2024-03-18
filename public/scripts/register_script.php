@@ -10,11 +10,16 @@ if (!isset($utype)) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //grab form information (required fields so will already be set)
-        $firstName = $_POST['firstName'];
-        $lastName = $_POST['lastName'];
-        $email = $_POST['email'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        if (isset ($_POST['firstName']) && isset ($_POST['lastName']) && isset ($_POST['email']) && isset ($_POST['username']) && isset ($_POST['password'])) {
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $email = $_POST['email'];
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+        } else {
+            $_SESSION['registerMessage'] = "<p>Missing required information to complete registration process.</p>";
+            exit (header('Location: ../pages/register.php'));
+        }
 
         //resizes image to standard size then adds it to the local directory and stores path to be put into database
         //if no pfp is provided, use the stock profile photo
@@ -40,7 +45,7 @@ if (!isset($utype)) {
                     $_SESSION['registerMessage'] = "<p>Your profile photo must be a maximum of 10MB in size.</p>";
                     exit(header("Location: ../pages/register.php"));
                 }
-                $_SESSION['registerMessage'] = "<p>An error occured while trying to retrieve your profile photo. Please try again.</p>";
+                $_SESSION['registerMessage'] = "<p>An error occured while trying to retrieve the profile photo from your submission. Please try again.</p>";
                 exit(header("Location: ../pages/register.php"));
             }
         } else {
@@ -93,6 +98,9 @@ if (!isset($utype)) {
             } else {
                 $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
             }
+            $prstmt->close();
+            $conn->close();
+            exit(header('Location: ../pages/register.php'));
         }
         $prstmt->close();
         $conn->close();
@@ -122,7 +130,7 @@ if (!isset($utype)) {
     }
 } else {
     //reroutes user to discussion page router if they are logged in already
-    header('Location: ../index.php');
+    exit(header('Location: ../index.php'));
 }
 
 ?>
