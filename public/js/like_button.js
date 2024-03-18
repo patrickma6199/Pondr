@@ -1,21 +1,37 @@
+$(document).ready(function() {
+    
+    getLikeCount();
+
+    
+    $('#like-button').click(function(e) {
+        increaseLikeCount(e);
+        
+    });
+   
+    
+});
+
 function increaseLikeCount(e) {
 
-    e.preventDefault(); // Prevent the default anchor action
-    console.log("RUNNING LIKE FUNCTION WIT", e)
-    // Assuming you have an identifier for the content. Here, we use a placeholder.
-    var postId = 2;
+    e.preventDefault(); // Prevent the default action
+    
+    
+    const pid_param = new URLSearchParams(window.location.search);
+    var postId = pid_param.get('postId');  
+
 
     $.ajax({
         type: 'POST',
         url: '../scripts/likes.php',
         data: { postId: postId },
         success: function(data) {
-            var result = JSON.parse(data);
-            console.log("result :",result);
-            // if(result.success) {
-                // Update the like count display
-                $('#like-count').text(result);
-            // }
+            console.log("postId",postId);
+           
+            
+            console.log("result :",data);
+            
+                $('#like-count').text(data.likes);
+         
         },
         error: function(xhr, status, error) {
             console.error('Error:', error);
@@ -23,19 +39,30 @@ function increaseLikeCount(e) {
     });
 }
 
-// $(document).ready(function(){
-//     $.ajax({
-//         url: 'thread_user.php',
-//         type: 'get',
-//         dataType: 'JSON',
-//         success: function(data){
-//         var result = JSON.parse(data);
-//         alert(JSON.stringify(data));
-//         if(result.success){
-            
-//         }
-          
+async function getLikeCount(){
+    const pid_param = new URLSearchParams(window.location.search);
+    var postId = pid_param.get('postId');   
 
-//         }
-//     });
-// });
+    let serializedData = `postId=${postId}&action=fetch`;
+
+    $.ajax({
+        type: 'POST',
+        url: '../scripts/likes.php',
+        data: serializedData,
+        success: function(data) {
+            
+            
+            console.log("result :",data);
+            
+            
+                $('#like-count').text(data.likes);
+         
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            console.log("status:",status)
+        }
+    });
+
+
+}
