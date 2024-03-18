@@ -1,26 +1,13 @@
- <?php
-// session_start();
-// $pid = $_SESSION['pid'];    //TODO: will not be session variable, but will be from the get method
-// $uid = $_SESSION['uid'];
+<?php
+    session_start();
+    require_once '../scripts/dbconfig.php';
+    $utype = $_SESSION['utype'];
+    $uid = $_SESSION['uid'];
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+   
 
-
-// if(!isset($uid)){
-
-
-//     if($_SERVER["REQUEST_METHOD"] == "GET"){ // TODO: method will always be get need to check by some other means
-//         // pid
-//         // uid is set, send to javascript which can send it to likes.php
-//         $data_arr[] = array("uid" => $uid,"pid => $pid");
-
-//         echo json_encode($data_arr);
-        
-//     }
-//     else {
-//         header('Location: ../pages/register.php');
-//     }
-// }
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,49 +18,44 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/threads.css">
     <link rel="icon" href="../img/logo.png">
+    <script src="../js/jquery-3.1.1.min.js"></script>
     <script src="../js/like_button.js"></script>
-    <script src = "../js/jquery-3.1.1.min.js"></script>
+
     <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
     
 </head>
 <body>
-    <?php require_once '../scripts/header.php';  ?>//for dynamic header
+    <?php require_once '../scripts/header.php';  ?> 
     <main class="column-container margin-down">
         <div class="thread-container">
-            <article>
-                <img src="../img/cat.jpg" class="thread-img">
-                <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
-                <i>Posted by: <a href="./secondaryProfile.php">username</a> on <time>January 1, 1970</time> under Sports</i>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. 
-                    Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar
-                    e arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus 
-                    est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis
-                    tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum 
-                    congue massa. Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa.
-                    Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet.
-                    Phasellus est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornar
-                    e arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet.
-                    Phasellus
-                    est tellus, sagittis quis tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum
-                    dolor
-                    sit amet, consectetur adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis
-                    quis
-                    tortor a, interdum congue massa. Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum
-                    congue massa. Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Integer vitae nunc sed nisl finibus imperdiet. Phasellus est tellus, sagittis quis tortor a, interdum congue massa.
-                    Praesent vitae varius nunc, sed ornare arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-            </article>
+            <?php 
+             if(isset($_GET['postId'])){
+                $postId = $_GET['postId'];
+             }
+           
+           
+            $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name FROM posts p JOIN users u ON p.userId = u.userId JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
+        
+            $prstmt = $conn->prepare($sql);
+            $prstmt->bind_param("i", $postId);
+            $prstmt->execute();
+            $prstmt->bind_result($postId,$userId,$postDate,$postTitle,$postText,$postImg,$userName,$category);
+            if($prstmt->fetch()){
+                echo "<article>";
+                echo "<img src=\"$postImg\" class =\"thread-img\" >";
+                echo "<h1> $postTitle </h1>";
+                echo "<i>Posted by: <a href=\"./secondaryProfile.php\">$userName</a> on <time>$postDate</time> $category</i>";
+                echo "<p> $postText </p>";
+                echo " </article>";
+                
+            }else{
+                echo "Post Does Not Exist";
+            }
+
+            ?>
+            
             <div id="icon-buttons">
-                <a href="" class="link-button" id="like-button" onclick="increaseLikeCount(event);"><i class="fa-regular fa-heart"></i> Like |  <span id="like-count"> 0 </span></a>
+                <a href="" class="link-button" id="like-button" ><i class="fa-regular fa-heart"></i> Like |  <span id="like-count"> 0 </span></a>
                 <a href="" class="link-button"><i class="fa-solid fa-comment"></i> Comment</a>
                 
             </div>
