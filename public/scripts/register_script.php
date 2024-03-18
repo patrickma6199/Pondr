@@ -44,7 +44,7 @@ if (!isset($utype)) {
                 exit(header("Location: ../pages/register.php"));
             }
         } else {
-            $pfp = "../img/pfp.png";
+            $pfp = "../img/pfps/pfp.png";
         }
 
         //Generates recovery key
