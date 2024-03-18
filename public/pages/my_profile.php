@@ -1,6 +1,11 @@
 <?php
 session_start();
 ini_set('display_errors', 1);
+require_once '../scripts/dbconfig.php';
+$utype = $_SESSION['utype'];
+$uid = $_SESSION['uid'];
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+require_once '../scripts/header.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -15,10 +20,36 @@ ini_set('display_errors', 1);
     <link rel="icon" href="../img/logo.png">
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    
     <main class="column-container margin-down">
         <section class="profile-container">
-            <div class="profile-img">
+            <?php  
+
+                $sql = "SELECT fName,lName,uName,bio,pfp FROM users WHERE userId = ?";
+                $prstmt = $conn->prepare($sql);
+                $prstmt->bind_param("i", $uid);
+                $prstmt->execute();
+                $prstmt->bind_result($fName,$lName,$uName,$bio,$pfp);
+                if ($prstmt->fetch()) {
+                    echo" <div class=\"profile-img\">";
+                    echo"<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
+                    echo "</div>";
+                    echo"<div class=\"profile-text\">";
+                    echo "<p><b>Name:</b> $fName $lName </p> ";
+                    echo "<p><b>Username:</b> $uName </p>";
+                    echo "<p> <b>Bio:</b> $bio </p>";
+                    echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
+                    echo "<br>";
+                    echo "<a href=\"my_profile_edit.php\" class=\"link-button\">Edit</a>";
+                    echo "</div>";
+
+
+                }
+    
+    
+    
+    ?>
+            <!-- <div class="profile-img">
                 <a href="../img/pfp-3.jpg"><img src="../img/pfp-3.jpg" alt="profile picture"></a>
             </div>
             <div class="profile-text">
@@ -29,10 +60,14 @@ ini_set('display_errors', 1);
 
                 <br>
                 <a href="profileEdit.php" class="link-button">Edit</a>
-            </div>
+            </div> -->
         </section>
         <section class="discussion-container">
             <h2>Your Threads</h2>
+
+            <?php
+
+            ?>
             <div class="mini-thread">
                 <article>
                     <a href="./thread.php"><h2>Highly excited for the #Deadpool3 teaser</h2></a>
