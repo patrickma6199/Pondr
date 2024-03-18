@@ -56,18 +56,20 @@ CREATE TABLE posts (
     link VARCHAR(255),
     catId INT,
     likes INT NOT NULL DEFAULT(0),
+    comment INT NOT NULL DEFAULT(0),
     PRIMARY KEY(postId,userId),
     FOREIGN KEY(userId) REFERENCES users(userId)
         ON DELETE CASCADE,
     FOREIGN KEY(catId) REFERENCES categories(catId)
         ON DELETE CASCADE
+    
 ) ENGINE = InnoDB;
 
-INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(1, 'Post Title 1', 'Post Text 1', 'www.link1.com', 1, 0, NOW());
-INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(2, 'Post Title 2', 'Post Text 2', 'www.link2.com', 2, 0, NOW());
-INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(3, 'Post Title 3', 'Post Text 3', 'www.link3.com', 3, 0, NOW());
-INSERT INTO posts(userId, title, text, link, catId, likes, postDate) VALUES(4, 'Post Title 4', 'Post Text 4', 'www.link4.com', 4, 0, NOW());
-INSERT INTO posts(userId, title, text, link, catId, likes,postDate) VALUES(5, 'Post Title 5', 'Post Text 5', 'www.link5.com', 5, 0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,comment, postDate) VALUES(1, 'Post Title 1', 'Post Text 1', 'www.link1.com', 1, 0, 1, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,comment, postDate) VALUES(2, 'Post Title 2', 'Post Text 2', 'www.link2.com', 2, 0,0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,comment, postDate) VALUES(3, 'Post Title 3', 'Post Text 3', 'www.link3.com', 3, 0,0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes, comment, postDate) VALUES(4, 'Post Title 4', 'Post Text 4', 'www.link4.com', 4, 0,0, NOW());
+INSERT INTO posts(userId, title, text, link, catId, likes,comment, postDate) VALUES(5, 'Post Title 5', 'Post Text 5', 'www.link5.com', 5, 0,0, NOW());
 
 
 CREATE TABLE comments (
