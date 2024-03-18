@@ -12,7 +12,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
     $dbHost = 'cosc360.ok.ubc.ca';
     $dbUser = '68504364';
     $dbPass = '68504364';
-    $dbName = 'pondr'; 
+    $dbName = 'db_68504364'; 
 }
 
 $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
