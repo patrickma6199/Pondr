@@ -1,5 +1,6 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
 
 // Stop bad navigation
 if (isset($_SESSION['uid'])) {
