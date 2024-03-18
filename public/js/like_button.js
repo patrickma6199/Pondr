@@ -28,7 +28,7 @@ function increaseLikeCount(e) {
             console.log("postId",postId);
            
             
-            console.log("result :",data);
+            console.log("result :",data.error);
             
                 $('#like-count').text(data.likes);
          
@@ -52,7 +52,7 @@ async function getLikeCount(){
         success: function(data) {
             
             
-            console.log("result :",data);
+            console.log("result :",data.error);
             
             
                 $('#like-count').text(data.likes);
