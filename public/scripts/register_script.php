@@ -32,6 +32,7 @@ if (!isset($utype)) {
                 if (in_array($_FILES['pfp']['type'], $validMime) && in_array($extension,$validExt)) {
                     if ($_FILES['pfp']['size'] <= 10485760) { // if they bypass the hidden form item
                         $pfp = "../img/pfps/$username.".$extension;
+                        $imageSet = true;
                     } else {
                         $_SESSION['registerMessage'] = "<p>Your profile photo must be a maximum of 10MB in size.</p>";
                         exit(header("Location: ../pages/register.php"));
@@ -44,12 +45,18 @@ if (!isset($utype)) {
                 if ($_FILES['pfp']['error'] == UPLOAD_ERR_FORM_SIZE) {
                     $_SESSION['registerMessage'] = "<p>Your profile photo must be a maximum of 10MB in size.</p>";
                     exit(header("Location: ../pages/register.php"));
+                } else if ($_FILES['pfp']['error'] == UPLOAD_ERR_NO_FILE) {
+                    $pfp = "../img/pfps/pfp.png";
+                    $imageSet = false;
+                } else {
+                    $_SESSION['registerMessage'] = "<p>An error occured while trying to retrieve the profile photo from your submission. Please try again.</p>";
+                    exit(header("Location: ../pages/register.php"));
                 }
-                $_SESSION['registerMessage'] = "<p>An error occured while trying to retrieve the profile photo from your submission. Please try again.</p>";
-                exit(header("Location: ../pages/register.php"));
+
             }
         } else {
             $pfp = "../img/pfps/pfp.png";
+            $imageSet = false;
         }
 
         //Generates recovery key
@@ -106,7 +113,7 @@ if (!isset($utype)) {
         $conn->close();
 
         // resizing and saving image (getting to this portion of the code means that the pfp was of valid size and type)
-        $original = $_FILES['pfp']['tmp_name'];
+        $original = ($imageSet) ? $_FILES['pfp']['tmp_name'] : $pfp;
         $oSize = getimagesize($original);
         $oWidth = $oSize[0];
         $oHeight = $oSize[1];

@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             } else {
                                 $prstmt->close();
                                 $unique = true;
+                                $imageSet = true;
                             }
                         } catch(mysqli_sql_exception $e){
                             $_SESSION['newPostMessage'] = "<p>An error occurred while trying to save your image. Please try again.</p>";
@@ -63,10 +64,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($_FILES['post_image']['error'] == UPLOAD_ERR_FORM_SIZE) {
                 $_SESSION['newPostMessage'] = "<p>Your post image must be a maximum of 10MB in size.</p>";
                 exit(header("Location: ../pages/new_post.php"));
+            } else if ($_FILES['post_image']['error'] == UPLOAD_ERR_NO_FILE) {
+                $imgUrl = null;
+                $imageSet = false;
+            } else {
+                $_SESSION['newPostMessage'] = "<p>An error occured while trying to retrieve the post image from your submission. Please try again.</p>";
+                exit (header("Location: ../pages/new_post.php"));
             }
-            $_SESSION['newPostMessage'] = "<p>An error occured while trying to retrieve the post image from your submission. Please try again.</p>";
-            exit(header("Location: ../pages/new_post.php"));
         }
+    } else {
+        $imgUrl = null;
+        $imageSet = false;
+    }
+
+    $sql = "INSERT INTO posts(userId,postDate,title,text,img,link,catId) VALUES (?,NOW(),?,?,?,?,?);";
+    $prstmt = $conn->prepare($sql);
+    $prstmt->bind_param('ssssss', $uid,$postTitle,$postText,$imgUrl,$postLink,$category);
+    try {
+        $prstmt->execute();
+        $_SESSION['newPostMessage'] = "<p>Your post was successfully posted!</p>";
+    } catch(mysqli_sql_exception $e) {
+        $_SESSION['newPostMessage'] = "<p>An error occured while trying to create your post. Please try again.</p>";
+        $prstmt->close();
+        $conn->close();
+        exit(header('Location: ../pages/new_post.php'));
+    }
+    $prstmt->close();
+    $conn->close();
+
+    if ($imageSet) {
         // resizing and saving image (getting to this portion of the code means that the post image was of valid size and type)
         $original = $_FILES['post_image']['tmp_name'];
         $oSize = getimagesize($original);
@@ -87,25 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             imagecopyresampled($rImage,$oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth,$oHeight);
             imagepng($rImage,$imgUrl);
         }
-    } else {
-        $imgUrl = null;
     }
-
-    $sql = "INSERT INTO posts(userId,postDate,title,text,img,link,catId) VALUES (?,NOW(),?,?,?,?,?);";
-    $prstmt = $conn->prepare($sql);
-    $prstmt->bind_param('ssssss', $uid,$postTitle,$postText,$imgUrl,$postLink,$category);
-    try {
-        $prstmt->execute();
-        $_SESSION['newPostMessage'] = "<p>Your post was successfully posted!</p>";
-    } catch(mysqli_sql_exception $e) {
-        $_SESSION['newPostMessage'] = "<p>An error occured while trying to create your post. Please try again.</p>";
-        $prstmt->close();
-        $conn->close();
-        exit(header('Location: ../pages/new_post.php'));
-    }
-    $prstmt->close();
-    $conn->close();
-
     exit(header('Location: ../pages/new_post.php'));
 
 } else {
