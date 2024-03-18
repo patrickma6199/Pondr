@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
+// Stop bad navigation
+if (isset($_SESSION['uid'])) {
     exit(header("../index.php"));
 }
 ?>
