@@ -4,11 +4,11 @@ require_once 'dbconfig.php';
 header('Content-Type: application/json');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
-$uid = $_SESSION['uid']; 
+$uid = $_SESSION['uid'];
 
 
 
-if (isset($_POST['postId'])) {
+if (isset ($_POST['postId'])) {
     $postId = $_POST['postId'];
     $action = $_POST['action'] ?? '';
     try {
@@ -28,7 +28,7 @@ if (isset($_POST['postId'])) {
             }
         } else {
             // Check if like already exists for the user and post
-            $checkSql = "SELECT * FROM likes WHERE userId = ? AND postId = ?";
+            $checkSql = "SELECT likesId FROM likes WHERE userId = ? AND postId = ?";
             $checkStmt = $conn->prepare($checkSql);
             $checkStmt->bind_param("ii", $uid, $postId);
             $checkStmt->execute();
@@ -47,19 +47,19 @@ if (isset($_POST['postId'])) {
                 $stmt->execute();
 
                 $sql = "SELECT likes FROM posts WHERE postId = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $postId);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($row = $result->fetch_assoc()) {
-                echo json_encode(['likes' => $row['likes']]); // Return the new like count
-            }
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $postId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($row = $result->fetch_assoc()) {
+                    echo json_encode(['likes' => $row['likes']]); // Return the new like count
+                }
             } else {
                 echo json_encode(['error' => 'User already liked this post']);
             }
 
             // Retrieve the new like count to return it
-            
+
         }
 
         $conn->commit();
@@ -68,10 +68,10 @@ if (isset($_POST['postId'])) {
         error_log($e->getMessage()); // Log error to server log
         echo 'error An error occurred';
     } finally {
-        if (isset($stmt)) {
+        if (isset ($stmt)) {
             $stmt->close();
         }
-        if (isset($checkStmt)) {
+        if (isset ($checkStmt)) {
             $checkStmt->close();
         }
         $conn->close();
