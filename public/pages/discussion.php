@@ -80,7 +80,7 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                     if($prstmt->fetch()){
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
-                        echo "<a href=\"./thread.php?pid=$postId\"><h2>$title</h2></a>";
+                        echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
                         echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                         echo "<p>$text</p>";
                         echo "</article>";
