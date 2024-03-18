@@ -15,7 +15,7 @@ $uid = (isset($_SESSION["uid"]))? $_SESSION["uid"] : null;
 ?>
 
 <nav id="top-bar">
-    <a href="./index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+    <a href="../index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
     <div id="top-search-bar">
         <form method="GET" action="discussion.php">
             <?php
