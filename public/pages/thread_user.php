@@ -66,17 +66,18 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 </div>
             </div>
 
-             <?php
+            <?php
 
-            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ?";
+            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL";
             $prstmt = $conn->prepare($sql1);
             $prstmt->bind_param("i", $postId);
             $prstmt->execute();
             $prstmt->store_result();
-            $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp);
+            $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId);
 
             echo '<div class="thread-comments">';
             while ($prstmt->fetch()) {
+
                 echo '<article class="thread-comment-container">';
                 echo '<div class="thread-comment-profile">';
                 echo " <img src=\"$pfp\" alt=\"profile photo\">";
@@ -86,18 +87,44 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 echo "$comText";
                 echo "</p>";
                 echo "<div> <a href=\"\" class=\"link-button\" id=\"reply-icon\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+
+
+                $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ?";
+                $prstmt2 = $conn->prepare($sql2);
+                $prstmt2->bind_param("i", $comId);
+                $prstmt2->execute();
+                $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp);
+                while ($prstmt2->fetch() &&  $subComId != NULL){
+                    echo "<div class=\"thread-comment-container\">";
+                    echo "<div class=\"thread-comment-profile\">";
+                    echo " <img src=\"$subPfp\" alt=\"profile photo\">";
+                    echo "<i> $subUserName on <time>$subComDate</time></i>";
+                    echo "</div>";
+                    echo "<p class=\"thread-comment\">";
+                    echo "$subComText";
+                    echo "</p>";
+                    echo "</div>";
+                }
+                $prstmt2->close();
                 echo "</article>";
+
+
+
             }
             echo "</div>";
-            $prstmt->free_result(); 
-            $prstmt->close(); 
+            $prstmt->free_result();
+            $prstmt->close();
 
 
 
-            ?> 
-          
+
+
+
+
+            ?>
+
             </div>
         </main>
     </body>
 
-</html> 
+</html>
