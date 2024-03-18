@@ -1,5 +1,6 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
 
 // will unset if already set to remove session variables
 // if already unset, nothing will happen
