@@ -4,16 +4,11 @@
     require_once 'dbconfig.php';
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-        //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
     if (isset ($_POST['username']) && isset ($_POST['password'])) {
+        //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
         $username = $_POST['username'];
-        $password = $_POST['password'];
-    } else {
-        $_SESSION['loginMessage'] = "<p>Missing username or password.</p>";
-        exit (header("Location: ../pages/login.php"));
-    }
+    $password = $_POST['password'];
+
 
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "SELECT userId, utype, pass FROM users WHERE uName = ?;";
@@ -49,6 +44,8 @@
         $conn->close();
         exit(header('Location: ../pages/login.php'));
 
+    } else {
+        exit (header("Location: ../index.php"));
     }
 
 ?>

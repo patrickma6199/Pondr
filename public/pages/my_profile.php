@@ -2,8 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
-$utype = $_SESSION['utype'];
-$uid = $_SESSION['uid'];
+$uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 require_once '../scripts/header.php';
 ?>
@@ -50,8 +49,6 @@ require_once '../scripts/header.php';
                     echo "NO PROFILE INFO";
                 }
                 $prstmt->close();
-
-
                 ?>
 
             </section>
