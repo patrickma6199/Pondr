@@ -4,9 +4,7 @@ require_once 'dbconfig.php';
 header('Content-Type: application/json');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
-$uid = $_SESSION['uid'];
-
-
+$uid = $_SESSION['uid'] ?? null;
 
 if (isset ($_POST['postId'])) {
     $postId = $_POST['postId'];
@@ -77,6 +75,6 @@ if (isset ($_POST['postId'])) {
         $conn->close();
     }
 } else {
-    echo 'error No post ID provided';
+    exit (header("Location: ../index.php"));
 }
 ?>

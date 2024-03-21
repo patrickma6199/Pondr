@@ -1,13 +1,11 @@
 <?php
-
+ini_set('display_errors', 1);
 require_once ('dbconfig.php');
 header('Content-Type: application/json');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
-$uid = $_SESSION['uid'];
 
-
-if (isset ($_POST['postId'])) {
+if (isset ($_POST['postId'])) { //implied request method is POST
     $postId = $_POST['postId'];
 
 
@@ -30,7 +28,7 @@ if (isset ($_POST['postId'])) {
 
     // Display the comment count
     $stmt->close();
+} else {
+    exit (header("Location: ../index.php"));
 }
-
-
 ?>
