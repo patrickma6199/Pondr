@@ -24,6 +24,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         <script src="../js/jquery-3.1.1.min.js"></script>
         <script src="../js/like_button.js"></script>
         <script src="../js/comment_count.js"></script>
+        <script src="../js/comment_add.js"></script>
 
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
 
@@ -63,7 +64,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 <div id="icon-buttons">
                     <a href="" class="link-button" id="like-button"><i class="fa-regular fa-heart"></i> Like | <span
                             id="like-count"> 0 </span></a>
-                    <a href="" class="link-button"><i class="fa-solid fa-comment"></i> Comment | <span
+                    <a href="" class="link-button" id="add-comment" ><i class="fa-solid fa-comment" ></i> Comment | <span
                             id="comment-count"> 0 </span> </a>
 
                 </div>
