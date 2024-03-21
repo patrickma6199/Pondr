@@ -7,6 +7,8 @@
         <title>Login/Sign Up</title>
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/form.css">
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src = "../js/register_verification.js"></script>
         <link rel="icon" href="../img/logo.png">
     </head>
     <body>
@@ -23,15 +25,17 @@
         </nav>
         <main class="center-container">
             <section class="form-container">
-                <form action="POST">
+                <form id = "loginform" method="POST" action="../scripts/register_script.php" enctype="multipart/form-data">
                     <legend>Login</legend>
                     <div class="form-item">
                         <label for="username">Username: </label>
-                        <input type="text" placeholder="Enter your username" name="username" required>
+                        <input type="text" placeholder="Enter your Username" name="username" id = "username" >
+                        <div class="error-message" id="error-username">Please enter your username.</div>
                     </div>
                     <div class="form-item">
                         <label for="password">Password: </label>
-                        <input type="password" placeholder="Enter your password" name="password" required>
+                        <input type="password" placeholder="Enter your Password" name="password" id ="password" >
+                        <div class="error-message" id="error-password">Please enter your password.</div>
                     </div>
                     <div class="form-item">
                         <button type="submit" class="form-button">Login</button>
