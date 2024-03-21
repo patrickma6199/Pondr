@@ -2,7 +2,8 @@
 ini_set('display_errors', 1);
 // Environment: local (XAMPP) or school server
 
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
+$deployed = false;
+if (!$deployed) {
     // Local XAMPP environment
     $dbHost = 'localhost';
     $dbUser = 'root';

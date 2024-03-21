@@ -4,7 +4,7 @@
     require_once 'dbconfig.php';
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['email']) && isset($_POST['new-pass']) && isset($_POST['recovery-key'])) { //implies request method in POST
 
         $email = $_POST['email'];
         $newPass = $_POST['new-pass'];
@@ -43,6 +43,8 @@
         $conn->close();
 
         exit(header("Location: ../pages/forget_password.php"));
+    } else {
+        exit(header('Location: ../index.php'));
     }
 
 ?>
