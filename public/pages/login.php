@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 // Stop bad navigation
 if (isset($_SESSION['uid'])) {
-    exit(header("../index.php"));
+    exit(header("Location: ../index.php"));
 }
 ?>
 

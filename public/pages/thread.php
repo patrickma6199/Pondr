@@ -2,8 +2,6 @@
 session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
-$utype = $_SESSION['utype'];
-$uid = $_SESSION['uid'];
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ?>
 
@@ -41,7 +39,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./secondaryProfile.php\">$userName</a> on <time>$postDate</time> $category</i>";
+                    echo "<i>Posted by: <a href=\"./profile.php?uname=$userName.php\">$userName</a> on <time>$postDate</time> $category</i>";
                     echo "<p> $postText </p>";
                     echo " </article>";
 
