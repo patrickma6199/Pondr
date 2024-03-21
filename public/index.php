@@ -2,8 +2,8 @@
 
 <?php
     session_start();
-    $utype = (isset($_SESSION[$utype])) ? $_SESSION['utype'] : null;
-    $uid = (isset($_SESSION[$uid])) ? $_SESSION['uid']: null;
+    $utype = (isset($_SESSION['utype'])) ? $_SESSION['utype'] : null;
+    $uid = (isset($_SESSION['uid'])) ? $_SESSION['uid'] : null;
 
     if (isset($utype)) {
         switch ($utype) {
@@ -18,4 +18,3 @@
         exit(header('Location: pages/landing.php'));
     }
 ?>
-

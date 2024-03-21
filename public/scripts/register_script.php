@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 require_once 'dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$utype = (isset($_SESSION['utype'])) ? $_SESSION['utype'] : null;
-$uid = (isset($_SESSION['uid'])) ? $_SESSION['uid'] : null;
+$utype = $_SESSION['utype'] ?? null;
+
 
 if (!isset($utype)) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -114,26 +114,30 @@ if (!isset($utype)) {
         $conn->close();
 
         // resizing and saving image (getting to this portion of the code means that the pfp was of valid size and type)
-        $original = ($imageSet) ? $_FILES['pfp']['tmp_name'] : $pfp;
-        $oSize = getimagesize($original);
-        $oWidth = $oSize[0];
-        $oHeight = $oSize[1];
-        $resizeDim = 960; //to make it into a square (960pxx960px)
-
-        if ($extension == "jpeg" || $extension == "jpg") {
-            $oImage = imagecreatefromjpeg($original);
-            $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
-            imagecopyresampled($rImage,$oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth,$oHeight);
-            imagejpeg($rImage, $pfp);
-        } else { // must be a png if not jpg
-            $oImage = imagecreatefrompng($original);
-            $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
-            imagealphablending($rImage, false);
-            imagesavealpha($rImage, true);
-            imagecopyresampled($rImage,$oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth,$oHeight);
-            imagepng($rImage,$pfp);
+        if ($imageSet) {
+            $original = $_FILES['pfp']['tmp_name'];
+            if (extension_loaded('gd')) {
+                $oSize = getimagesize($original);
+                $oWidth = $oSize[0];
+                $oHeight = $oSize[1];
+                $resizeDim = 960; //to make it into a square (960pxx960px)
+                if ($extension == "jpeg" || $extension == "jpg") {
+                    $oImage = imagecreatefromjpeg($original);
+                    $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+                    imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
+                    imagejpeg($rImage, $pfp);
+                } else { // must be a png if not jpg
+                    $oImage = imagecreatefrompng($original);
+                    $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+                    imagealphablending($rImage, false);
+                    imagesavealpha($rImage, true);
+                    imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
+                    imagepng($rImage, $pfp);
+                }
+            } else {
+                move_uploaded_file($original, $pfp);
+            }
         }
-
         exit(header('Location: ../pages/register.php'));
     }
 } else {

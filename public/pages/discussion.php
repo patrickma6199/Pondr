@@ -4,8 +4,7 @@ require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ini_set('display_errors', 1);
 
-$utype = (isset($_SESSION["utype"]))? $_SESSION["utype"] : null;
-$uid = (isset($_SESSION["uid"]))? $_SESSION["uid"] : null;
+$uid = $_SESSION['uid'] ?? null;
 
 if (isset($_GET["search"])) {               //remove search if searched value is empty
     if ($_GET["search"] == "") {
@@ -90,7 +89,7 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                         while ($prstmt->fetch()) {
                             echo "<div class=\"mini-thread\">";
                             echo "<article>";
-                            echo "<a href=\"./thread.php?pid=$postId\"><h2>$title</h2></a>";
+                            echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
                             echo "<i>Posted by: $uName on <time>$postDate</time></i>";
                             echo "<p>$text</p>";
                             echo "</article>";
