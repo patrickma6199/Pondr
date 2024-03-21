@@ -10,9 +10,10 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $catId = (isset($_GET['catId'])) ? $_GET['catId'] : null;
 
-$utype = (isset($_SESSION["utype"]))? $_SESSION["utype"] : null;
-$uid = (isset($_SESSION["uid"]))? $_SESSION["uid"] : null;
+$utype = $_SESSION['utype'] ?? null;
+$uid = $_SESSION['uid'] ?? null;
 ?>
+
 
 <nav id="top-bar">
     <a href="../index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
@@ -50,7 +51,7 @@ $uid = (isset($_SESSION["uid"]))? $_SESSION["uid"] : null;
         switch ($utype) {
             case 0:
             case 1:
-                echo "<a href=\"profile.php\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
+                echo "<a href=\"my_profile.php\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
                 echo "<a href=\"../scripts/logout.php\" class=\"link-button\">Logout</a>";
                 break;
             default:
