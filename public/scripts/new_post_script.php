@@ -78,14 +78,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $imageSet = false;
     }
 
+    $conn->begin_transaction();
     $sql = "INSERT INTO posts(userId,postDate,title,text,img,link,catId) VALUES (?,NOW(),?,?,?,?,?);";
     $prstmt = $conn->prepare($sql);
     $prstmt->bind_param('ssssss', $uid,$postTitle,$postText,$imgUrl,$postLink,$category);
     try {
         $prstmt->execute();
+        if (isset ($category)) {
+            $sql = "UPDATE categories SET count = count + 1 WHERE catId=?;";
+            $prstmt = $conn->prepare($sql);
+            $prstmt->bind_param("s", $category);
+            $prstmt->execute();
+        }
+        $conn->commit();
         $_SESSION['newPostMessage'] = "<p>Your post was successfully posted!</p>";
     } catch(mysqli_sql_exception $e) {
         $_SESSION['newPostMessage'] = "<p>An error occured while trying to create your post. Please try again.</p>";
+        $conn->rollback();
         $prstmt->close();
         $conn->close();
         exit(header('Location: ../pages/new_post.php'));
