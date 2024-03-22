@@ -2,8 +2,6 @@
 session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
-$utype = $_SESSION['utype'];
-$uid = $_SESSION['uid'];
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 
