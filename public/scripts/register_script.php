@@ -66,19 +66,28 @@ if (!isset($utype)) {
 
         while(!$unique) {
             //check if key exists already for another user
-            $sql = "SELECT * FROM users WHERE recoveryKey = ?;";
+            $sql = "SELECT recoveryKey FROM users;";
             $prstmt = $conn->prepare($sql);
-            $prstmt->bind_param("s",$newKey);
-            
+
             try{
+                $newKey = bin2hex(random_bytes(16));
                 $prstmt->execute();
+                $prstmt->bind_result($currKey);
                 // if already used, regenerate
-                if ($prstmt->fetch()) {
-                    $newKey = bin2hex(random_bytes(16));
-                } else {
+                if($prstmt->fetch()){
+                    if (password_verify())
+                        while ($prstmt->fetch()) {
+                            if (password_verify($newKey, $currKey)) {
+                                break;
+                            }
+                        }
+                    
+
+                } else {    // if no users exist yet
                     $prstmt->close();
                     $unique = true;
                 }
+
             } catch(mysqli_sql_exception $e){
                 $_SESSION['registerMessage'] = "<p>An error occurred while trying to generate your recovery key. Please try again.</p>";
                 $prstmt->close();
