@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#regform', '#loginform').on('submit', function(e) {
+    $('#regform, #loginform').on('submit', function(e) {
         e.preventDefault(); // Prevent form from submitting until checks are done
 
         var firstName = $('#firstName').val().trim();
