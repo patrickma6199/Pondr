@@ -59,30 +59,37 @@ if (!isset($utype)) {
             $pfp = "../img/pfps/pfp.png";
             $imageSet = false;
         }
+        try{
+            // For generating new unique recovery keys
+            do {
+                // Gen. key
+                $newKey = bin2hex(random_bytes(32));
 
-        // For generating new unique recovery keys
-        do {
-            // Gen. key
-            $newKey = bin2hex(random_bytes(32));
+                // Prepare and execute query to check if the key already exists
+                $query = "SELECT recoveryKey FROM users;";
+                $prstmt = $conn->prepare($query);
+                $prstmt->execute();
+                $prstmt->bind_result($currKey);
 
-            // Prepare and execute query to check if the key already exists
-            $query = "SELECT recoveryKey FROM users;";
-            $prstmt = $conn->prepare($query);
-            $prstmt->execute();
-            $prstmt->bind_result($currKey);
+                $unique = true;
 
-            $unique = true;
-
-            while ($prstmt->fetch()) {
-                if (password_verify($newKey, $currKey)) {
-                    $unique = false;
-                    break;
+                while ($prstmt->fetch()) {
+                    if (password_verify($newKey, $currKey)) {
+                        $unique = false;
+                        break;
+                    }
                 }
-            }
 
+                $prstmt->close();
+
+            } while (!$unique);
+        } catch (mysqli_sql_exception $e) {
+            $_SESSION['registerMessage'] = "<p>An error occurred while generating your recovery key. Please try again.</p>";
             $prstmt->close();
+            $conn->close();
+            exit(header('Location: ../pages/register.php'));
+        }
 
-        } while (!$unique);
 
 
         //this is the sql query using prepared statements for sanitization of requests
