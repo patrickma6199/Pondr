@@ -17,7 +17,7 @@
             $prstmt->execute();
             $prstmt->bind_result($recoveryDB);
             if ($prstmt->fetch()) {
-                if ($recovery == $recoveryDB) {
+                if (password_verify($recovery,$recoveryDB)) {
                     $prstmt->close();
                     $sql = "UPDATE users SET pass = ? WHERE email = ?;";
                     $prstmt = $conn->prepare($sql);
