@@ -17,7 +17,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sample Thread Name</title>
+        <title> Thread </title>
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/threads.css">
         <link rel="icon" href="../img/logo.png">
@@ -91,7 +91,8 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 echo "<p class=\"thread-comment\">";
                 echo "$comText";
                 echo "</p>";
-                echo "<div> <a href=\"\" class=\"link-button\" id=\"reply-icon\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+                echo "<div> <a href=\"\" class=\"link-button reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+
 
 
                 $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ?";
