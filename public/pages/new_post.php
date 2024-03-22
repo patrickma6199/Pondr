@@ -21,6 +21,7 @@ if (!isset ($_SESSION['uid'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery-3.1.1.min.js"> </script>
     <script src="../js/jquery-3.1.1.min.js"></script>
     <script src="../js/char_count.js"></script>
+    <script src="../js/new_post_verification.js"></script>
 </head>
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
