@@ -18,6 +18,8 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
+    <script src = "../js/jquery-3.1.1.min.js"> </script>
+    <script src = "../js/register_verification.js"></script>
 </head>
 
 <body>
@@ -25,7 +27,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <div class="center-container">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
-            <form method="POST" action="../scripts/register_script.php" enctype="multipart/form-data">
+            <form id="regform" method="POST" action="../scripts/register_script.php" enctype="multipart/form-data" >
                 <legend>Register</legend>
                 <?php
                 if (isset($_SESSION['registerMessage'])) {
@@ -33,33 +35,33 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                     unset($_SESSION['registerMessage']);
                 }
                 ?>
-                <div class="form-item">
+              <div class="form-item">
                     <label for="firstName">First Name: </label>
-                    <input type="text" placeholder="Enter your First Name" name="firstName" required>
+                    <input type="text" placeholder="Enter your First Name" name="firstName" class="firstName" >
                 </div>
                 <div class="form-item">
                     <label for="lastName">Last Name: </label>
-                    <input type="text" placeholder="Enter your Last Name" name="lastName" required>
+                    <input type="text" placeholder="Enter your Last Name" name="lastName" class="lastName">
                 </div>
                 <div class="form-item">
                     <label for="email">Email: </label>
-                    <input type="text" placeholder="Enter your Email" name="email" required>
+                    <input type="email" placeholder="Enter your Email" name="email" class ="email" >
                 </div>
                 <div class="form-item">
                     <label for="re-email">Re-enter Email: </label>
-                    <input type="text" placeholder="Enter your Last Name" name="re-email" required>
+                    <input type="email" placeholder="Re-enter your Email" name="re-email" class ="re-email" >
                 </div>
                 <div class="form-item">
                     <label for="username">Username: </label>
-                    <input type="text" placeholder="Enter your username" name="username" required>
+                    <input type="text" placeholder="Enter your Username" name="username" class = "username" >
                 </div>
                 <div class="form-item">
                     <label for="password">Password: </label>
-                    <input type="password" placeholder="Enter your password" name="password" required>
+                    <input type="password" placeholder="Enter your Password" name="password" class ="password" >
                 </div>
                 <div class="form-item">
                     <label for="re-password">Re-enter Password: </label>
-                    <input type="password" placeholder="Re-enter your password" name="re-password" required>
+                    <input type="password" placeholder="Re-enter your Password" name="re-password" class ="re-password" >
                 </div>
                 <div class="form-item">
                     <label for="pfp">Upload your profile picture (will be made square): </label>
@@ -69,6 +71,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                 </div>
                 <div class="form-item">
                     <button type="submit" class="form-button"> Register</button>
+                    <div class="error-message" ></div>
                     <button type="reset" class="form-button">Reset</button>
                 </div>
                 <?php

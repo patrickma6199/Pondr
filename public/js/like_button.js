@@ -1,12 +1,15 @@
 $(document).ready(function() {
+
+    setInterval(getLikeCount(),1000);
     
-    getLikeCount();
+     getLikeCount();
 
     
     $('#like-button').click(function(e) {
         increaseLikeCount(e);
         
     });
+    
    
     
 });
