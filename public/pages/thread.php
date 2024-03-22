@@ -3,9 +3,6 @@ session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +22,6 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         <script src="../js/comment_add.js"></script>
 
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
-
     </head>
 
     <body>
@@ -38,17 +34,17 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 }
 
 
-                $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name FROM posts p JOIN users u ON p.userId = u.userId JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
+                $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId FROM posts p JOIN users u ON p.userId = u.userId JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
 
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $postId);
                 $prstmt->execute();
-                $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category);
+                $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId);
                 if ($prstmt->fetch()) {
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./secondaryProfile.php\">$userName</a> on <time>$postDate</time> $category</i>";
+                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> on <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
                     echo "<p> $postText </p>";
                     echo " </article>";
 
@@ -92,7 +88,6 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 echo "<div> <a href=\"\" class=\"link-button reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
 
 
-
                 $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ?";
                 $prstmt2 = $conn->prepare($sql2);
                 $prstmt2->bind_param("i", $comId);
@@ -111,24 +106,12 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 }
                 $prstmt2->close();
                 echo "</article>";
-
-
-
             }
             echo "</div>";
             $prstmt->free_result();
             $prstmt->close();
 
-
-
-
-
-
-
             ?>
-
-
-
             </div>
         </main>
     </body>

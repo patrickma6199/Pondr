@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    setInterval(getLikeCount(),1000);
+    setInterval(getLikeCount,5000);
     
      getLikeCount();
 
@@ -9,9 +9,6 @@ $(document).ready(function() {
         increaseLikeCount(e);
         
     });
-    
-   
-    
 });
 
 function increaseLikeCount(e) {
