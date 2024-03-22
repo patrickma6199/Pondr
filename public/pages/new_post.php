@@ -50,6 +50,7 @@ if (!isset ($_SESSION['uid'])) {
                 <div class="form-item">
                     <label for="post_link">Any link? (Optional)</label>
                     <input type="text" name="post_link" placeholder="Enter Link Here"/>
+                     <div class="error-message" id="error-postLink"></div>
                 </div>
                 <div class="form-item">
                     <label for="post_image">Any Images to your post? (Optional)</label>
