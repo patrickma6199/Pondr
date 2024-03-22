@@ -1,11 +1,10 @@
 $(document).ready(function () {
    
+    setInterval(commCount,5000);
     commCount();
-    var comm_update = setTimeout(commCount() ,1000);
-    comm_update;
-
    
 });
+
 async function commCount(){
     const pid_param = new URLSearchParams(window.location.search);
     var postId = pid_param.get('postId');
@@ -17,7 +16,6 @@ async function commCount(){
         success: function (data) {
 
             console.log("result comm :", data);
-           if(data == "done"){window.location.href="thread_user.php"}
             // Update the comment count display
             $('#comment-count').text(data.count);
            
