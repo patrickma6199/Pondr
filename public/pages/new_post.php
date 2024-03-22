@@ -26,8 +26,8 @@ if (!isset ($_SESSION['uid'])) {
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="center-container">
-        <section class="form-container">
-            <form action="../scripts/new_post_script.php" method="POST" enctype="multipart/form-data">
+        <section class="form-container" style="width: 60%;">
+            <form action="../scripts/new_post_script.php" method="POST" enctype="multipart/form-data" id="post-form">
                 <legend>New Post</legend>
                 <?php
                 if (isset ($_SESSION['newPostMessage'])) {
@@ -50,7 +50,7 @@ if (!isset ($_SESSION['uid'])) {
                 <div class="form-item">
                     <label for="post_link">Any link? (Optional)</label>
                     <input type="text" name="post_link" placeholder="Enter Link Here"/>
-                     <div class="error-message" id="error-postLink"></div>
+                     <div class="error-message" id="error-postLink">URL is invalid. Please follow this format: https://AAAAAA.AAA/AAA/AAA/</div>
                 </div>
                 <div class="form-item">
                     <label for="post_image">Any Images to your post? (Optional)</label>

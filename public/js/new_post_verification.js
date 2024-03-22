@@ -2,12 +2,23 @@ $(document).ready(function () {
     let link = $('input[name="post_link"]')
     let validURL = /^https?:\/\/(?:\w+\.)+\w+$/;
     let error_mes = $("#error-postLink");
+    let form = $('#post-form');
     let valid = /^$/;
-    link.on('keyup', function() {
+    link.on('focusout', function() {
         if (!validURL.test(link.val())) {
-            error_mes.html("URL is invalid. Please follow this format: https://AAAAAA.AAA/AAA/AAA/").show();
+            error_mes.text("URL is invalid. Please follow this format: https://AAAAAA.AAA/AAA/AAA/").show();
         } else {
             error_mes.hide();
+        }
+    });
+
+    form.on('submit', (e) => {
+        e.preventDefault();
+        if (!validURL.test(link.val())) {
+            error_mes.text("URL is invalid. Please follow this format: https://AAAAAA.AAA/AAA/AAA/").show();
+        } else {
+            error_mes.hide();
+            this.submit();
         }
     });
 });
