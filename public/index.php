@@ -2,13 +2,13 @@
 
 <?php
     session_start();
-    $utype = $_SESSION['utype'];
-    $uid = $_SESSION['uid'];
+    $utype = (isset($_SESSION['utype'])) ? $_SESSION['utype'] : null;
+    $uid = (isset($_SESSION['uid'])) ? $_SESSION['uid'] : null;
 
     if (isset($utype)) {
         switch ($utype) {
             case 0:
-                exit(header('Location: pages/discussion_user.php'));
+                exit(header('Location: pages/discussion.php'));
             case 1:
                 exit(header('Location: pages/admin.php'));
             default:

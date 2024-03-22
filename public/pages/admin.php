@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../scripts/dbconfig.php';
+ini_set('display_errors', 1);
 ?>
 
 <!DOCTYPE html>
@@ -15,18 +15,7 @@ require_once '../scripts/dbconfig.php';
     <link rel="icon" href="../img/logo.png">
 </head>
 <body>
-    <nav id="top-bar">
-        <a href="./admin.php"><img src="../img/logo.png" alt="Pondr Admin Logo" id="top-bar-logo"></a>
-        <div id="top-search-bar">
-            <form method="GET">
-                <input type="text" name="search" placeholder="Search for Users and Threads" />
-                <button type="submit" class="form-button">Search</button>
-            </form>
-        </div>
-        <a href="admin_settings.php" class="link-button">Settings</a>
-        <a href="logout.php" class="link-button">Logout</a>
-    </nav>
-
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <div class="admin-container">
         <section class="user-management">
             <h2>User Management</h2>
