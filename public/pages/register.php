@@ -35,7 +35,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                     unset($_SESSION['registerMessage']);
                 }
                 ?>
-                <div class="form-item">
+               <div class="form-item">
                     <label for="firstName">First Name: </label>
                     <input type="text" placeholder="Enter your First Name" name="firstName" id="firstName" >
                     <div class="error-message" id="error-firstname">Please enter your first name.</div>
@@ -68,7 +68,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                 <div class="form-item">
                     <label for="re-password">Re-enter Password: </label>
                     <input type="password" placeholder="Re-enter your Password" name="re-password" id ="re-password" >
-                    <div class="error-message" id="error-repassword">Please re-enter your password.</div>
+                 <div class="error-message" id="error-repassword">Please re-enter your password.</div>
                 </div>
                 <div class="form-item">
                     <label for="pfp">Upload your profile picture (will be made square): </label>
@@ -77,10 +77,10 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                     <input type="file"  name="pfp" accept="image/*">
                 </div>
                 <div class="form-item">
-                    <button type="submit" class="form-button"> Register</button>
-                    <div class="error-message" ></div>
+                    <button type="submit" class="form-button"> Register </button>
                     <button type="reset" class="form-button">Reset</button>
                 </div>
+             
                 <?php
                     if (isset($_SESSION['recovery'])) {
                         echo $_SESSION['recovery'];
