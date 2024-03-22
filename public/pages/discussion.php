@@ -65,7 +65,7 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
-                JOIN categories as c ON p.catId = c.catId 
+                LEFT OUTER JOIN categories as c ON p.catId = c.catId 
                 WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END;";
                 $prstmt = $conn->prepare($sql);
                 $searchString = (isset($search)) ? $search : "";
