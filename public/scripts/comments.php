@@ -8,7 +8,6 @@ session_start();
 if (isset ($_POST['postId'])) { //implied request method is POST
     $postId = $_POST['postId'];
 
-
     $sql = "SELECT comment FROM posts WHERE postId = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $postId);

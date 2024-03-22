@@ -13,12 +13,11 @@ $(document).ready(function () {
     });
 
     form.on('submit', (e) => {
-        e.preventDefault();
         if (!validURL.test(link.val())) {
+            e.preventDefault();
             error_mes.text("URL is invalid. Please follow this format: https://AAAAAA.AAA/AAA/AAA/").show();
         } else {
             error_mes.hide();
-            this.submit();
         }
     });
 });
