@@ -1,13 +1,14 @@
 <?php
     session_start();
+    ini_set('display_errors', 1);
     require_once 'dbconfig.php';
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+    if (isset ($_POST['username']) && isset ($_POST['password'])) {
         //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
         $username = $_POST['username'];
-        $password = $_POST['password'];
+    $password = $_POST['password'];
+
 
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "SELECT userId, utype, pass FROM users WHERE uName = ?;";
@@ -23,9 +24,6 @@
                     //assign session variables
                     $_SESSION['utype'] = $utype;
                     $_SESSION['uid'] = $uid;
-
-                    $prstmt->close();
-                    $conn->close();
 
                     //redirect to discussions router
                     exit(header('Location: ../index.php'));
@@ -46,6 +44,8 @@
         $conn->close();
         exit(header('Location: ../pages/login.php'));
 
+    } else {
+        exit (header("Location: ../index.php"));
     }
 
 ?>

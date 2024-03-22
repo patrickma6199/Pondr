@@ -1,9 +1,10 @@
 <?php
+    ini_set('display_errors', 1);
     session_start();
     require_once 'dbconfig.php';
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['email']) && isset($_POST['new-pass']) && isset($_POST['recovery-key'])) { //implies request method in POST
 
         $email = $_POST['email'];
         $newPass = $_POST['new-pass'];
@@ -21,14 +22,12 @@
                     $sql = "UPDATE users SET pass = ? WHERE email = ?;";
                     $prstmt = $conn->prepare($sql);
                     $hashPass = password_hash($newPass,PASSWORD_DEFAULT);
-                    $prstmt->bind_param('ss',$hasPass,$email);
+                    $prstmt->bind_param('ss',$hashPass,$email);
                     try {
                         $prstmt->execute();
                         $_SESSION['forgetPassMessage'] = "<p>Password successfully updated. Enjoy your Pondr journey!</p>";
                     } catch(mysqli_sql_exception $e) {
-                        $message = $e->getMessage();
-                        $line = $e->getLine();
-                        $_SESSION['forgetPassMessage'] = "<p>2Error attempting to change your password. Please try again.</p>";
+                        $_SESSION['forgetPassMessage'] = "<p>Error attempting to change your password. Please try again.</p>";
                     }
                 } else {
                     $_SESSION['forgetPassMessage'] = "<p>Incorrect email or recovery token.</p>";
@@ -37,8 +36,6 @@
                 $_SESSION['forgetPassMessage'] = "<p>Incorrect email or recovery token.</p>";
             }
         }catch(mysqli_sql_exception $e){
-            $message = $e->getMessage();
-            $line = $e->getLine();
             $_SESSION['forgetPassMessage'] = "<p>Error attempting to change your password. Please try again.</p>";
         }
 
@@ -46,6 +43,8 @@
         $conn->close();
 
         exit(header("Location: ../pages/forget_password.php"));
+    } else {
+        exit(header('Location: ../index.php'));
     }
 
 ?>

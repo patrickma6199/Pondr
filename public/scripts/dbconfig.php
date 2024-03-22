@@ -1,17 +1,19 @@
 <?php
+ini_set('display_errors', 1);
 // Environment: local (XAMPP) or school server
 
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
+$deployed = false;
+if (!$deployed) {
     // Local XAMPP environment
     $dbHost = 'localhost';
     $dbUser = 'root';
     $dbPass = ''; 
     $dbName = 'pondr';
 } else {
-    $dbHost = 'school_server_host';
-    $dbUser = 'school_db_user';
-    $dbPass = 'school_db_password';
-    $dbName = 'pondr'; 
+    $dbHost = 'cosc360.ok.ubc.ca';
+    $dbUser = '68504364';
+    $dbPass = '68504364';
+    $dbName = 'db_68504364'; 
 }
 
 $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);

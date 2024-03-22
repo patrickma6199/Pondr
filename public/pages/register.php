@@ -1,8 +1,9 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
 
 if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
-    exit(header("../index.php"));
+    exit(header("Location: ../index.php"));
 }
 ?>
 
@@ -22,17 +23,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
 </head>
 
 <body>
-    <nav id="top-bar">
-        <a href="./discussion.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
-        <div id="top-search-bar">
-            <form method="GET" action="discussion.html">
-                <input type="text" name="search" placeholder="Search for Users and Threads" />
-                <button type="submit" class="form-button">Search</button>
-            </form>
-        </div>
-        <a href="login.php" class="link-button">Login</a>
-        <a href="register.php" class="link-button">Sign Up</a>
-    </nav>
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <div class="center-container">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
@@ -77,10 +68,12 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                 <div class="form-item">
                     <label for="re-password">Re-enter Password: </label>
                     <input type="password" placeholder="Re-enter your Password" name="re-password" id ="re-password" >
-                    <div class="error-message" id="error-repassword">Please enter your last name.</div>
+                 <div class="error-message" id="error-repassword">Please re-enter your password.</div>
                 </div>
                 <div class="form-item">
-                    <label for="pfp">Upload your profile picture: </label>
+                    <label for="pfp">Upload your profile picture (will be made square): </label>
+                    <!-- Max file size for profile photo is 10MB -->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
                     <input type="file"  name="pfp" accept="image/*">
                 </div>
                 <div class="form-item">
