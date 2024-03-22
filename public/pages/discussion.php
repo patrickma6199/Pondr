@@ -11,8 +11,8 @@ if (isset($_GET["search"])) {               //remove search if searched value is
         unset($_GET["search"]);
     }
 }
-$search = (isset($_GET["search"])) ? $_GET["search"] : null;
-$catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
+$search = $_GET['search'] ?? null;
+$catId = $_GET['catId'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +66,8 @@ $catId = (isset($_GET["catId"])) ? $_GET["catId"] : null;
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END;";
+                WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END
+                ORDER BY p.postDate DESC;";
                 $prstmt = $conn->prepare($sql);
                 $searchString = (isset($search)) ? $search : "";
                 if (isset($catId)) {
