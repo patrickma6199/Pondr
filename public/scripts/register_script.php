@@ -60,48 +60,37 @@ if (!isset($utype)) {
             $imageSet = false;
         }
 
-        //Generates recovery key
-        $newKey = bin2hex(random_bytes(16));
-        $unique = false;
+        // For generating new unique recovery keys
+        do {
+            // Gen. key
+            $newKey = bin2hex(random_bytes(32));
 
-        while(!$unique) {
-            //check if key exists already for another user
-            $sql = "SELECT recoveryKey FROM users;";
-            $prstmt = $conn->prepare($sql);
+            // Prepare and execute query to check if the key already exists
+            $query = "SELECT recoveryKey FROM users;";
+            $prstmt = $conn->prepare($query);
+            $prstmt->execute();
+            $prstmt->bind_result($currKey);
 
-            try{
-                $newKey = bin2hex(random_bytes(16));
-                $prstmt->execute();
-                $prstmt->bind_result($currKey);
-                // if already used, regenerate
-                if($prstmt->fetch()){
-                    if (password_verify())
-                        while ($prstmt->fetch()) {
-                            if (password_verify($newKey, $currKey)) {
-                                break;
-                            }
-                        }
-                    
+            $unique = true;
 
-                } else {    // if no users exist yet
-                    $prstmt->close();
-                    $unique = true;
+            while ($prstmt->fetch()) {
+                if (password_verify($newKey, $currKey)) {
+                    $unique = false;
+                    break;
                 }
-
-            } catch(mysqli_sql_exception $e){
-                $_SESSION['registerMessage'] = "<p>An error occurred while trying to generate your recovery key. Please try again.</p>";
-                $prstmt->close();
-                $conn->close();
-                exit(header("Location: ../pages/register.php"));
             }
-        }
+
+            $prstmt->close();
+
+        } while (!$unique);
 
 
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "INSERT INTO users(utype, fName, lName, uName, email, pass, bio, pfp, recoveryKey) VALUES (0, ?, ?, ?, ?, ?, 'No Bio Provided.', ?, ?);";
         $prstmt = $conn->prepare($sql);
         $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-        $prstmt->bind_param('sssssss',$firstName,$lastName,$username,$email,$hashedPass,$pfp,$newKey);
+        $hashedRKey = password_hash($newKey, PASSWORD_DEFAULT);
+        $prstmt->bind_param('sssssss',$firstName,$lastName,$username,$email,$hashedPass,$pfp,$hashedRKey);
 
         //if query successful
         try {

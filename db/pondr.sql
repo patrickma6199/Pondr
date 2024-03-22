@@ -16,7 +16,7 @@ CREATE TABLE users (
     pass VARCHAR(255) NOT NULL,
     bio VARCHAR(1000) NOT NULL, -- will be "No Bio Made" by default
     pfp VARCHAR(255),
-    recoveryKey VARCHAR(32),
+    recoveryKey VARCHAR(255) NOT NULL,
     PRIMARY KEY(userId)
 ) ENGINE = InnoDB;
 
