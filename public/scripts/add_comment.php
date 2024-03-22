@@ -10,11 +10,15 @@ if(isset($_POST['postId']) && isset($_POST['commentText']) && isset($_SESSION['u
     $postId = $_POST['postId'];
     $commentText = $_POST['commentText'];
     $userId = $_SESSION['uid'];
-   
+    if(isset($_POST['parentComId'])) {
+   $parentCommentId = $_POST['parentComId'];
+    }else {
+        $parentCommentId = null;
+    }
 
-    $sql = "INSERT INTO comments (userId, postId, text,comDate) VALUES (?,?,?,NOW())";
+    $sql = "INSERT INTO comments (userId, postId, text,comDate,parentComId) VALUES (?,?,?,NOW(),?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iis", $userId,$postId, $commentText);
+    $stmt->bind_param("iisi", $userId,$postId, $commentText,$parentCommentId);
     if($stmt->execute()) {
         echo "Success";
         
