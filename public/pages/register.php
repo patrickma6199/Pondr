@@ -35,33 +35,40 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                     unset($_SESSION['registerMessage']);
                 }
                 ?>
-              <div class="form-item">
+                <div class="form-item">
                     <label for="firstName">First Name: </label>
-                    <input type="text" placeholder="Enter your First Name" name="firstName" class="firstName" >
+                    <input type="text" placeholder="Enter your First Name" name="firstName" id="firstName" >
+                    <div class="error-message" id="error-firstname">Please enter your first name.</div>
                 </div>
                 <div class="form-item">
                     <label for="lastName">Last Name: </label>
-                    <input type="text" placeholder="Enter your Last Name" name="lastName" class="lastName">
+                    <input type="text" placeholder="Enter your Last Name" name="lastName" id="lastName">
+                    <div class="error-message" id="error-lastname">Please enter your last name.</div>
                 </div>
                 <div class="form-item">
                     <label for="email">Email: </label>
-                    <input type="email" placeholder="Enter your Email" name="email" class ="email" >
+                    <input type="email" placeholder="Enter your Email" name="email" id ="email" >
+                    <div class="error-message" id="error-email">Please enter your email.</div>
                 </div>
                 <div class="form-item">
                     <label for="re-email">Re-enter Email: </label>
-                    <input type="email" placeholder="Re-enter your Email" name="re-email" class ="re-email" >
+                    <input type="email" placeholder="Re-enter your Email" name="re-email" id ="re-email" >
+                    <div class="error-message" id="error-reemail">Please re-enter your email.</div>
                 </div>
                 <div class="form-item">
                     <label for="username">Username: </label>
-                    <input type="text" placeholder="Enter your Username" name="username" class = "username" >
+                    <input type="text" placeholder="Enter your Username" name="username" id = "username" >
+                    <div class="error-message" id="error-username">Please enter your username.</div>
                 </div>
                 <div class="form-item">
                     <label for="password">Password: </label>
-                    <input type="password" placeholder="Enter your Password" name="password" class ="password" >
+                    <input type="password" placeholder="Enter your Password" name="password" id ="password" >
+                    <div class="error-message" id="error-password">Please enter your password.</div>
                 </div>
                 <div class="form-item">
                     <label for="re-password">Re-enter Password: </label>
-                    <input type="password" placeholder="Re-enter your Password" name="re-password" class ="re-password" >
+                    <input type="password" placeholder="Re-enter your Password" name="re-password" id ="re-password" >
+                    <div class="error-message" id="error-repassword">Please re-enter your password.</div>
                 </div>
                 <div class="form-item">
                     <label for="pfp">Upload your profile picture (will be made square): </label>
