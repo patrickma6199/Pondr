@@ -37,3 +37,31 @@
     width: 50px;
     float: right;
 }
+
+/* ... existing styles ... */
+
+/* Sidebar Styles */
+#trending-users-sidebar {
+    width: 200px;
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    height: 100vh; /* Full height */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+}
+
+#trending-users-list {
+    list-style: none;
+    padding: 0;
+}
+
+#trending-users-list li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+#trending-users-list li a:hover {
+    background-color: #444;
+}
