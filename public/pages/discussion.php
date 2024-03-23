@@ -50,11 +50,12 @@ $catId = $_GET['catId'] ?? null;
                         }
                         echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
                     } else {
-                        echo "<p>No Categories have been made yet! make some.</p>";
+                        echo "<p>No Categories have been made yet! Try making one now!</p>";
                     }
                     $prstmt->close();
                 } catch(mysqli_sql_exception $e) {
-                    echo "<p>Error occurred: pulling categories.</p>";
+                    $code = $e->getCode();
+                    echo "<p>Error occurred: pulling categories. Error: $code</p>";
                 }
                 ?>
             </ul>
@@ -63,7 +64,7 @@ $catId = $_GET['catId'] ?? null;
         <section class="discussion-container">
                 <?php
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
-                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
+                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
                 WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END
@@ -77,12 +78,12 @@ $catId = $_GET['catId'] ?? null;
                 }
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg);
+                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId);
                     if($prstmt->fetch()){
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
                         echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
-                        echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">$uName</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">$catName</a></i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
@@ -91,7 +92,7 @@ $catId = $_GET['catId'] ?? null;
                             echo "<div class=\"mini-thread\">";
                             echo "<article>";
                             echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
-                            echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                            echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">$uName</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">$catName</a></i>";
                             echo "<p>$text</p>";
                             echo "</article>";
                             if (isset($postImg)) { echo "<img src=\"$postImg\">";}
@@ -102,7 +103,8 @@ $catId = $_GET['catId'] ?? null;
                     }
                     $prstmt->close();
                 } catch (mysqli_sql_exception $e) {
-                    echo "<p>Error while loading discussion posts. Try again.</p>";
+                    $code = $e->getCode();
+                    echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
                 }
                 $conn->close();
                 ?>
