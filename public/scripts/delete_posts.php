@@ -4,8 +4,7 @@ ini_set('display_errors', 1);
 require_once './dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$utype = $_SESSION['utype'] ?? null; // correctly identifies admin users
-$uid = $_SESSION['uid'] ?? null;
+
 
 if ($utype === '1') { //  '1' = admin user
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postId'])) {
