@@ -25,6 +25,7 @@ require_once '../scripts/header.php';
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
+                
 
                 $sql = "SELECT fName,lName,uName,bio,pfp FROM users WHERE userId = ?";
                 $prstmt = $conn->prepare($sql);
