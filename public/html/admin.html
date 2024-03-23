@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    
     <title>Admin Dashboard - Pondr</title>
     <link rel="icon" href="../img/logo.png">
 </head>
@@ -23,6 +24,16 @@
     </nav>
 
     <div class="admin-container">
+          <!-- Sidebar for Top 10 Trending Users -->
+          <aside id="trending-users-sidebar">
+            <h3>Top 10 Users of the Month</h3>
+            <ul id="trending-users-list">
+                <!-- Server-side script should populate this list -->
+                <!-- Example: -->
+                <!-- <li><a href="#">Username1</a></li> -->
+            </ul>
+        </aside>
+        
         <section class="user-management">
             <h2>User Management</h2>
             <form method="POST" action="search_results.html">
