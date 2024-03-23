@@ -2,6 +2,7 @@ $(document).ready(function() {
     $('#loginform').on('submit', function(e) {
         e.preventDefault(); // Prevent form from submitting until checks are done
 
+        var validationFailed = false;
         var username = $('#username').val().trim();
         var password = $('#password').val();
 
