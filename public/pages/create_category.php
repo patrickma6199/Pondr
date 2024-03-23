@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($categoryName)) {
 
 
 
-
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
 
@@ -59,7 +58,7 @@ unset($_SESSION['message']);
     <link rel="stylesheet" href="../css/form.css">
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; ?>
+    <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <main class="center-container">
     <h2>Create New Category</h2>
     <?php if (!empty($message)): ?>
