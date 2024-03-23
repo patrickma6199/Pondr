@@ -18,12 +18,14 @@ if (isset($_SESSION['uid'])) {
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/form.css">
         <link rel="icon" href="../img/logo.png">
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src = "../js/login_verification.js"></script>
     </head>
     <body>
         <?php require_once '../scripts/header.php'; //for dynamic header ?>
         <main class="center-container">
             <section class="form-container">
-                <form action="../scripts/login_script.php" method="POST">
+                <form id = "loginform" action="../scripts/login_script.php" method="POST">
                     <legend>Login</legend>
                     <?php
                     if (isset($_SESSION['loginMessage'])) {
@@ -33,11 +35,13 @@ if (isset($_SESSION['uid'])) {
                     ?>
                     <div class="form-item">
                         <label for="username">Username: </label>
-                        <input type="text" placeholder="Enter your username" name="username" required>
+                        <input type="text" placeholder="Enter your Username" name="username" id = "username" >
+                        <div class="error-message" id="error-username">Please enter your username.</div>
                     </div>
                     <div class="form-item">
                         <label for="password">Password: </label>
-                        <input type="password" placeholder="Enter your password" name="password" required>
+                        <input type="password" placeholder="Enter your Password" name="password" id ="password" >
+                        <div class="error-message" id="error-password">Please enter your password.</div>
                     </div>
                     <div class="form-item">
                         <button type="submit" class="form-button">Login</button>
