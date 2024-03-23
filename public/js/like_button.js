@@ -1,9 +1,14 @@
 $(document).ready(function() {
 
-    // setInterval(getLikeCount,5000);
+    setInterval(getLikeCount,5000);
     
-     getLikeCount();
-
+    getLikeCount();
+    if (localStorage.getItem('postLiked') === 'true') {
+        $('#like-button').addClass('liked');
+    } else {
+        $('#like-button').removeClass('liked');
+    }
+   
     
     $('#like-button').click(function(e) {
         e.preventDefault();
@@ -16,6 +21,7 @@ $(document).ready(function() {
             url: '../scripts/likes.php',
             data: { postId: postId, action: action },
             success: function(data) {
+                console.log("likes: ",data);
                 updateLikeButton(data);
             },
             error: function(xhr, status, error) {
@@ -59,8 +65,10 @@ async function getLikeCount(){
 function updateLikeButton(data) {
     if (data.liked === false) {
         $('#like-button').removeClass('liked');
+        localStorage.setItem('postLiked', 'false');
     } else {
         $('#like-button').addClass('liked');
+        localStorage.setItem('postLiked', 'true');
     }
     $('#like-count').text(data.likes);
 }
