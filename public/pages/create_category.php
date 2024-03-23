@@ -88,8 +88,7 @@ unset($_SESSION['message']);
     </section>
 </main>
 <?php
-// Close the connection at the very end of the script
-$conn->close();
+    $conn->close();
 ?>
 </body>
 </html>
