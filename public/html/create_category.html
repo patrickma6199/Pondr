@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Category - Pondr</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/form.css">
+</head>
+<body>
+    <?php require_once '../scripts/header.php'; ?>
+    <main class="center-container">
+        <h2>Create New Category</h2>
+        <?php if (!empty($message)): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
+        <form method="post" action="">
+            <label for="categoryName">Category Name:</label>
+            <input type="text" id="categoryName" name="categoryName" required>
+            <button type="submit">Create Category</button>
+        </form>
+    </main>
+</body>
+</html>
+
