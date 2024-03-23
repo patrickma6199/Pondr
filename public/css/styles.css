@@ -43,6 +43,8 @@ input[type="text"], input[type="password"], input[type="email"], button, .link-b
     outline: none;
 }
 
+
+
 input[type="text"]:hover, input[type="password"]:hover,input[type="email"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover, .form-container select { 
     background-color: var(--button-hover-bg);
     border-color: var(--highlight-color);
@@ -52,6 +54,9 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     outline: 0.1em solid white;
     background-color: var(--button-hover-bg);
     border-color:var(--input-hover);
+}
+.link-button.liked, .link-button.liked:focus, .link-button:focus.liked{
+     outline: 0.1em solid pink;
 }
 
 .form-button {
@@ -124,6 +129,8 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     width: 40px;
     margin: 0 1rem;
 }
+
+
 
 @media (max-width: 700px) {
     #top-bar {
