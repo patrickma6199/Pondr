@@ -41,11 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($categoryName)) {
     exit;
 }
 
-$conn->close();
+
 
 
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -81,9 +83,14 @@ unset($_SESSION['message']);
             } else {
                 echo "<li>No categories found</li>";
             }
+
             ?>
         </ul>
     </section>
 </main>
+<?php
+// Close the connection at the very end of the script
+$conn->close();
+?>
 </body>
 </html>
