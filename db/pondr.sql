@@ -40,11 +40,11 @@ CREATE TABLE categories (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-INSERT INTO categories(userId,Name) VALUES(1,'Category 1');
-INSERT INTO categories(userId,Name) VALUES(2,'Category 2');
-INSERT INTO categories(userId,Name) VALUES(3,'Category 3');
-INSERT INTO categories(userId,Name) VALUES(4,'Category 4');
-INSERT INTO categories(userId,Name) VALUES(5,'Category 5');
+INSERT INTO categories(userId,Name) VALUES(1,'Mr.Beast');
+INSERT INTO categories(userId,Name) VALUES(2,'Lord of the Rings');
+INSERT INTO categories(userId,Name) VALUES(3,'Knitting');
+INSERT INTO categories(userId,Name) VALUES(4,'Ramen');
+INSERT INTO categories(userId,Name) VALUES(5,'Crisps of the World');
 
 CREATE TABLE posts (
     postId INT AUTO_INCREMENT,
