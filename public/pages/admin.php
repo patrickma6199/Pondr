@@ -26,7 +26,7 @@ ini_set('display_errors', 1);
             <div id="user-list">
                 <div class="list-user">
                     <div>
-                        <h3>John Doe <i class = "fas fa-trash-alt" style="margin-left: 10px;" onclick=""></i></h3>
+                        <h3>John Doe <i class = "fas fa-trash-alt" style="margin-left: 10px;" onclick="" id = "delete-button"></i></h3>
                         <p>Username: JohnDoe1234</p>
                     </div>
                     <img src="../img/pfp-3.jpg">
