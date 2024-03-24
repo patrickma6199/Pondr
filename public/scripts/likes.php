@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
 $uid = $_SESSION['uid'] ?? null;
+$liked = false;
 
 if (isset ($_POST['postId'])) {
     $postId = $_POST['postId'];
