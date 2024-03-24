@@ -66,44 +66,43 @@
 
 .error-message {
     display: none; /* Hidden by default */
-    margin-top: 5px; /* Space between input field and error message */
-    background-color: #fff0f4; /* Light pink background */
-    color: #d8000c; /* Dark red text color */
-    border: 1px solid #f44336; /* Dark red border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px; /* Padding inside the message box */
-    font-size: 0.8em; /* Smaller font size */
-    text-align: left; /* Align text to the left */
-    /* position: absolute; Positioned absolutely to overlay the form */
-    bottom: -35px; /* Adjust as necessary */
+    margin-top: 5px;
+    background-color: #fff0f4; 
+    color: #d8000c;
+    border: 1px solid #f44336;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 0.8em;
+    text-align: left;
+    bottom: -35px;
     left: 0;
-    width: 100%; /* Take the full width of the parent .form-item */
-    box-sizing: border-box; /* Include padding and border in the width */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .error-message::before {
-    content: "⚠"; /* Warning sign */
-    color: #d8000c; /* Same as error text color */
-    padding-right: 5px; /* Space between icon and text */
+    content: "⚠";
+    color: #d8000c;
+    padding-right: 5px;
 }
 
 /* Adjust the height of .form-item when an error message is visible */
 .form-item.has-error {
-    padding-bottom: 45px; /* Space for error message, adjust as needed */
+    padding-bottom: 45px;
 }
 
-/* Highlight the input field when there is an error */
+/* highlight the input field when there is an error */
 .form-item.c-error input,
 .form-item.c-error select {
-    background: #fff0f4; /* Light pink background */
-    border: 1px solid #c51244; /* Dark red border */
-    color: #c51244; /* Dark red text color */
+    background: #fff0f4; 
+    border: 1px solid #c51244;
+    color: #c51244;
 }
 
 /* Add styles for your label to indicate an error, if needed */
 .c-label.c-error:after {
-    content: '*'; /* Example: Add an asterisk to indicate required */
-    color: #c51244; /* Red asterisk */
+    content: '*';
+    color: #c51244;
 }
 
 

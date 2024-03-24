@@ -24,9 +24,27 @@ $catId = $_GET['catId'] ?? null;
     <link rel="stylesheet" href="../css/discussion.css">
     <link rel="icon" href="../img/logo.png">
     <title>Pondr</title>  
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Select the element you want to fade out
+            let fading_message = $('#fading-message');
+
+            // Use setTimeout to trigger the fadeOut after 5 seconds
+            setTimeout(function() {
+                fading_message.fadeOut();
+            }, 5000); // 5000 milliseconds = 5 seconds
+        });
+    </script>
 </head>
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php
+    if(isset($_SESSION['discussionMessage'])) {
+        echo $_SESSION['discussionMessage'];
+        unset($_SESSION['discussionMessage']);
+    }
+    ?>
     <main class="center-container margin-down">
         <section class="side-container">
             <?php
@@ -44,9 +62,9 @@ $catId = $_GET['catId'] ?? null;
                     $prstmt->execute();
                     $prstmt->bind_result($catListId,$catName);
                     if ($prstmt->fetch()) {
-                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
+                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">" . htmlspecialchars($catName) . "</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">" . htmlspecialchars($catName) . "</a></li>";
                         while ($prstmt->fetch()) {
-                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
+                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">" . htmlspecialchars($catName) . "</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">" . htmlspecialchars($catName) . "</a></li>";
                         }
                         echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
                     } else {
@@ -82,8 +100,8 @@ $catId = $_GET['catId'] ?? null;
                     if($prstmt->fetch()){
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
-                        echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
-                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">$uName</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">$catName</a></i>";
+                        echo "<a href=\"./thread.php?postId=$postId\"><h2>". htmlspecialchars($title) ."</h2></a>";
+                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a></i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
@@ -91,8 +109,8 @@ $catId = $_GET['catId'] ?? null;
                         while ($prstmt->fetch()) {
                             echo "<div class=\"mini-thread\">";
                             echo "<article>";
-                            echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
-                            echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">$uName</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">$catName</a></i>";
+                            echo "<a href=\"./thread.php?postId=$postId\"><h2>" . htmlspecialchars($title) . "</h2></a>";
+                            echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a></i>";
                             echo "<p>$text</p>";
                             echo "</article>";
                             if (isset($postImg)) { echo "<img src=\"$postImg\">";}
