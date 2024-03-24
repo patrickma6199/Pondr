@@ -2,6 +2,9 @@
 session_start();
 ini_set('display_errors', 1);
 
+unset($_SESSION['bc_title']);
+unset($_SESSION['bc_link']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
