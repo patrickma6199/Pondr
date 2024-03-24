@@ -18,6 +18,7 @@ $pageTitle = "My Profile";
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="icon" href="../img/logo.png">
+        <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -70,6 +71,7 @@ $pageTitle = "My Profile";
                     echo " </article>";
                     echo "<img src=\"$img \">";
                     echo "</div>";
+                    echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
 
 
                 } else {
