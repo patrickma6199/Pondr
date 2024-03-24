@@ -34,17 +34,20 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                 }
 
 
-                $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId FROM posts p JOIN users u ON p.userId = u.userId JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
+                 $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
+
 
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $postId);
                 $prstmt->execute();
-                $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId);
+                $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId,$link);
                 if ($prstmt->fetch()) {
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> on <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a>  On <time>$postDate</time></i?";
+                    echo "Under <a href=\"./discussion.php?catId=$catId\">$category</a>";
+                    echo "<a href=\"$link\" target=\"_blank\"> $link </a>";
                     echo "<p> $postText </p>";
                     echo " </article>";
 
