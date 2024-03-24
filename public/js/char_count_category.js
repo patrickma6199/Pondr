@@ -1,9 +1,9 @@
 $(document).ready(function(){
     var maxLen = 255; 
     $('#max').text('/ ' + maxLen); 
-    let curLen = $('#categoryDescription').val().length; 
+    let curLen = $('textarea[name="categoryDescription"]').val().length; 
 
-    $('#categoryDescription').keyup(function() { 
+    $('textarea[name="categoryDescription"]').keyup(function() { 
         curLen = $(this).val().length;
         if (curLen > maxLen) {
             $('#char-count').css("color", "red"); 
