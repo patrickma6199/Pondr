@@ -40,12 +40,6 @@
     flex-grow: 1;
 }
 
-/* .form-item > textarea {
-    width: calc(100% - 10em);*/ /* Adjust the width of the inputs to leave space for error icon */
-    /*margin-right: 1em;*/ /* Space between input and error icon */
-/* } */
-
-
 .form-item > select {
     width: 100%;
 }
