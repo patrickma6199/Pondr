@@ -48,8 +48,8 @@ function load_categories() {
             }
         },
         error: function(xhr, status, error) {
-            console.error('Error:', error);
-            console.log("status:",status)
+            console.error('Category Error:', error);
+            console.log("status:", status);
         }
     });
 }
@@ -86,8 +86,9 @@ function load_new_notification() {
             }
         },
         error: function(xhr, status, error) {
-            console.error('Error:', error);
-            console.log("status:",status)
+            console.error('New Post Error:', error);
+            console.log("status:", status);
+            console.log("Result:" + xhr.responseText);
         }
     });
 }
