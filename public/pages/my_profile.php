@@ -72,13 +72,22 @@ $pageTitle = "My Profile";
                     echo "<img src=\"$img \">";
                     echo "</div>";
                     echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
-
-
+                    while ($prstmt->fetch()) {
+                        echo "<div class=\"mini-thread\">";
+                        echo "<article>";
+                        echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                        echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                        echo "<p> $text </p>";
+                        echo " </article>";
+                        echo "<img src=\"$img \">";
+                        echo "</div>";
+                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                    }
                 } else {
-                    echo "No threads";
+                    echo "<p>No threads yet! Go make one!</p>";
                 }
                 $prstmt->close();
-
+                $conn->close();
                 ?>
                
 
