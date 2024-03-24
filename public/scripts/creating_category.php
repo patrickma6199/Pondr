@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 // check if user is logged in
 $uid = $_SESSION['uid'] ?? null;
 if (!$uid) {
-    $_SESSION['message'] = "You must be logged in to create a category.";
+    $_SESSION['loginMessage'] = "You must be logged in to create a category.";
     header("Location: login.php"); 
     exit;
 }
