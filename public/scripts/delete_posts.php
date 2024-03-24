@@ -4,34 +4,32 @@ ini_set('display_errors', 1);
 require_once './dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $utype = isset ($_SESSION['utype']) ?? null;
+$uid = $_SESSION['uid'];
 
 
-if ($utype == '1') { //  '1' = admin user
-    if (isset($_POST['postId'])) {
-        $postId = $_POST['postId'];
 
-        // SQL to delete post
-        $sql = "DELETE FROM posts WHERE postId = ?;";
-        $prstmt = $conn->prepare($sql);
-        $prstmt->bind_param("s", $postId);
+if (isset ($_GET['postId'])) {
+    $pid = $_GET['postId'];
+    $uName = $_GET['uName'];
 
-        try {
-            $prstmt->execute();
-            $_SESSION['deletePostMessage'] = "<p>Post successfully deleted!</p>";
-        } catch (mysqli_sql_exception $e) {
-            $_SESSION['deletePostMessage'] = "<p>An error occurred while trying to delete the post. Please try again.</p>";
-        }
-
-        $prstmt->close();
-        $conn->close();
-        exit(header('Location: ../pages/admin.php')); // redirect to admin dashboard page
-    } else {
-        $_SESSION['deletePostMessage'] = "<p>Invalid request. No post specified for deletion.</p>";
-        exit(header('Location: ../pages/admin.php'));
+    $sql = "DELETE FROM posts WHERE postId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $pid);
+    if($stmt->execute()){
+        header("Location: ../pages/profile.php?uName=$uName");
+        exit();
+        
     }
-} else {
-    // redirect normal users
-    $_SESSION['deletePostMessage'] = "<p>You do not have permission to perform this action.</p>";
-    exit(header('Location: ../index.php'));
+    else{
+        echo"Error with deleting";
+        exit();
+    }
+    
+}else{
+    echo"PostId or Uname wrong";
+    echo"Postid =$pid";
+    echo"Uname = $uName";
 }
+$conn->close();
+
 ?>
