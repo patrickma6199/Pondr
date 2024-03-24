@@ -21,6 +21,7 @@ CREATE TABLE users (
 ) ENGINE = InnoDB;
 
 
+
 -- INSERT INTO users() VALUES();
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'John', 'Doe', 'john_doe', 'john.doe@example.com', 'password123', 'No Bio Made');
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'Jane', 'Doe', 'jane_doe', 'jane.doe@example.com', 'securePass', 'No Bio Made');
@@ -41,7 +42,7 @@ CREATE TABLE categories (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-INSERT INTO categories (userId, name, description) VALUES (1, 'Mr.Beast', 'Content related to the YouTuber Mr.Beast and his philanthropic adventures.');
+INSERT INTO categories (userId, name, description) VALUES (1, 'Mr. Beast', 'Content related to the YouTuber Mr.Beast and his philanthropic adventures.');
 INSERT INTO categories (userId, name, description) VALUES (2, 'Lord of the Rings', 'Discussions and posts about the Lord of the Rings book and movie series.');
 INSERT INTO categories (userId, name, description) VALUES (3, 'Knitting', 'A place for knitting enthusiasts to share patterns, advice, and projects.');
 INSERT INTO categories (userId, name, description) VALUES (4, 'Ramen', 'Exploring the world of Ramen - from instant noodles to gourmet dishes.');
