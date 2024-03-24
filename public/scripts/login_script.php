@@ -26,7 +26,7 @@
                 // Master password is correct, log in as admin
                     $_SESSION['utype'] = $utype;
                     $_SESSION['uid'] = $uid;
-                    exit(header('Location: ../admin.php'));
+                    exit(header('Location: ../pages/admin.php'));
 
                 //if query only returns one user and user's password hashed matches entered password hashed
                 } elseif (password_verify($password, $pass)){
@@ -36,7 +36,7 @@
                     $_SESSION['uid'] = $uid;
 
                     //redirect user based on type
-                    $redirectLocation = $utype == 1 ? '../admin.php' : '../index.php';
+                    $redirectLocation = $utype == 1 ? '../pages/admin.php' : '../index.php';
                     exit(header('Location: ' . $redirectLocation));
                                 } else {
                     //if password doesn't match
