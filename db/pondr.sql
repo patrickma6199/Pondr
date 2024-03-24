@@ -21,6 +21,7 @@ CREATE TABLE users (
 ) ENGINE = InnoDB;
 
 
+
 -- INSERT INTO users() VALUES();
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'John', 'Doe', 'john_doe', 'john.doe@example.com', 'password123', 'No Bio Made');
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'Jane', 'Doe', 'jane_doe', 'jane.doe@example.com', 'securePass', 'No Bio Made');
