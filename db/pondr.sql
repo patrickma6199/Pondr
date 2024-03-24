@@ -34,17 +34,18 @@ CREATE TABLE categories (
     catId INT AUTO_INCREMENT,
     userId INT NOT NULL,
     name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
     count INT NOT NULL DEFAULT 0, -- Count of posts under each category
     PRIMARY KEY(catId),
     FOREIGN KEY(userId) REFERENCES users(userId)
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-INSERT INTO categories(userId,Name) VALUES(1,'Mr.Beast');
-INSERT INTO categories(userId,Name) VALUES(2,'Lord of the Rings');
-INSERT INTO categories(userId,Name) VALUES(3,'Knitting');
-INSERT INTO categories(userId,Name) VALUES(4,'Ramen');
-INSERT INTO categories(userId,Name) VALUES(5,'Crisps of the World');
+INSERT INTO categories (userId, name, description) VALUES (1, 'Mr.Beast', 'Content related to the YouTuber Mr.Beast and his philanthropic adventures.');
+INSERT INTO categories (userId, name, description) VALUES (2, 'Lord of the Rings', 'Discussions and posts about the Lord of the Rings book and movie series.');
+INSERT INTO categories (userId, name, description) VALUES (3, 'Knitting', 'A place for knitting enthusiasts to share patterns, advice, and projects.');
+INSERT INTO categories (userId, name, description) VALUES (4, 'Ramen', 'Exploring the world of Ramen - from instant noodles to gourmet dishes.');
+INSERT INTO categories (userId, name, description) VALUES (5, 'Crisps of the World', 'A category for crisp (chip) lovers to discuss and review crisps from around the globe.');
 
 CREATE TABLE posts (
     postId INT AUTO_INCREMENT,
