@@ -38,7 +38,7 @@ $(document).ready(function(){
     $(document).on('click', '.reply-icon', function(e){
         e.preventDefault();
         var parentComId = $(this).data('commentid');
-        var replyTextarea = '<textarea class="thread-comment-reply" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'">Submit</button>';
+        var replyTextarea = '<br> <br> <textarea class="thread-comment-reply" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'">Submit</button>';
 
         if ($('#reply-text-'+ parentComId).length === 0) {
             $(this).parent().append(replyTextarea);
