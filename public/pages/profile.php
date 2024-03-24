@@ -18,6 +18,9 @@ require_once '../scripts/header.php';
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="icon" href="../img/logo.png">
+        <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
+         <script src="../js/jquery-3.1.1.min.js"></script>
+         <script src="../js/delete_profile.js"></script>
     </head>
 
     <body>
@@ -44,6 +47,8 @@ require_once '../scripts/header.php';
                     echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
                     echo "<br>";
                     echo "</div>";
+                    
+                    
 
 
                 } else {
@@ -51,6 +56,9 @@ require_once '../scripts/header.php';
                 }
                 $prstmt->close();
                 ?>
+                <div id="icon-buttons">
+                    <a href="" class="link-button" id="delete-profile-button"><i class="fa-regular fa-trash-can"></i></a>
+                </div>
 
             </section>
             <section class="discussion-container">
