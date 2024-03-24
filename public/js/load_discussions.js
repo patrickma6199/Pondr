@@ -78,7 +78,7 @@ function load_new_notification() {
             } else {
                 if (data.new) {
                     message.text(data.message).show();
-                    
+                    lastPostId = data.newPID;
                     setTimeout(function () {
                         message.fadeOut();
                     }, 5000);

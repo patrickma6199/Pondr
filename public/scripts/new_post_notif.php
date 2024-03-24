@@ -22,8 +22,7 @@ if (isset($_POST['search']) && isset($_POST['catId']) && isset($_POST['lastPost'
         $prstmt->execute();
         $prstmt->bind_result($postId);
         if($prstmt->fetch()){
-
-            echo json_encode(['new' => true, 'message' => 'A new post has been made under this search and category! Refresh your page to see the update!']);
+            echo json_encode(['new' => true, 'message' => 'There\'s a new post waiting for you! Refresh your page to see the update!', 'newPID' => $postId]);
         } else {
             echo json_encode(['new' => false]);
         }
