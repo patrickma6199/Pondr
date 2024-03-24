@@ -14,7 +14,9 @@ if (!isset ($_SESSION['uid'])) {
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/form.css">
         <link rel="stylesheet" href="../css/categories.css">
+        <script src="../js/jquery-3.1.1.min.js"></script>
         <script src="../js/char_count_category.js"></script>
+       
 
     </head>
 
