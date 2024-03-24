@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-require_once '../scripts/header.php';
+$pageTitle = "My Profile";
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +22,11 @@ require_once '../scripts/header.php';
     </head>
 
     <body>
-
+        <?php require_once '../scripts/header.php'; //for dynamic header ?>
+        <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
-                
-
                 $sql = "SELECT fName,lName,uName,bio,pfp FROM users WHERE userId = ?";
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $uid);
