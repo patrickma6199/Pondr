@@ -18,6 +18,9 @@ $pageTitle = $_GET['uName'] ?? "Profile";
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="icon" href="../img/logo.png">
+        <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src="../js/delete_profile.js"></script>
     </head>
 
     <body>
@@ -45,11 +48,17 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                     echo "</div>";
 
 
+
+
                 } else {
                     echo "NO PROFILE INFO";
                 }
                 $prstmt->close();
                 ?>
+                <div id="icon-buttons">
+                    <a href="" class="link-button" id="delete-profile-button"><i
+                            class="fa-regular fa-trash-can"></i></a>
+                </div>
 
             </section>
             <section class="discussion-container">
@@ -58,9 +67,9 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                 <?php
                 $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId FROM posts p JOIN users u ON p.userId = u.userId WHERE u.uName=?";
                 $prstmt = $conn->prepare($sql1);
-                $prstmt->bind_param("i", $uName);
+                $prstmt->bind_param("s", $uName);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img,$pid);
+                $prstmt->bind_result($postDate, $title, $text, $img, $pid);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
@@ -70,6 +79,9 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                     echo " </article>";
                     echo "<img src=\"$img \">";
                     echo "</div>";
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"../scripts/delete_posts.php?postId=$pid&uName=$uName\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a>
+                </div>";
 
 
                 } else {
@@ -78,7 +90,8 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                 $prstmt->close();
 
                 ?>
-               
+
+
 
             </section>
         </main>
