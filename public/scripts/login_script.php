@@ -10,7 +10,12 @@
         $password = $_POST['password'];
 
         //master password for admins
+        // Run this once to generate a hash
         $masterPassword = '1738imlikeheywhatsupHello?';
+        $masterPasswordHash = '$2y$10$TatMDSVNoez84Y0Stn0gPuudmXkXCUwYez2pQiuucsAy8OG5faGee';
+        //$masterPasswordHash = password_hash($masterPassword, PASSWORD_DEFAULT);
+        //echo $masterPasswordHash;
+
 
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "SELECT userId, utype, pass FROM users WHERE uName = ?;";
@@ -22,7 +27,7 @@
             if ($prstmt->fetch()) {
 
                 //check if user is admin
-                if ($utype == 1 && password_verify($password, $masterPassword)) {
+                if ($utype == 1 && $password === '1738imlikeheywhatsupHello?') {
                 // Master password is correct, log in as admin
                     $_SESSION['utype'] = $utype;
                     $_SESSION['uid'] = $uid;

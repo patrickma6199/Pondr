@@ -43,6 +43,8 @@ input[type="text"], input[type="password"], input[type="email"], button, .link-b
     outline: none;
 }
 
+
+
 input[type="text"]:hover, input[type="password"]:hover,input[type="email"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover, .form-container select { 
     background-color: var(--button-hover-bg);
     border-color: var(--highlight-color);
@@ -52,6 +54,10 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     outline: 0.1em solid white;
     background-color: var(--button-hover-bg);
     border-color:var(--input-hover);
+}
+.link-button.liked{
+     outline: 0.1em solid white;
+     background-color: palevioletred;
 }
 
 .form-button {
@@ -125,6 +131,8 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     margin: 0 1rem;
 }
 
+
+
 @media (max-width: 700px) {
     #top-bar {
         flex-direction: column;
@@ -146,7 +154,52 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 
     
 }
+/* Breadcrumb navigation styling */
+.breadcrumb {
+    padding-left: 0;
+    background: var(--background-color);
+    padding: 1rem; 
+    border-radius: 10px; 
+    margin-bottom: 20px; 
+    display: inline-flex; 
+    list-style-type: none;
+}
 
-/*/ stop here for styling page
+.breadcrumb-item {
+    color: var(--text-color); 
+    font-size: 0.9rem; 
+    text-transform: capitalize;
+}
+
+.breadcrumb-item a {
+    color: var(--highlight-color); 
+    text-decoration: none; 
+    transition: color 0.2s; 
+}
+
+.breadcrumb-item a:hover {
+    color: var(--text-color); 
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: ' > '; 
+    color: var(--text-color); 
+    margin: 0 5px; 
+}
+
+.breadcrumb-item:last-child {
+    font-weight: bold; 
+}
 
 
+.fading-message {
+    margin:auto;
+    background-color: #9ed8e6;
+    color: #07435e;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 0.8em;
+    text-align: center;
+    width:80%;
+    box-sizing: border-box;
+}

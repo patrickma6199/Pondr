@@ -25,6 +25,7 @@ require_once '../scripts/header.php';
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
+                
 
                 $sql = "SELECT fName,lName,uName,bio,pfp FROM users WHERE userId = ?";
                 $prstmt = $conn->prepare($sql);
@@ -56,15 +57,15 @@ require_once '../scripts/header.php';
                 <h2>Your Threads</h2>
 
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName FROM posts p JOIN users u ON p.userId = u.userId WHERE p.userId=?";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId FROM posts p JOIN users u ON p.userId = u.userId WHERE p.userId=?";
                 $prstmt = $conn->prepare($sql1);
                 $prstmt->bind_param("i", $uid);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img, $uName);
+                $prstmt->bind_result($postDate, $title, $text, $img, $uName,$pid);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
-                    echo "<a href=\"./thread.php\"><h2> $title </h2></a>";
+                    echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
                     echo "<i>Posted by: $uName on <time> $postDate </time></i>";
                     echo "<p> $text </p>";
                     echo " </article>";

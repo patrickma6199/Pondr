@@ -10,7 +10,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    border: 0.1em solid var(--button-border);
+    border-radius: 0.5em;
+    margin: 0.5em 0;
+    padding: 0 0.5em;
+    background: var(--input-background);
 }
 .mini-thread img{
     width: 100px;
@@ -26,6 +30,24 @@
 .mini-thread a {
     color: white;
 }
+
+.mini-thread p {
+    overflow: hidden;
+    max-height: 4em;
+}
+
+@supports(-webkit-line-clamp: 3){
+    .mini-thread p {
+        max-height: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+    }
+}
+
 
 .discussion-container img {
     max-width: 200px;

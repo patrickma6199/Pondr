@@ -24,46 +24,45 @@ $catId = $_GET['catId'] ?? null;
     <link rel="stylesheet" href="../css/discussion.css">
     <link rel="icon" href="../img/logo.png">
     <title>Pondr</title>  
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/load_discussions.js"></script>
+    <script>
+        $(document).ready(function() {
+            let post_success = $('#post-success');
+
+            setTimeout(function() {
+                post_success.fadeOut();
+            }, 5000);
+        });
+    </script>
 </head>
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php
+    if(isset($_SESSION['discussionMessage'])) {
+        echo $_SESSION['discussionMessage'];
+        unset($_SESSION['discussionMessage']);
+    }
+    ?>
+    <p class="fading-message" id="new-post" style="display:none;"></p>
     <main class="center-container margin-down">
         <section class="side-container">
             <?php
-            // if logged in, add button for new posts
+            // if logged in, add button for new posts and joining a community
             if (isset ($uid)) {
                 echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
+                echo '<a href="create_category.php" class="create-community-btn"><h3>Join a community!</h3></a>';
             }
             ?>
-            <h3>Filter by Category: </h3>
-            <ul>
-                <?php
-                $sql = "SELECT catId, name FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
-                $prstmt = $conn->prepare($sql);
-                try {
-                    $prstmt->execute();
-                    $prstmt->bind_result($catListId,$catName);
-                    if ($prstmt->fetch()) {
-                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
-                        while ($prstmt->fetch()) {
-                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
-                        }
-                        echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
-                    } else {
-                        echo "<p>No Categories have been made yet! make some.</p>";
-                    }
-                    $prstmt->close();
-                } catch(mysqli_sql_exception $e) {
-                    echo "<p>Error occurred: pulling categories.</p>";
-                }
-                ?>
-            </ul>
+            <h3>Trending Categories</h3>
+            <ul id="cat-list"></ul>
         </section>
 
         <section class="discussion-container">
                 <?php
+                $highestPostId = 0;
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
-                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img 
+                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
                 WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END
@@ -77,32 +76,42 @@ $catId = $_GET['catId'] ?? null;
                 }
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg);
+                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId);
                     if($prstmt->fetch()){
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
-                        echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
-                        echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                        echo "<a href=\"./thread.php?postId=$postId\"><h2>". htmlspecialchars($title) ."</h2></a>";
+                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") ."</i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                         echo "</div>";
+                        if ($postId > $highestPostId) {
+                            $highestPostId = $postId;
+                        }
                         while ($prstmt->fetch()) {
                             echo "<div class=\"mini-thread\">";
                             echo "<article>";
-                            echo "<a href=\"./thread.php?postId=$postId\"><h2>$title</h2></a>";
-                            echo "<i>Posted by: $uName on <time>$postDate</time></i>";
+                            echo "<a href=\"./thread.php?postId=$postId\"><h2>" . htmlspecialchars($title) . "</h2></a>";
+                            echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") ."</i>";
                             echo "<p>$text</p>";
                             echo "</article>";
                             if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                             echo "</div>";
+                            if ($postId > $highestPostId) {
+                                $highestPostId = $postId;
+                            }
                         }
                     } else {
                         echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
                     }
                     $prstmt->close();
+                    echo "<script>";
+                    echo "var lastPostId = $highestPostId;";
+                    echo "</script>";
                 } catch (mysqli_sql_exception $e) {
-                    echo "<p>Error while loading discussion posts. Try again.</p>";
+                    $code = $e->getCode();
+                    echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
                 }
                 $conn->close();
                 ?>

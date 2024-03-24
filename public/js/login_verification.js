@@ -5,6 +5,7 @@ $(document).ready(function() {
         var validationFailed = false;
         var username = $('#username').val().trim();
         var password = $('#password').val();
+       
 
         // Check username
         if (!username) {

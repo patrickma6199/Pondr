@@ -2,9 +2,11 @@
 ini_set('display_errors', 1);
 require_once 'dbconfig.php';
 header('Content-Type: application/json');
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
 $uid = $_SESSION['uid'] ?? null;
+$liked = false;
 
 if (isset ($_POST['postId'])) {
     $postId = $_POST['postId'];
@@ -25,13 +27,13 @@ if (isset ($_POST['postId'])) {
                 echo json_encode(['error' => 'Post not found']);
             }
         } else {
-            // Check if like already exists for the user and post
+
             $checkSql = "SELECT likesId FROM likes WHERE userId = ? AND postId = ?";
             $checkStmt = $conn->prepare($checkSql);
             $checkStmt->bind_param("ii", $uid, $postId);
             $checkStmt->execute();
             $checkResult = $checkStmt->get_result();
-            if ($checkResult->num_rows == 0) {
+            if ($checkResult->num_rows == 0 && $action != 'unlike') {
                 // Insert like since it doesn't exist
                 $sql = "INSERT INTO likes (userId, postId) VALUES (?, ?)";
                 $stmt = $conn->prepare($sql);
@@ -44,21 +46,37 @@ if (isset ($_POST['postId'])) {
                 $stmt->bind_param("i", $postId);
                 $stmt->execute();
 
-                $sql = "SELECT likes FROM posts WHERE postId = ?";
+                $liked = true;
+            } elseif($checkResult->num_rows > 0) {
+
+         
+                $sql = "DELETE FROM likes WHERE userId = ? AND postId = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ii", $uid, $postId);
+                $stmt->execute();
+
+
+                $sql = "UPDATE posts SET likes = likes - 1 WHERE postId = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $postId);
                 $stmt->execute();
-                $result = $stmt->get_result();
-                if ($row = $result->fetch_assoc()) {
-                    echo json_encode(['likes' => $row['likes']]); // Return the new like count
-                }
-            } else {
-                echo json_encode(['error' => 'User already liked this post']);
+
+                $liked = false;
             }
+
+                $sql = "SELECT likes FROM posts WHERE postId = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $postId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($row = $result->fetch_assoc()) {
+                echo json_encode(['likes' => $row['likes'], 'liked' => $liked]);
+            }
+        }
 
             // Retrieve the new like count to return it
 
-        }
+        
 
         $conn->commit();
     } catch (mysqli_sql_exception $e) {
