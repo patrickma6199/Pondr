@@ -35,7 +35,8 @@ $catId = $_GET['catId'] ?? null;
                 echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
             }
             ?>
-            <h3>Filter by Category: </h3>
+            <a href="create_category.php" class="create-community-btn"><h3>Join a community! </h3></a>
+
             <ul>
                 <?php
                 $sql = "SELECT catId, name FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
