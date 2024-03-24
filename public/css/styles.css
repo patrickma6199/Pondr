@@ -154,7 +154,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     
 }
 
-#fading-message {
+.fading-message {
     margin:auto;
     background-color: #9ed8e6;
     color: #07435e;

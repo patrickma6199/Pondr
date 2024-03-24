@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         $conn->commit();
-        $_SESSION['discussionMessage'] = "<p id=\"fading-message\">Your post was successfully posted!</p>";
+        $_SESSION['discussionMessage'] = "<p class=\"fading-message\" id=\"post-success\">Your post was successfully posted!</p>";
     } catch(Exception $e) {
         $message = $e->getMessage();
         $_SESSION['newPostMessage'] = "<p>An error occured while trying to create your post. Please try again. Error: $message</p>";
