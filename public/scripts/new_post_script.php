@@ -90,10 +90,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $prstmt->bind_param("s", $category);
             $prstmt->execute();
         }
+
+        if ($imageSet) {
+            if (extension_loaded('gd')) {
+                // resizing and saving image (getting to this portion of the code means that the post image was of valid size and type)
+                $original = $_FILES['post_image']['tmp_name'];
+                $oSize = getimagesize($original);
+                if (!$oSize) {
+                    throw new Exception("Failed to get image size.");
+                }
+                $oWidth = $oSize[0];
+                $oHeight = $oSize[1];
+                $resizeDim = 960; //to make it into a square (960px x 960px)
+
+                if ($extension == "jpeg" || $extension == "jpg") {
+                    $oImage = imagecreatefromjpeg($original);
+                    if (!$oImage) {
+                        throw new Exception("Failed to create JPEG image from file.");
+                    }
+                } else { // must be a png if not jpg
+                    $oImage = imagecreatefrompng($original);
+                    if (!$oImage) {
+                        throw new Exception("Failed to create PNG image from file.");
+                    }
+                }
+
+                $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+                if (!$rImage) {
+                    throw new Exception("Failed to create truecolor image.");
+                }
+
+                if (!imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight)) {
+                    throw new Exception("Failed to resample image.");
+                }
+
+                if ($extension == "jpeg" || $extension == "jpg") {
+                    if (!imagejpeg($rImage, $imgUrl)) {
+                        throw new Exception("Failed to save JPEG image.");
+                    }
+                } else { // must be a png if not jpg
+                    imagealphablending($rImage, false);
+                    imagesavealpha($rImage, true);
+                    if (!imagepng($rImage, $imgUrl)) {
+                        throw new Exception("Failed to save PNG image.");
+                    }
+                }
+            } else {
+                if (!move_uploaded_file($_FILES['post_image']['tmp_name'], $imgUrl)) {
+                    throw new Exception("Failed to move uploaded file.");
+                }
+            }
+        }
         $conn->commit();
-        $_SESSION['newPostMessage'] = "<p>Your post was successfully posted!</p>";
-    } catch(mysqli_sql_exception $e) {
-        $_SESSION['newPostMessage'] = "<p>An error occured while trying to create your post. Please try again.</p>";
+        $_SESSION['discussionMessage'] = "<p id=\"fading-message\">Your post was successfully posted!</p>";
+    } catch(Exception $e) {
+        $message = $e->getMessage();
+        $_SESSION['newPostMessage'] = "<p>An error occured while trying to create your post. Please try again. Error: $message</p>";
         $conn->rollback();
         $prstmt->close();
         $conn->close();
@@ -102,33 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $prstmt->close();
     $conn->close();
 
-    if ($imageSet) {
-        if (extension_loaded('gd')) {
-            // resizing and saving image (getting to this portion of the code means that the post image was of valid size and type)
-            $original = $_FILES['post_image']['tmp_name'];
-            $oSize = getimagesize($original);
-            $oWidth = $oSize[0];
-            $oHeight = $oSize[1];
-            $resizeDim = 960; //to make it into a square (960pxx960px)
-
-            if ($extension == "jpeg" || $extension == "jpg") {
-                $oImage = imagecreatefromjpeg($original);
-                $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
-                imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
-                imagejpeg($rImage, $imgUrl);
-            } else { // must be a png if not jpg
-                $oImage = imagecreatefrompng($original);
-                $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
-                imagealphablending($rImage, false);
-                imagesavealpha($rImage, true);
-                imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
-                imagepng($rImage, $imgUrl);
-            }
-        } else {
-            move_uploaded_file($_FILES['post_image']['tmp_name'],$imgUrl);
-        }
-    }
-    exit(header('Location: ../pages/new_post.php'));
+    exit(header('Location: ../pages/discussion.php'));
 
 } else {
     exit (header('Location: ../index.php'));
