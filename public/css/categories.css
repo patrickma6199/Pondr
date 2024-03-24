@@ -1,0 +1,23 @@
+.main-container {
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width: 80%;
+    margin: auto;
+}
+.category-container {
+    text-align:center;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    
+}
+.category-container ul{
+    list-style-type: none;
+    text-transform: capitalize;
+    display: inline-flex;
+}
+.category-container ul li:not(:last-child)::after {
+    content: ', ';
+     margin: 0 5px; 
+}

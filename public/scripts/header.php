@@ -60,15 +60,15 @@ $uid = $_SESSION['uid'] ?? null;
     } else {
         echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
         echo "<a href=\"register.php\" class=\"link-button\">Sign Up</a>";
-        
+
     }
     ?>
-    </nav>
+</nav>
 
-  
 
-    <?php
-    
+
+<?php
+
 echo '<ul class="breadcrumb">';
 $path = $_SERVER["PHP_SELF"];
 $parts = explode('/', $path);
@@ -77,7 +77,7 @@ $parts = explode('/', $path);
 $pages = array_search('pages', $parts);
 $isHomePage = (end($parts) === 'landing.php');
 if ($isHomePage) {
-    echo '<li class="breadcrumb-item">Home</li>'; 
+    echo '<li class="breadcrumb-item">Home</li>';
 } else {
     echo '<li class="breadcrumb-item"><a href="/Pondr/public/pages/landing.php">Home</a></li>';
 }
@@ -85,7 +85,7 @@ if ($isHomePage) {
 
 for ($i = $pages + 1; $i < count($parts); $i++) {
     if (!strstr($parts[$i], ".")) {
-        
+
         $url = "";
         for ($j = 0; $j <= $i; $j++) {
             $url .= $parts[$j] . "/";
@@ -110,5 +110,3 @@ for ($i = $pages + 1; $i < count($parts); $i++) {
 }
 echo '</ul>';
 ?>
-
-   
