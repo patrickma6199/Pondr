@@ -1,52 +1,8 @@
-<?php
-session_start();
-require_once '../scripts/dbconfig.php'; 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-ini_set('display_errors', 1);
+<?php require_once '../scripts/creating_category.php'; 
 
-// check if user is logged in
-$uid = $_SESSION['uid'] ?? null;
-if (!$uid) {
-    $_SESSION['message'] = "You must be logged in to create a category.";
-    header("Location: login.php"); 
-    exit;
+if (!isset ($_SESSION['uid'])) {
+    exit (header("Location: ../index.php"));
 }
-
-$categoryName = $_POST['categoryName'] ?? null;
-
-// create category if form is submitted
-if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($categoryName)) {
-    //check for duplicate category
-    $checkSql = "SELECT * FROM categories WHERE name = ?";
-    $stmt = $conn->prepare($checkSql);
-    $stmt->bind_param("s", $categoryName);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $_SESSION['message'] = "Category already exists.";
-    } else {
-        $sql = "INSERT INTO categories (userId, name) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("is", $uid, $categoryName);
-    
-        try {
-            $stmt->execute();
-            $_SESSION['message'] = "Category created successfully.";
-        } catch (mysqli_sql_exception $e) {
-            $_SESSION['message'] = "Error creating category: " . $e->getMessage();
-        }
-    }
-    $stmt->close();
-    header("Location: create_category.php"); //redirect back to the category page
-    exit;
-}
-
-
-
-$message = $_SESSION['message'] ?? '';
-unset($_SESSION['message']);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -56,39 +12,52 @@ unset($_SESSION['message']);
     <title>Create Category - Pondr</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
+    <script src="../js/char_count_category.js"></script>
+    
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
-    <main class="center-container">
-    <h2>Create New Category</h2>
-    <?php if (!empty($message)): ?>
-        <p><?php echo $message; ?></p>
-    <?php endif; ?>
-    <form method="post" action="">
-        <label for="categoryName">Category Name:</label>
-        <input type="text" id="categoryName" name="categoryName" required>
-        <button type="submit">Create Category</button>
-    </form>
-    <section>
-        <h3>Existing Categories</h3>
-        <ul>
-            <?php
-            $sql = "SELECT name FROM categories";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo "<li>" . htmlspecialchars($row['name']) . "</li>";
+    <?php require_once '../scripts/header.php'; ?>
+    <main class="form-container center-container">
+        <h2>Create New Category</h2>
+        <?php if (!empty($message)): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
+        <form method="post" action="">
+            <div class="form-item">
+                <label for="categoryName">Category Name:</label>
+                <input type="text" placeholder="Enter your Category Name" id="categoryName" name="categoryName" required>
+            </div>
+            <div class="form-item">
+                <label for="categoryDescription">Description:</label>
+                <textarea id="categoryDescription" placeholder="Enter a short description!" name="categoryDescription" rows="4" required></textarea>
+                <div id="char-count">
+                        <span id="curr">0</span>
+                        <span id="max">255</span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-button">Create Category</button>
+        </form>
+        <section>
+            <h3>Existing Categories</h3>
+            <ul>
+                <?php
+                $sql = "SELECT name FROM categories";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<li>" . htmlspecialchars($row['name']) . "</li>";
+                    }
+                } else {
+                    echo "<li>No categories found</li>";
                 }
-            } else {
-                echo "<li>No categories found</li>";
-            }
-
-            ?>
-        </ul>
-    </section>
-</main>
-<?php
-    $conn->close();
-?>
+                ?>
+            </ul>
+        </section>
+    </main>
+    <?php
+        $conn->close();
+    ?>
 </body>
 </html>
+
