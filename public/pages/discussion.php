@@ -25,15 +25,14 @@ $catId = $_GET['catId'] ?? null;
     <link rel="icon" href="../img/logo.png">
     <title>Pondr</title>  
     <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/load_discussions.js"></script>
     <script>
         $(document).ready(function() {
-            // Select the element you want to fade out
-            let fading_message = $('#fading-message');
+            let post_success = $('#post-success');
 
-            // Use setTimeout to trigger the fadeOut after 5 seconds
             setTimeout(function() {
-                fading_message.fadeOut();
-            }, 5000); // 5000 milliseconds = 5 seconds
+                post_success.fadeOut();
+            }, 5000);
         });
     </script>
 </head>
@@ -45,6 +44,7 @@ $catId = $_GET['catId'] ?? null;
         unset($_SESSION['discussionMessage']);
     }
     ?>
+    <p class="fading-message" id="new-post" style="display:none;"></p>
     <main class="center-container margin-down">
         <section class="side-container">
             <?php
@@ -53,34 +53,13 @@ $catId = $_GET['catId'] ?? null;
                 echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
             }
             ?>
-            <h3>Filter by Category: </h3>
-            <ul>
-                <?php
-                $sql = "SELECT catId, name FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
-                $prstmt = $conn->prepare($sql);
-                try {
-                    $prstmt->execute();
-                    $prstmt->bind_result($catListId,$catName);
-                    if ($prstmt->fetch()) {
-                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">" . htmlspecialchars($catName) . "</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">" . htmlspecialchars($catName) . "</a></li>";
-                        while ($prstmt->fetch()) {
-                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">" . htmlspecialchars($catName) . "</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">" . htmlspecialchars($catName) . "</a></li>";
-                        }
-                        echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
-                    } else {
-                        echo "<p>No Categories have been made yet! Try making one now!</p>";
-                    }
-                    $prstmt->close();
-                } catch(mysqli_sql_exception $e) {
-                    $code = $e->getCode();
-                    echo "<p>Error occurred: pulling categories. Error: $code</p>";
-                }
-                ?>
-            </ul>
+            <h3>Trending Categories</h3>
+            <ul id="cat-list"></ul>
         </section>
 
         <section class="discussion-container">
                 <?php
+                $highestPostId = 0;
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
@@ -101,25 +80,34 @@ $catId = $_GET['catId'] ?? null;
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
                         echo "<a href=\"./thread.php?postId=$postId\"><h2>". htmlspecialchars($title) ."</h2></a>";
-                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a></i>";
+                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") ."</i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                         echo "</div>";
+                        if ($postId > $highestPostId) {
+                            $highestPostId = $postId;
+                        }
                         while ($prstmt->fetch()) {
                             echo "<div class=\"mini-thread\">";
                             echo "<article>";
                             echo "<a href=\"./thread.php?postId=$postId\"><h2>" . htmlspecialchars($title) . "</h2></a>";
-                            echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time> under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a></i>";
+                            echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") ."</i>";
                             echo "<p>$text</p>";
                             echo "</article>";
                             if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                             echo "</div>";
+                            if ($postId > $highestPostId) {
+                                $highestPostId = $postId;
+                            }
                         }
                     } else {
                         echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
                     }
                     $prstmt->close();
+                    echo "<script>";
+                    echo "var lastPostId = $highestPostId;";
+                    echo "</script>";
                 } catch (mysqli_sql_exception $e) {
                     $code = $e->getCode();
                     echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
