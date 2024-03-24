@@ -5,7 +5,7 @@ $(document).ready(function(){
     $('#add-comment').off().on('click', function(e){
         e.preventDefault();
         if ($('#comment-text').length === 0) {
-            var textarea = '<br><br><textarea class="thread-comment-container" id="comment-text"></textarea><button id="submit-comment">Submit</button>';
+            var textarea = '<br><br><textarea class="thread-comment-reply" id="comment-text"></textarea><button id="submit-comment">Submit</button>';
             $(this).after(textarea);
         } else {
             $('#comment-text').focus();
