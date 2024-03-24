@@ -192,6 +192,14 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 }
 
 
-/*/ stop here for styling page
-
-
+.fading-message {
+    margin:auto;
+    background-color: #9ed8e6;
+    color: #07435e;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 0.8em;
+    text-align: center;
+    width:80%;
+    box-sizing: border-box;
+}
