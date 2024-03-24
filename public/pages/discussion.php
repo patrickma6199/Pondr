@@ -13,6 +13,8 @@ if (isset($_GET["search"])) {               //remove search if searched value is
 }
 $search = $_GET['search'] ?? null;
 $catId = $_GET['catId'] ?? null;
+
+$pageTitle = "Discussions";
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +40,7 @@ $catId = $_GET['catId'] ?? null;
 </head>
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/breadcrumbs.php'; ?>
     <?php
     if(isset($_SESSION['discussionMessage'])) {
         echo $_SESSION['discussionMessage'];
