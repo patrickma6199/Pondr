@@ -21,7 +21,7 @@ $uid = $_SESSION['uid'] ?? null;
         <form method="GET" action="discussion.php">
             <?php
             if (isset($_GET['catId'])) {
-                echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";                     //if category was selected, send category into get request to discussion.php
+                echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";    //if category was selected, send category into get request to discussion.php
             }
             echo "<input type=\"text\" name=\"search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset($search)) ? $search : "") . "\"/>";
             ?>

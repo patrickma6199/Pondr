@@ -66,7 +66,7 @@ require_once '../scripts/header.php';
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
                     echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
-                    echo "<i>Posted by: $uName on <time> $postDate </time> <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                    echo "<i>Posted by: $uName on <time> $postDate </time></i>";
                     echo "<p> $text </p>";
                     echo " </article>";
                     echo "<img src=\"$img \">";
