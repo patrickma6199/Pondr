@@ -41,15 +41,25 @@ if (!isset ($_SESSION['uid'])) {
         <section>
             <h3>Existing Categories</h3>
             <ul>
-                <?php
-                $sql = "SELECT name FROM categories";
-                $result = $conn->query($sql);
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo "<li>" . htmlspecialchars($row['name']) . "</li>";
+            <?php
+                $sql = "SELECT catId, name FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
+                $prstmt = $conn->prepare($sql);
+                try {
+                    $prstmt->execute();
+                    $prstmt->bind_result($catListId,$catName);
+                    if ($prstmt->fetch()) {
+                        echo (isset($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
+                        while ($prstmt->fetch()) {
+                            echo (isset ($search)) ? "<li><a href=\"./discussion.php?catId=$catListId&search=$search\">$catName</a></li>" : "<li><a href=\"./discussion.php?catId=$catListId\">$catName</a></li>";
+                        }
+                        echo (isset ($search)) ? "<li><a href=\"./discussion.php?search=$search\">Clear Filter</a></li>" : "<li><a href=\"./discussion.php\">Clear Category</a></li>";
+                    } else {
+                        echo "<p>No Categories have been made yet! Try making one now!</p>";
                     }
-                } else {
-                    echo "<li>No categories found</li>";
+                    $prstmt->close();
+                } catch(mysqli_sql_exception $e) {
+                    $code = $e->getCode();
+                    echo "<p>Error occurred: pulling categories. Error: $code</p>";
                 }
                 ?>
             </ul>
