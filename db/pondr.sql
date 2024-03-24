@@ -42,7 +42,7 @@ CREATE TABLE categories (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-INSERT INTO categories (userId, name, description) VALUES (1, 'Mr.Beast', 'Content related to the YouTuber Mr.Beast and his philanthropic adventures.');
+INSERT INTO categories (userId, name, description) VALUES (1, 'Mr. Beast', 'Content related to the YouTuber Mr.Beast and his philanthropic adventures.');
 INSERT INTO categories (userId, name, description) VALUES (2, 'Lord of the Rings', 'Discussions and posts about the Lord of the Rings book and movie series.');
 INSERT INTO categories (userId, name, description) VALUES (3, 'Knitting', 'A place for knitting enthusiasts to share patterns, advice, and projects.');
 INSERT INTO categories (userId, name, description) VALUES (4, 'Ramen', 'Exploring the world of Ramen - from instant noodles to gourmet dishes.');
