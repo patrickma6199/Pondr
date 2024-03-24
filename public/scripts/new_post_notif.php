@@ -10,15 +10,15 @@ if (isset($_POST['search']) && isset($_POST['catId']) && isset($_POST['lastPost'
     $catId = $_POST['catId'];
     $lastPost = $_POST['lastPost'];
     $sql = "SELECT p.postId
-    FROM posts as p LEFT OUTER JOIN categories as c ON p.catId = c.catId 
+    FROM posts as p JOIN users as u ON p.userId = u.userId LEFT OUTER JOIN categories as c ON p.catId = c.catId 
     WHERE" . ($catId != "" ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END AND p.postId > ?;";
-    $prstmt = $conn->prepare($sql);
-    if ($catId != "") {
-        $prstmt->bind_param("ssssss",$catId,$search,$search,$search,$search,$lastPost);
-    } else {
-        $prstmt->bind_param("sssss",$search,$search,$search,$search,$lastPost);
-    }
     try {
+        $prstmt = $conn->prepare($sql);
+        if ($catId != "") {
+            $prstmt->bind_param("ssssss",$catId,$search,$search,$search,$search,$lastPost);
+        } else {
+            $prstmt->bind_param("sssss",$search,$search,$search,$search,$lastPost);
+        }
         $prstmt->execute();
         $prstmt->bind_result($postId);
         if($prstmt->fetch()){
