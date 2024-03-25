@@ -42,10 +42,10 @@ try {
             }
         }
     } catch (mysqli_sql_exception $e) {
-        error_log("IMAGE not set", $e->getMessage());
+       $_SESSION['editMessage'] = "<p>Error => IMAGE UPDATE error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
 
     } catch (Exception $e) {
-        error_log("IMAGE not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => Database error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
     }
 
 
@@ -59,10 +59,15 @@ try {
         $updatesMade = true;
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("FNAME not set", $e->getMessage());
-
+      $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+      if (isset ($stmt)) {
+                $stmt->close();
+            }
     } catch (Exception $e) {
-        error_log("FNAME not set", $e->getMessage());
+       $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+        if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -75,10 +80,15 @@ try {
         $updatesMade = true;
     }
     } catch (mysqli_sql_exception $e) {
-        error_log("LNAME not set", $e->getMessage());
-
+        $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     } catch (Exception $e) {
-        error_log("LNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -91,10 +101,16 @@ try {
         $updatesMade = true;
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("BIO not set", $e->getMessage());
+         $_SESSION['editMessage'] = "<p>Error => Bio error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+          if (isset ($stmt)) {
+                $stmt->close();
+            }
 
     } catch (Exception $e) {
-        error_log("BIO not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => Bio Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -107,10 +123,16 @@ try {
         $updatesMade = true;
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("UNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
 
     } catch (Exception $e) {
-        error_log("UNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -122,27 +144,35 @@ try {
         $stmt->close();
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("IMGNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage => $e </p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
 
     } catch (Exception $e) {
-        error_log("IMGNAME not set", $e->getMessage());
+      $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage => $e </p>";
+       if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     // Redirect only once after attempting all updates
     if ($updatesMade) {
-        header('Location: ../pages/my_profile.php'); // Adjust the path as needed
-        exit();
+         $_SESSION['editMessage'] ="<p>UPDATES ARE A SUCCESSS</p>";
+       exit( header('Location: ../pages/my_profile.php')); // Adjust the path as needed
+      
+        
     } else {
         // Optional: Handle the case where no updates were made
         echo 'No updates were provided or changes made.';
-        header('Location: ../pages/my_profile.php'); // Redirect back to the edit profile page or another appropriate page
-        exit();
+        exit(header('Location: ../pages/my_profile.php')); // Redirect back to the edit profile page or another appropriate page
+        
     }
 } catch (mysqli_sql_exception $e) {
-    error_log("UID not set", $e->getMessage());
-
+   $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
+   
 } catch (Exception $e) {
-    error_log("UID not set", $e->getMessage());
+   $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
 }
 
 
