@@ -4,23 +4,23 @@ $(document).ready(function() {
         e.preventDefault();
         const pid_param = new URLSearchParams(window.location.search);
         var uName = pid_param.get('uName');
-        console.log(uName);
-
 
         $.ajax({
             type: 'POST',
             url: '../scripts/delete_profile.php',
             data: { uName: uName },
             success: function (data) {
-                console.log("delete: ", data);
+                if (data.error !== undefined) {
+                    console.error(data.error);
+                }
 
             },
             error: function (xhr, status, error) {
-                console.error('Error:', error);
+                console.error('Error: ', error);
+                console.log("Status: ", status);
             }
         });
 
     });
-
 
 });

@@ -7,42 +7,27 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $utype = isset ($_SESSION['utype']) ?? null;
 $uid = $_SESSION['uid'];
 
-try{
 if (isset ($_GET['postId'])) {
     $pid = $_GET['postId'];
-
     $sql = "DELETE FROM posts WHERE postId = ?";
     try{
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $pid);
-    if ($stmt->execute()) {
-        header("Location: ../pages/my_profile.php");
-        exit();
-
-    } else {
-        echo json_encode(['error' => 'SQL DELETE ERROR.']);
-        exit();
-    }
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $pid);
+        $stmt->execute();
+        $stmt->close();
+        exit(header("Location: ../pages/my_profile.php"));
     }catch (mysqli_sql_exception $e) {
-    error_log("SQL not set", $e->getMessage());
-
-} catch (Exception $e) {
-    error_log("SQL not set", $e->getMessage());
-}
-
+        error_log("SQL Error: ", $e->getMessage());
+    } catch (Exception $e) {
+        error_log("SQL Error: ", $e->getMessage());
+    } finally {
+        if (isset ($stmt)) {
+            $stmt->close();
+        }
+    }
 } 
 else {
-     echo json_encode(['error' => 'POSTID NOT SET.']);
+    exit (header("Location: ../index.php"));
 }
-
-
-
 $conn->close();
-}catch (mysqli_sql_exception $e) {
-    error_log("PostId not set", $e->getMessage());
-
-} catch (Exception $e) {
-    error_log("PostId not set", $e->getMessage());
-}
-
 ?>
