@@ -5,6 +5,7 @@ require_once '../scripts/dbconfig.php';
 $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $pageTitle = $_GET['uName'] ?? "Profile";
+$utype = $_SESSION['utype'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -55,10 +56,15 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                 }
                 $prstmt->close();
                 ?>
-                <div id="icon-buttons">
-                    <a href="" class="link-button" id="delete-profile-button"><i
-                            class="fa-regular fa-trash-can"></i></a>
-                </div>
+                <?php
+                if($utype === 1){
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"\" class=\"link-button\" id=\"delete-profile-button\"><i
+                            class=\"fa-regular fa-trash-can\"></i></a>
+                </div>";
+                
+                }
+                ?>
 
             </section>
             <section class="discussion-container">
@@ -79,9 +85,11 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                     echo " </article>";
                     echo "<img src=\"$img \">";
                     echo "</div>";
+                    if($utype === 1){
                     echo "<div id=\"icon-buttons\">
                     <a href=\"../scripts/delete_posts.php?postId=$pid&uName=$uName\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a>
                 </div>";
+                    }
 
 
                 } else {
