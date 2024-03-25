@@ -71,6 +71,7 @@
     align-items: center;
     margin-top: 2.6vw;
     position: relative;
+    justify-content: space-between;
 }
 
 
@@ -102,4 +103,12 @@
 
 .side-container a:hover {
     background: var(--input-hover);
+}
+
+.clear-category-btn {
+    font-weight: bolder; 
+    margin-top: auto; 
+    padding: 10px; 
+    display: block; 
+    flex-direction: column;
 }
