@@ -18,7 +18,6 @@ if ($utype == 0 || $utype == 1) {
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $pid);
             $stmt->execute();
-            $stmt->close();
             exit(header("Location: ../pages/profile.php?uName=$uName"));
         } catch (mysqli_sql_exception $e) {
             error_log("SQL Error: ", $e->getMessage());
