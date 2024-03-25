@@ -48,10 +48,6 @@ ini_set('display_errors', 1);
                             <textarea placeholder="Enter your new Bio" name="bio" cols="40" rows="4 "></textarea>
                         </div>
                         <div class="form-item">
-                            <label for="uName">Username: </label>
-                            <textarea placeholder="Enter your new Username" name="uName" ></textarea>
-                        </div>
-                        <div class="form-item">
                             <button type="submit" class="form-button">Confirm Changes</a>
                             <button type="reset" class="form-button">Reset</button>
                         </div>

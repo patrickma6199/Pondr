@@ -228,64 +228,7 @@ try{
     }
     exit (header("Location: ../pages/my_profile_edit.php"));
 } catch (Exception $e) {
-    $_SESSION['editMessage'] = "<p>Error => Bio Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
-    $conn->rollback();
-    $conn->close();
-    if (isset ($stmt)) {
-        $stmt->close();
-        unset($stmt);
-    }
-    exit (header("Location: ../pages/my_profile_edit.php"));
-}
-
-try{
-if (!empty ($_POST['uName'])) {
-    $sql = "UPDATE users SET uName=? WHERE userId=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('si', $_POST['uName'], $uid);
-    $stmt->execute();
-    $stmt->close();
-    $updatesMade = true;
-}
-}catch (mysqli_sql_exception $e) {
-    $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
-    $conn->rollback();
-    $conn->close();
-    if (isset ($stmt)) {
-        $stmt->close();
-        unset($stmt);
-    }
-    exit (header("Location: ../pages/my_profile_edit.php"));
-} catch (Exception $e) {
-    $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
-    $conn->rollback();
-    $conn->close();
-    if (isset ($stmt)) {
-        $stmt->close();
-        unset($stmt);
-    }
-    exit (header("Location: ../pages/my_profile_edit.php"));
-}
-
-try{
-if (!empty ($newImgName)) {
-    $sql = "UPDATE users SET pfp=? WHERE userId=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('si', $newImgName, $uid);
-    $stmt->execute();
-    $stmt->close();
-}
-}catch (mysqli_sql_exception $e) {
-    $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage =>" . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
-    $conn->rollback();
-    $conn->close();
-    if (isset ($stmt)) {
-        $stmt->close();
-        unset($stmt);
-    }
-    exit (header("Location: ../pages/my_profile_edit.php"));
-} catch (Exception $e) {
-    $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage =>" . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $_SESSION['editMessage'] = "<p>Error => Bio error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
     $conn->rollback();
     $conn->close();
     if (isset ($stmt)) {
@@ -299,10 +242,9 @@ $conn->commit();
 $conn->close();
 // Redirect only once after attempting all updates
 if ($updatesMade) {
-    $_SESSION['editMessage'] ="<p>Updates were successful!</p>";
     exit( header('Location: ../pages/my_profile.php'));
 } else {
-    exit(header('Location: ../pages/my_profile.php'));
-    
+    $_SESSION['editMessage'] = "<p>No changes were made.</p>";
+    exit(header('Location: ../pages/my_profile_edit.php'));
 }
 ?>
