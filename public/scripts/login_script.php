@@ -7,14 +7,7 @@
     if (isset ($_POST['username']) && isset ($_POST['password'])) {
         //if the user is not logged in, verify theyre credentials and log them in if valid by setting session variables
         $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        //master password for admins
-        // Run this once to generate a hash
-        $masterPassword = '1738imlikeheywhatsupHello?';
-        $masterPasswordHash = '$2y$10$TatMDSVNoez84Y0Stn0gPuudmXkXCUwYez2pQiuucsAy8OG5faGee';
-        //$masterPasswordHash = password_hash($masterPassword, PASSWORD_DEFAULT);
-        //echo $masterPasswordHash;
+    $password = $_POST['password'];
 
 
         //this is the sql query using prepared statements for sanitization of requests
@@ -25,25 +18,16 @@
             $prstmt->execute();
             $prstmt->bind_result($uid, $utype, $pass);
             if ($prstmt->fetch()) {
-
-                //check if user is admin
-                if ($utype == 1 && $password === '1738imlikeheywhatsupHello?') {
-                // Master password is correct, log in as admin
-                    $_SESSION['utype'] = $utype;
-                    $_SESSION['uid'] = $uid;
-                    exit(header('Location: ../pages/admin.php'));
-
                 //if query only returns one user and user's password hashed matches entered password hashed
-                } elseif (password_verify($password, $pass)){
+                if (password_verify($password, $pass)){
 
                     //assign session variables
                     $_SESSION['utype'] = $utype;
                     $_SESSION['uid'] = $uid;
 
-                    //redirect user based on type
-                    $redirectLocation = $utype == 1 ? '../pages/admin.php' : '../index.php';
-                    exit(header('Location: ' . $redirectLocation));
-                                } else {
+                    //redirect to discussions router
+                    exit(header('Location: ../index.php'));
+                } else {
                     //if password doesn't match
                     //set up message to inform user of incorrect login info
                     $_SESSION['loginMessage'] = "<p>Invalid username or password.</p>";

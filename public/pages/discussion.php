@@ -51,7 +51,7 @@ $catId = $_GET['catId'] ?? null;
             // if logged in, add button for new posts and joining a community
             if (isset ($uid)) {
                 echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
-                echo '<a href="create_category.php" class="create-community-btn"><h3>Join a community!</h3></a>';
+                echo '<a href="create_category.php" class="create-community-btn"><h3>Join a community?</h3></a>';
             }
             ?>
             <h3>Trending Categories</h3>
