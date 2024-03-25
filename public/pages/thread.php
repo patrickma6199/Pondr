@@ -85,19 +85,23 @@ try {
             <div class="thread-container">
                 <?php
 
-                $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
+                $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link, u.utype FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
 
                 try {
                     $prstmt = $conn->prepare($sql);
                     $prstmt->bind_param("i", $postId);
                     $prstmt->execute();
-                    $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId, $link);
+                    $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId, $link, $userType);
                     if ($prstmt->fetch()) {
                         echo "<article>";
                         echo "<img src=\"$postImg\" class =\"thread-img\" >";
                         echo "<h1> $postTitle </h1>";
-                        echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                        if ($userType == 1) {
+                            echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName" . "[MOD]</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
 
+                        } else {
+                            echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                        }
                         echo "<p> $postText </p>";
                         echo " </article>";
                         echo "<a href=\"$link\" target=\"_blank\"> $link </a>";
@@ -143,14 +147,14 @@ try {
 
             <?php
 
-            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL ORDER BY c.comDate DESC";
+            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId,u.utype FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL ORDER BY c.comDate DESC";
             try {
                 $prstmt = $conn->prepare($sql1);
 
                 $prstmt->bind_param("i", $postId);
                 $prstmt->execute();
                 $prstmt->store_result();
-                $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId);
+                $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId, $userType);
 
                 echo '<div class="thread-comments">';
                 while ($prstmt->fetch()) {
@@ -158,7 +162,12 @@ try {
                     echo '<article class="thread-comment-container">';
                     echo '<div class="thread-comment-profile">';
                     echo " <img src=\"$pfp\" alt=\"profile photo\">";
+                    if ($userType == 1) {
+                        echo "<i><a href=\"./profile.php?uName=$userName\"> $userName"."[MOD] </a> on <time>$comDate</time></i>";
+
+                    }else{
                     echo "<i><a href=\"./profile.php?uName=$userName\"> $userName </a> on <time>$comDate</time></i>";
+                    }
                     echo "</div>";
                     echo "<p class=\"thread-comment\">";
                     echo "$comText";
@@ -169,17 +178,22 @@ try {
                         echo "<div> <a href=\"\" class=\"link-button reply-icon\" onclick=\"showLoginAlert(event)\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
                     }
 
-                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
+                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp,u.utype FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
                     try {
                         $prstmt2 = $conn->prepare($sql2);
                         $prstmt2->bind_param("i", $comId);
                         $prstmt2->execute();
-                        $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp);
+                        $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp,$subUserType);
                         while ($prstmt2->fetch() && $subComId != NULL) {
                             echo "<div class=\"thread-comment-container\">";
                             echo "<div class=\"thread-comment-profile\">";
                             echo " <img src=\"$subPfp\" alt=\"profile photo\">";
+                            if($subUserType == 1) {
+                            echo "<i> <a href=\"./profile.php?uName=$subUserName\">$subUserName"."[MOD]</a> on <time>$subComDate</time></i>";
+
+                            }else{
                             echo "<i> <a href=\"./profile.php?uName=$subUserName\">$subUserName</a> on <time>$subComDate</time></i>";
+                            }
                             echo "</div>";
                             echo "<p class=\"thread-comment\">";
                             echo "$subComText";
