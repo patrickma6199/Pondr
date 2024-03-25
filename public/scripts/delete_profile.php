@@ -39,29 +39,28 @@ try {
                         echo json_encode(['error' => 'User not found.']);
                     }
                 } catch (mysqli_sql_exception $e) {
-                    error_log("SQL not set", $e->getMessage());
-
+                   echo json_encode(['error' => "SQL ERROR not set", 'errorMessage' => $e->getMessage()]);
                 } catch (Exception $e) {
-                    error_log("SQL not set", $e->getMessage());
+                    echo json_encode(['error' => "SQL ERROR not set", 'errorMessage' => $e->getMessage()]);
                 }
             } else {
                 echo json_encode(['error' => 'uName not provided.']);
 
             }
         } catch (mysqli_sql_exception $e) {
-            error_log("UNAME not set", $e->getMessage());
+            echo json_encode(['error' => "UNAME not set", 'errorMessage' => $e->getMessage()]);
 
         } catch (Exception $e) {
-            error_log("UNAME not set", $e->getMessage());
+            echo json_encode(['error' => "UNAME not set", 'errorMessage' => $e->getMessage()]);
         }
     } else {
         echo json_encode(['error' => 'NOT AN ADMIN NAUGHTY NAUGHTY.']);
     }
 } catch (mysqli_sql_exception $e) {
-    error_log("UTYPE not set", $e->getMessage());
+    echo json_encode(['error' => "UTYPE not set", 'errorMessage' => $e->getMessage()]);
 
 } catch (Exception $e) {
-    error_log("UTYPE not set", $e->getMessage());
+    echo json_encode(['error' => "UTYPE not set", 'errorMessage' => $e->getMessage()]);
 }
 $conn->close();
 
