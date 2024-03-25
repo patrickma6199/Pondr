@@ -15,7 +15,7 @@ async function commCount(){
         data: { postId: postId },
         success: function (data) {
             if (data.error !== undefined) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 // Update the comment count display
                 $('#comment-count').text(data.count);

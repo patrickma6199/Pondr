@@ -20,12 +20,14 @@ if (isset ($_POST['postId'])) { //implied request method is POST
         } else {
             echo json_encode(['error' => "Table row doesn't seem to exist."]);
         }
+        $stmt->close();
     } catch (mysqli_sql_exception $e) {
         echo json_encode(['error' => "SQL error occured."]);
+        if (isset ($stmt)) {
+            $stmt->close();
+        }
     }
-
-    // Display the comment count
-    $stmt->close();
+    $conn->close();
 } else {
     exit (header("Location: ../index.php"));
 }
