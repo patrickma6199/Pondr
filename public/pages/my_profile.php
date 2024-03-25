@@ -6,6 +6,9 @@ $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $pageTitle = "My Profile";
 $utype = $_SESSION['utype'] ?? null;
+if (!isset ($uid)) {
+    exit(header("Location: ../index.php"));
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,18 +48,14 @@ $utype = $_SESSION['utype'] ?? null;
                     echo "<br>";
                     echo "<a href=\"my_profile_edit.php\" class=\"link-button\">Edit</a>";
                     echo "</div>";
-
-
                 } else {
                     echo "NO PROFILE INFO";
                 }
                 $prstmt->close();
                 ?>
-
             </section>
             <section class="discussion-container">
                 <h2>Your Threads</h2>
-
                 <?php
                 $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId FROM posts p JOIN users u ON p.userId = u.userId WHERE p.userId=?";
                 $prstmt = $conn->prepare($sql1);
@@ -66,13 +65,15 @@ $utype = $_SESSION['utype'] ?? null;
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
-                    echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                    echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
                     echo "<i>Posted by: $uName on <time> $postDate </time></i>";
                     echo "<p> $text </p>";
                     echo " </article>";
-                    echo "<img src=\"$img \">";
+                    if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                    if ($utype === 0) {
+                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                    }
                     echo "</div>";
-                    echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                     while ($prstmt->fetch()) {
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
@@ -80,11 +81,11 @@ $utype = $_SESSION['utype'] ?? null;
                         echo "<i>Posted by: $uName on <time> $postDate </time></i>";
                         echo "<p> $text </p>";
                         echo " </article>";
-                        echo "<img src=\"$img \">";
-                        echo "</div>";
-                        if ($utype === 0 || $utype === 1) {
+                        if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        if ($utype === 0) {
                             echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                         }
+                        echo "</div>";
                     }
                 } else {
                     echo "<p>No threads yet! Go make one!</p>";
