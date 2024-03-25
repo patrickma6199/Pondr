@@ -25,28 +25,33 @@ $utype = $_SESSION['utype'] ?? null;
     </head>
 
     <body>
-        <?php require_once '../scripts/header.php'; //for dynamic header ?>
+        <?php require_once '../scripts/header.php'; //for dynamic header  ?>
         <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
                 $uName = $_GET['uName'] ?? null;
                 if (!isset ($uName)) {
-                    exit(header("Location: ../index.php"));
+                    exit (header("Location: ../index.php"));
                 }
-                $sql = "SELECT fName,lName,bio,pfp FROM users WHERE uName = ?";
+
+                $sql = "SELECT fName,lName,bio,pfp,utype FROM users WHERE uName = ?";
                 try {
                     $prstmt = $conn->prepare($sql);
                     $prstmt->bind_param("i", $uName);
                     $prstmt->execute();
-                    $prstmt->bind_result($fName, $lName, $bio, $pfp);
+                    $prstmt->bind_result($fName, $lName, $bio, $pfp, $userType);
                     if ($prstmt->fetch()) {
                         echo "<div class=\"profile-img\">";
                         echo "<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
                         echo "</div>";
                         echo "<div class=\"profile-text\">";
                         echo "<p><b>Name:</b> $fName $lName </p> ";
-                        echo "<p><b>Username:</b> $uName </p>";
+                        if ($userType == 1) {
+                            echo "<p><b>Username:</b> $uName" . "[MOD]</p>";
+                        } else {
+                            echo "<p><b>Username:</b> $uName </p>";
+                        }
                         echo "<p> <b>Bio:</b> $bio </p>";
                         echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
                         echo "<br>";
@@ -62,9 +67,7 @@ $utype = $_SESSION['utype'] ?? null;
                         $prstmt->close();
                     }
                 }
-                ?>
-                <?php
-                if($utype === 1){
+                if ($utype === 1) {
                     echo "<div id=\"icon-buttons\">
                     <a href=\"\" class=\"link-button\" id=\"delete-profile-button\" onclick=\"return confirm('Are you sure?')\"><i
                             class=\"fa-regular fa-trash-can\"></i></a>
@@ -77,17 +80,39 @@ $utype = $_SESSION['utype'] ?? null;
                 <h2>Threads</h2>
 
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name, u.utype FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
                 try{
-                    $prstmt = $conn->prepare($sql1);
-                    $prstmt->bind_param("s", $uName);
-                    $prstmt->execute();
-                    $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId, $catId, $catName);
-                    if ($prstmt->fetch()) {
-                        echo "<div class=\"mini-thread\">";
-                        echo "<article>";
-                        echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
-                        echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                  $prstmt = $conn->prepare($sql1);
+                  $prstmt->bind_param("s", $uName);
+                  $prstmt->execute();
+                  $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId, $catId, $catName, $userType);
+                  if ($prstmt->fetch()) {
+                      echo "<div class=\"mini-thread\">";
+                      echo "<article>";
+                      echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
+                      if ($userType == 1) {
+                          echo "<i>Posted by: $uName"."[MOD] on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                      } else {
+                          echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                      }
+                      echo "<p> $text </p>";
+                      echo " </article>";
+                      if (isset ($postImg)) {
+                          echo "<img src=\"$postImg\">";
+                      }
+                      if (($utype === 0 && $uid == $userId) || $utype === 1) {
+                          echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                      }
+                      echo "</div>";
+                      while ($prstmt->fetch()) {
+                          echo "<div class=\"mini-thread\">";
+                          echo "<article>";
+                          echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                          if ($userType == 1) {
+                              echo "<i>Posted by: $uName"."[MOD] on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                          } else {
+                              echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                          }
                         echo "<p> $text </p>";
                         echo " </article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
@@ -95,18 +120,6 @@ $utype = $_SESSION['utype'] ?? null;
                             echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                         }
                         echo "</div>";
-                        while ($prstmt->fetch()) {
-                            echo "<div class=\"mini-thread\">";
-                            echo "<article>";
-                            echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
-                            echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
-                            echo "<p> $text </p>";
-                            echo " </article>";
-                            if (isset($postImg)) { echo "<img src=\"$postImg\">";}
-                            if (($utype === 0 && $uid == $userId) || $utype === 1) {
-                                echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
-                            }
-                            echo "</div>";
                         }
                     } else {
                         echo "This user has not posted yet...";
