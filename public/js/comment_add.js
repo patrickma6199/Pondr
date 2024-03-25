@@ -5,7 +5,7 @@ $(document).ready(function(){
     $('#add-comment').off().on('click', function(e){
         e.preventDefault();
         if ($('#comment-text').length === 0) {
-            var textarea = '<br><br><textarea class="thread-comment-reply" id="comment-text"></textarea><button id="submit-comment">Submit</button>';
+            var textarea = '<br><br><textarea class="thread-comment-box" id="comment-text"></textarea><button id="submit-comment">Submit</button>';
             $(this).after(textarea);
         } else {
             $('#comment-text').focus();
@@ -38,7 +38,7 @@ $(document).ready(function(){
     $(document).on('click', '.reply-icon', function(e){
         e.preventDefault();
         var parentComId = $(this).data('commentid');
-        var replyTextarea = '<br> <br> <textarea class="thread-comment-reply" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'">Submit</button>';
+        var replyTextarea = '<br> <br> <textarea class="thread-comment-box" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'">Submit</button>';
 
         if ($('#reply-text-'+ parentComId).length === 0) {
             $(this).parent().append(replyTextarea);
