@@ -5,6 +5,7 @@ require_once '../scripts/dbconfig.php';
 $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $pageTitle = "My Profile";
+$utype = $_SESSION['utype'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +23,7 @@ $pageTitle = "My Profile";
     </head>
 
     <body>
-        <?php require_once '../scripts/header.php'; //for dynamic header ?>
+        <?php require_once '../scripts/header.php'; //for dynamic header  ?>
         <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <section class="profile-container">
@@ -61,7 +62,7 @@ $pageTitle = "My Profile";
                 $prstmt = $conn->prepare($sql1);
                 $prstmt->bind_param("i", $uid);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img, $uName,$pid);
+                $prstmt->bind_result($postDate, $title, $text, $img, $uName, $pid);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
@@ -81,7 +82,9 @@ $pageTitle = "My Profile";
                         echo " </article>";
                         echo "<img src=\"$img \">";
                         echo "</div>";
-                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                        if ($utype === 0 || $utype === 1) {
+                            echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                        }
                     }
                 } else {
                     echo "<p>No threads yet! Go make one!</p>";
@@ -89,7 +92,7 @@ $pageTitle = "My Profile";
                 $prstmt->close();
                 $conn->close();
                 ?>
-               
+
 
             </section>
         </main>
