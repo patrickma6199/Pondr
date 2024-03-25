@@ -42,10 +42,10 @@ try {
             }
         }
     } catch (mysqli_sql_exception $e) {
-        error_log("IMAGE not set", $e->getMessage());
+       $_SESSION['editMessage'] = "<p>Error => IMAGE UPDATE error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
 
     } catch (Exception $e) {
-        error_log("IMAGE not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => Database error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
     }
 
 
@@ -59,10 +59,15 @@ try {
         $updatesMade = true;
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("FNAME not set", $e->getMessage());
-
+      $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+      if (isset ($stmt)) {
+                $stmt->close();
+            }
     } catch (Exception $e) {
-        error_log("FNAME not set", $e->getMessage());
+       $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+        if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -75,10 +80,15 @@ try {
         $updatesMade = true;
     }
     } catch (mysqli_sql_exception $e) {
-        error_log("LNAME not set", $e->getMessage());
-
+        $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     } catch (Exception $e) {
-        error_log("LNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -91,10 +101,16 @@ try {
         $updatesMade = true;
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("BIO not set", $e->getMessage());
+         $_SESSION['editMessage'] = "<p>Error => Bio error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+          if (isset ($stmt)) {
+                $stmt->close();
+            }
 
     } catch (Exception $e) {
-        error_log("BIO not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => Bio Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -107,10 +123,16 @@ try {
         $updatesMade = true;
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("UNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
 
     } catch (Exception $e) {
-        error_log("UNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     try{
@@ -122,10 +144,16 @@ try {
         $stmt->close();
     }
     }catch (mysqli_sql_exception $e) {
-        error_log("IMGNAME not set", $e->getMessage());
+        $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage => $e </p>";
+         if (isset ($stmt)) {
+                $stmt->close();
+            }
 
     } catch (Exception $e) {
-        error_log("IMGNAME not set", $e->getMessage());
+      $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage => $e </p>";
+       if (isset ($stmt)) {
+                $stmt->close();
+            }
     }
 
     // Redirect only once after attempting all updates
@@ -139,10 +167,10 @@ try {
         exit();
     }
 } catch (mysqli_sql_exception $e) {
-    error_log("UID not set", $e->getMessage());
-
+   $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
+   
 } catch (Exception $e) {
-    error_log("UID not set", $e->getMessage());
+   $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
 }
 
 
