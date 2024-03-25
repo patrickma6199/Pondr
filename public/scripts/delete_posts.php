@@ -7,8 +7,7 @@ $utype = isset ($_SESSION['utype']) ?? null;
 $uid = $_SESSION['uid'] ?? null;
 $utype = $_SESSION['utype'] ?? null;
 
-
-if ($utype == 0 || $utype == 1) {
+if ($utype == 1) {
     if (isset ($_GET['postId'])) {
         $pid = $_GET['postId'];
         $uName = $_GET['uName'];
