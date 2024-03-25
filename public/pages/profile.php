@@ -6,6 +6,7 @@ $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $pageTitle = $_GET['uName'] ?? "Profile";
 $utype = $_SESSION['utype'] ?? null;
+$uid = $_SESSION['uid'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -67,29 +68,38 @@ $utype = $_SESSION['utype'] ?? null;
                 <h2>Your Threads</h2>
 
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId FROM posts p JOIN users u ON p.userId = u.userId WHERE u.uName=?";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId, u.userId FROM posts p JOIN users u ON p.userId = u.userId WHERE u.uName=?";
                 $prstmt = $conn->prepare($sql1);
                 $prstmt->bind_param("s", $uName);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img, $pid);
+                $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
-                    echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                    echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
                     echo "<i>Posted by: $uName on <time> $postDate </time></i>";
                     echo "<p> $text </p>";
                     echo " </article>";
-                    echo "<img src=\"$img \">";
-                    echo "</div>";
-                    if($utype === 1){
-                    echo "<div id=\"icon-buttons\">
-                    <a href=\"../scripts/delete_posts.php?postId=$pid&uName=$uName\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a>
-                </div>";
+                    if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                    if (($utype === 0 && $uid == $userId) || $utype === 1) {
+                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                     }
-
-
+                    echo "</div>";
+                    while ($prstmt->fetch()) {
+                        echo "<div class=\"mini-thread\">";
+                        echo "<article>";
+                        echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                        echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                        echo "<p> $text </p>";
+                        echo " </article>";
+                        if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        if (($utype === 0 && $uid == $userId) || $utype === 1) {
+                            echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                        }
+                        echo "</div>";
+                    }
                 } else {
-                    echo "No threads";
+                    echo "This user has not posted yet...";
                 }
                 $prstmt->close();
 
