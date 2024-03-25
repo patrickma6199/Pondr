@@ -65,7 +65,7 @@ $pageTitle = "Discussions";
                 <?php
                 $highestPostId = 0;
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
-                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId
+                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
                 WHERE" . (isset($catId) ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END
@@ -79,12 +79,12 @@ $pageTitle = "Discussions";
                 }
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId);
+                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId, $userId);
                     if($prstmt->fetch()){
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
                         echo "<a href=\"./thread.php?postId=$postId\"><h2>". htmlspecialchars($title) ."</h2></a>";
-                        echo "<i>Posted by: <a href=\"./profile.php?uName=$uName\">" . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") ."</i>";
+                        echo "<i>Posted by: ".($userId == $uid ? "<a href=\"./my_profile.php\">":"<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") ."</i>";
                         echo "<p>$text</p>";
                         echo "</article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
