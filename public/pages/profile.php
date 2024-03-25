@@ -80,7 +80,7 @@ $utype = $_SESSION['utype'] ?? null;
                 <h2>Threads</h2>
 
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name, u.utype FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId, u.userId, c.catId, c.name, u.utype FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
                 try{
                   $prstmt = $conn->prepare($sql1);
                   $prstmt->bind_param("s", $uName);
