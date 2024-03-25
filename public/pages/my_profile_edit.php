@@ -25,6 +25,12 @@ ini_set('display_errors', 1);
             <section class="form-container">
                 <form action="../scripts/edit_profile.php" method="post" class="edit-container">
                     <legend>Edit Profile Info</legend>
+                     <?php
+                    if (isset($_SESSION['editMessage'])) {
+                        echo $_SESSION['editMessage'];
+                        unset($_SESSION['editMessage']);
+                    }
+                    ?>
                         <div class="form-item">
                             <label for="img">Enter a new Profile Picture: </label>
                             <input type="file" name="img" accept="image/*" >
