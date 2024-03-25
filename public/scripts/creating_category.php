@@ -18,29 +18,29 @@ $categoryName = $_POST['categoryName'] ?? null;
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !empty($categoryName)) {
     //check for duplicate category
     $checkSql = "SELECT * FROM categories WHERE name = ?";
-    $stmt = $conn->prepare($checkSql);
-    $stmt->bind_param("s", $categoryName);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $_SESSION['message'] = "Category already exists.";
-    } else {
-        $sql = "INSERT INTO categories (userId, name) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("is", $uid, $categoryName);
-    
-        try {
+    try{
+        $stmt = $conn->prepare($checkSql);
+        $stmt->bind_param("s", $categoryName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if ($result->num_rows > 0) {
+            $_SESSION['message'] = "Category already exists.";
+        } else {
+            $sql = "INSERT INTO categories (userId, name) VALUES (?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("is", $uid, $categoryName);
             $stmt->execute();
             $_SESSION['message'] = "Category created successfully.";
-        } catch (mysqli_sql_exception $e) {
-            $_SESSION['message'] = "Error creating category: " . $e->getMessage();
+            $stmt->close();
+        }
+    } catch(mysqli_sql_exception $e) {
+        $_SESSION['message'] = "Error creating category: " . $e->getMessage();
+        if (isset ($stmt)) {
+            $stmt->close();
         }
     }
-    $stmt->close();
-    header("Location: create_category.php"); //redirect back to the category page
-    exit;
-}
 
-$message = $_SESSION['message'] ?? '';
-unset($_SESSION['message']);
+    exit(header("Location: create_category.php")); //redirect back to the category page
+}
 ?>

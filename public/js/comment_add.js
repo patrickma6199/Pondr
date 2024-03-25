@@ -27,8 +27,9 @@ $(document).ready(function(){
             success: function(data){
                 if (data.error !== undefined) {
                     console.error(data.error);
+                } else {
+                    location.reload(true);
                 }
-                location.reload(true);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -63,9 +64,9 @@ $(document).ready(function(){
             success: function(data){
                 if (data.error !== undefined) {
                     console.error(data.error);
+                } else {
+                    location.reload(true);
                 }
-                
-                location.reload(true);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);

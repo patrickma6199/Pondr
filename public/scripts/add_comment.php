@@ -17,6 +17,7 @@ if(isset($_POST['postId']) && isset($_POST['commentText']) && isset($_SESSION['u
     }
 
     $sql = "INSERT INTO comments (userId, postId, text,comDate,parentComId) VALUES (?,?,?,NOW(),?)";
+    $conn->begin_transaction();
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iisi", $userId, $postId, $commentText, $parentCommentId);
@@ -26,8 +27,17 @@ if(isset($_POST['postId']) && isset($_POST['commentText']) && isset($_SESSION['u
         $sql1 = "UPDATE posts SET comment=comment+1 WHERE postId=?";
         $stmt1 = $conn->prepare($sql1);
         $stmt1->bind_param("i", $postId);
+        $stmt1->execute();
         $stmt1->close();
+        $conn->commit();
     } catch (mysqli_sql_exception $e) {
+        $conn->rollback();
+        if (isset ($stmt)) {
+            $stmt->close();
+        }
+        if (isset ($stmt1)) {
+            $stmt1->close();
+        }
         $code = $e->getCode();
         echo json_encode(['error' => "SQL Error: $code"]);
     }
