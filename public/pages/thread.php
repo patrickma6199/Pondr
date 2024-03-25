@@ -3,11 +3,15 @@ session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$utype = $_SESSION['utype'] ?? null;
+
+
 if (isset ($_GET['postId'])) {
     $postId = $_GET['postId'];
 } else {
     exit (header("Location: ../index.php"));
 }
+
 
 // for breadcrumbs
 $sql = "SELECT title FROM posts WHERE postId = ?;";
@@ -78,14 +82,22 @@ try{
                 $prstmt->close();
 
                 ?>
+                <?php
+                if($utype === 0 || $utype === 1) {
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"\" class=\"link-button\" id=\"like-button\"><i class=\"fa-regular fa-heart\"></i> Like | <span
+                            id=\"like-count\"> 0 </span></a>
+                    <a href=\"\" class=\"link-button\" id=\"add-comment\" ><i class=\"fa-solid fa-comment\" ></i> Comment | <span
+                            id=\"comment-count\"> 0 </span> </a> </div>";
+                } else {
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"\" class=\"link-button\" ><i class=\"fa-regular fa-heart\"></i> Like </a>
+                    <a href=\"\" class=\"link-button\" ><i class=\"fa-solid fa-comment\" ></i> Comment </a> </div>";
+                        }
+                ?>
 
-                <div id="icon-buttons">
-                    <a href="" class="link-button" id="like-button"><i class="fa-regular fa-heart"></i> Like | <span
-                            id="like-count"> 0 </span></a>
-                    <a href="" class="link-button" id="add-comment" ><i class="fa-solid fa-comment" ></i> Comment | <span
-                            id="comment-count"> 0 </span> </a>
-
-                </div>
+              
+                
             </div>
 
             <?php
@@ -104,13 +116,16 @@ try{
                 echo '<article class="thread-comment-container">';
                 echo '<div class="thread-comment-profile">';
                 echo " <img src=\"$pfp\" alt=\"profile photo\">";
-                echo "<i> $userName on <time>$comDate</time></i>";
+                echo "<i><a href=\"./profile.php?uName=$userName\"> $userName </a> on <time>$comDate</time></i>";
                 echo "</div>";
                 echo "<p class=\"thread-comment\">";
                 echo "$comText";
                 echo "</p>";
+                 if($utype === 0 || $utype === 1) {
                 echo "<div> <a href=\"\" class=\"link-button reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
-
+                 } else {
+                echo "<div> <a href=\"\" class=\"link-button reply-icon\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+                 }
 
                 $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ?";
                 $prstmt2 = $conn->prepare($sql2);
@@ -121,7 +136,7 @@ try{
                     echo "<div class=\"thread-comment-container\">";
                     echo "<div class=\"thread-comment-profile\">";
                     echo " <img src=\"$subPfp\" alt=\"profile photo\">";
-                    echo "<i> $subUserName on <time>$subComDate</time></i>";
+                    echo "<i> <a href=\"./profile.php?uName=$subUserName\">$subUserName</a> on <time>$subComDate</time></i>";
                     echo "</div>";
                     echo "<p class=\"thread-comment\">";
                     echo "$subComText";
