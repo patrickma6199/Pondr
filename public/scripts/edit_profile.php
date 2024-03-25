@@ -4,52 +4,153 @@ session_start();
 ini_set('display_errors', 1);
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+if (isset ($_SESSION['uid'])) {
+    $uid = $_SESSION['uid'];
+    $updatesMade = false; // Flag to check if any updates were made
+} else {
+    exit(header("Location: ../index.php")); // bad navigation
+}
+// Handle file upload and set $newImgName if a new image is uploaded
+$conn->begin_transaction();
 try {
-    if (isset ($_SESSION['uid'])) {
-        $uid = $_SESSION['uid'];
-        $updatesMade = false; // Flag to check if any updates were made
-    }
-
-
-
-    // Handle file upload and set $newImgName if a new image is uploaded
-
-    $newImgName = '';
-    try {
-        if (isset ($_FILES['img']) && $_FILES['img']['error'] == UPLOAD_ERR_OK) {
-            $imgName = $_FILES['img']['name'];
-            $imgTmpName = $_FILES['img']['tmp_name'];
-            $imgSize = $_FILES['img']['size'];
-            $imgError = $_FILES['img']['error'];
-            $imgType = $_FILES['img']['type'];
-
-            $imgExtension = strtolower(end(explode('.', $imgName)));
-            $allowed = array('jpg', 'jpeg', 'png', 'gif');
-
-            if (in_array($imgExtension, $allowed)) {
-                $newImgName = uniqid('', true) . '.' . $imgExtension;
-                $imgDestination = '../uploads/' . $newImgName;
-
-                if (move_uploaded_file($imgTmpName, $imgDestination)) {
-                    $updatesMade = true; // Image uploaded, set flag to true
+    if (isset ($_FILES['pfp'])) {
+        if ($_FILES['pfp']['error'] == UPLOAD_ERR_OK) {
+            $validExt = array("jpg", "jpeg", "png");
+            $validMime = array("image/jpeg", "image/png");
+            $filenameArray = explode(".", $_FILES['pfp']['name']);
+            $extension = end($filenameArray);
+            if (in_array($_FILES['pfp']['type'], $validMime) && in_array($extension, $validExt)) {
+                if ($_FILES['pfp']['size'] <= 10485760) { // if they bypass the hidden form item
+                    $sql = "SELECT uName, pfp FROM users WHERE userId = ?;";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("s", $uid);
+                    $stmt->execute();
+                    $stmt->bind_result($username, $oldPfp);
+                    if ($stmt->fetch()) {
+                        $pfp = "../img/pfps/$username." . $extension;
+                        if ($oldPfp == "../img/pfps/pfp.png") {
+                            $defaultPfp = true;
+                        } else {
+                            $defaultPfp = false;
+                        }
+                    } else {
+                        $_SESSION['editMessage'] = "<p>There is no user with your user id. No changes have been made.</p>";
+                        $conn->rollback();
+                        $conn->close();
+                        exit (header("Location: ../pages/my_profile_edit.php"));
+                    }
+                    $stmt->close();
                 } else {
-                    echo "Error uploading the file.";
-                    exit; // Exit if file upload fails
+                    $_SESSION['editMessage'] = "<p>Your profile photo must be a maximum of 10MB in size. No changes have been made.</p>";
+                    $conn->rollback();
+                    $conn->close();
+                    exit (header("Location: ../pages/my_profile_edit.php"));
                 }
             } else {
-                echo "File type not allowed.";
-                exit; // Exit if file type is not allowed
+                $_SESSION['editMessage'] = "<p>Your profile photo needs to be in jpeg or png format. No changes have been made.</p>";
+                $conn->rollback();
+                $conn->close();
+                exit (header("Location: ../pages/my_profile_edit.php"));
+            }
+        } else {
+            if ($_FILES['pfp']['error'] == UPLOAD_ERR_FORM_SIZE) {
+                $_SESSION['editMessage'] = "<p>Your profile photo must be a maximum of 10MB in size. No changes have been made.</p>";
+                $conn->rollback();
+                $conn->close();
+                exit (header("Location: ../pages/my_profile_edit.php"));
+            } else if ($_FILES['pfp']['error'] != UPLOAD_ERR_NO_FILE) { // if no file provided, do nothing
+                $_SESSION['editMessage'] = "<p>An error occured while trying to retrieve the profile photo from your submission. No changes have been made.</p>";
+                $conn->rollback();
+                $conn->close();
+                exit (header("Location: ../pages/my_profile_edit.php"));
             }
         }
-    } catch (mysqli_sql_exception $e) {
-       $_SESSION['editMessage'] = "<p>Error => IMAGE UPDATE error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-
-    } catch (Exception $e) {
-        $_SESSION['editMessage'] = "<p>Error => Database error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
     }
+} catch (Exception $e) {
+    $_SESSION['registerMessage'] = "<p>An error occured while updating your profile photo. No changes have been made.</p>";
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    $conn->rollback();
+    $conn->close();
+    exit (header("Location: ../pages/my_profile_edit.php"));
+}
 
+if (isset($pfp)) {
+    try {
+        $sql = "UPDATE users SET pfp = ? WHERE userId = ?;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $pfp, $uid);
+        $stmt->execute();
 
-    try{
+        $original = $_FILES['pfp']['tmp_name'];
+        if (extension_loaded('gd')) {
+            // resizing and saving image (getting to this portion of the code means that the post image was of valid size and type)
+            $original = $_FILES['pfp']['tmp_name'];
+            $oSize = getimagesize($original);
+            if (!$oSize) {
+                throw new Exception("Failed to get image size.");
+            }
+            $oWidth = $oSize[0];
+            $oHeight = $oSize[1];
+            $resizeDim = 960; //to make it into a square (960px x 960px)
+
+            if ($extension == "jpeg" || $extension == "jpg") {
+                $oImage = imagecreatefromjpeg($original);
+                if (!$oImage) {
+                    throw new Exception("Failed to create JPEG image from file.");
+                }
+            } else { // must be a png if not jpg
+                $oImage = imagecreatefrompng($original);
+                if (!$oImage) {
+                    throw new Exception("Failed to create PNG image from file.");
+                }
+            }
+
+            $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+            if (!$rImage) {
+                throw new Exception("Failed to create truecolor image.");
+            }
+
+            if (!imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight)) {
+                throw new Exception("Failed to resample image.");
+            }
+            if(!$defaultPfp){
+                if (!unlink($oldPfp)) {
+                    throw new Exception("Failed to delete old pfp.");
+                }
+            }
+
+            if ($extension == "jpeg" || $extension == "jpg") {
+                if (!imagejpeg($rImage, $pfp)) {
+                    throw new Exception("Failed to save JPEG image.");
+                }
+            } else { // must be a png if not jpg
+                imagealphablending($rImage, false);
+                imagesavealpha($rImage, true);
+                if (!imagepng($rImage, $pfp)) {
+                    throw new Exception("Failed to save PNG image.");
+                }
+            }
+        } else {
+            if (!unlink($oldPfp)) {
+                throw new Exception("Failed to delete old pfp.");
+            }
+            if (!move_uploaded_file($_FILES['post_image']['tmp_name'], $pfp)) {
+                throw new Exception("Failed to move uploaded file.");
+            }
+        }
+    } catch (Exception $e) {
+        $conn->rollback();
+        $conn->close();
+        $_SESSION['registerMessage'] = "<p>An error occurred while updating your profile photo. No changes have been made.</p>";
+        exit (header("Location: ../pages/my_profile_edit.php"));
+        
+    }
+}
+
+try{
     if (!empty ($_POST['firstName'])) {
         $sql = "UPDATE users SET fName=? WHERE userId=?";
         $stmt = $conn->prepare($sql);
@@ -58,19 +159,28 @@ try {
         $stmt->close();
         $updatesMade = true;
     }
-    }catch (mysqli_sql_exception $e) {
-      $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-      if (isset ($stmt)) {
-                $stmt->close();
-            }
-    } catch (Exception $e) {
-       $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-        if (isset ($stmt)) {
-                $stmt->close();
-            }
-    }
+}catch (mysqli_sql_exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
 
-    try{
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+} catch (Exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => First Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+}
+
+try{
     if (!empty ($_POST['lastName'])) {
         $sql = "UPDATE users SET lName=? WHERE userId=?";
         $stmt = $conn->prepare($sql);
@@ -79,19 +189,27 @@ try {
         $stmt->close();
         $updatesMade = true;
     }
-    } catch (mysqli_sql_exception $e) {
-        $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-         if (isset ($stmt)) {
-                $stmt->close();
-            }
-    } catch (Exception $e) {
-        $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-         if (isset ($stmt)) {
-                $stmt->close();
-            }
+} catch (mysqli_sql_exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
     }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+} catch (Exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => Last Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+}
 
-    try{
+try{
     if (!empty ($_POST['bio'])) {
         $sql = "UPDATE users SET bio=? WHERE userId=?";
         $stmt = $conn->prepare($sql);
@@ -100,80 +218,91 @@ try {
         $stmt->close();
         $updatesMade = true;
     }
-    }catch (mysqli_sql_exception $e) {
-         $_SESSION['editMessage'] = "<p>Error => Bio error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-          if (isset ($stmt)) {
-                $stmt->close();
-            }
-
-    } catch (Exception $e) {
-        $_SESSION['editMessage'] = "<p>Error => Bio Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-         if (isset ($stmt)) {
-                $stmt->close();
-            }
-    }
-
-    try{
-    if (!empty ($_POST['uName'])) {
-        $sql = "UPDATE users SET uName=? WHERE userId=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('si', $_POST['uName'], $uid);
-        $stmt->execute();
+}catch (mysqli_sql_exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => Bio error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
         $stmt->close();
-        $updatesMade = true;
+        unset($stmt);
     }
-    }catch (mysqli_sql_exception $e) {
-        $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-         if (isset ($stmt)) {
-                $stmt->close();
-            }
-
-    } catch (Exception $e) {
-        $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . "</p>";
-         if (isset ($stmt)) {
-                $stmt->close();
-            }
-    }
-
-    try{
-    if (!empty ($newImgName)) {
-        $sql = "UPDATE users SET pfp=? WHERE userId=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('si', $newImgName, $uid);
-        $stmt->execute();
-        $stmt->close();
-    }
-    }catch (mysqli_sql_exception $e) {
-        $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage => $e </p>";
-         if (isset ($stmt)) {
-                $stmt->close();
-            }
-
-    } catch (Exception $e) {
-      $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage => $e </p>";
-       if (isset ($stmt)) {
-                $stmt->close();
-            }
-    }
-
-    // Redirect only once after attempting all updates
-    if ($updatesMade) {
-         $_SESSION['editMessage'] ="<p>UPDATES ARE A SUCCESSS</p>";
-       exit( header('Location: ../pages/my_profile.php')); // Adjust the path as needed
-      
-        
-    } else {
-        // Optional: Handle the case where no updates were made
-        echo 'No updates were provided or changes made.';
-        exit(header('Location: ../pages/my_profile.php')); // Redirect back to the edit profile page or another appropriate page
-        
-    }
-} catch (mysqli_sql_exception $e) {
-   $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
-   
+    exit (header("Location: ../pages/my_profile_edit.php"));
 } catch (Exception $e) {
-   $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
+    $_SESSION['editMessage'] = "<p>Error => Bio Name error occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
 }
 
+try{
+if (!empty ($_POST['uName'])) {
+    $sql = "UPDATE users SET uName=? WHERE userId=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('si', $_POST['uName'], $uid);
+    $stmt->execute();
+    $stmt->close();
+    $updatesMade = true;
+}
+}catch (mysqli_sql_exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+} catch (Exception $e) {
+    $_SESSION['editMessage'] = "<p>Error => UNAME UPDATEerror occurred errorMessage => " . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+}
 
+try{
+if (!empty ($newImgName)) {
+    $sql = "UPDATE users SET pfp=? WHERE userId=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('si', $newImgName, $uid);
+    $stmt->execute();
+    $stmt->close();
+}
+}catch (mysqli_sql_exception $e) {
+    $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage =>" . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+} catch (Exception $e) {
+    $_SESSION['editMessage'] ="<p>error => Error updating profile picture errorMessage =>" . htmlspecialchars($e->getMessage()) . ". No changes have been made.</p>";
+    $conn->rollback();
+    $conn->close();
+    if (isset ($stmt)) {
+        $stmt->close();
+        unset($stmt);
+    }
+    exit (header("Location: ../pages/my_profile_edit.php"));
+}
+
+$conn->commit();
+$conn->close();
+// Redirect only once after attempting all updates
+if ($updatesMade) {
+    $_SESSION['editMessage'] ="<p>Updates were successful!</p>";
+    exit( header('Location: ../pages/my_profile.php'));
+} else {
+    exit(header('Location: ../pages/my_profile.php'));
+    
+}
 ?>
