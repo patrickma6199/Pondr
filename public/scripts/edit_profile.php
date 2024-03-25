@@ -158,13 +158,15 @@ try {
 
     // Redirect only once after attempting all updates
     if ($updatesMade) {
-        header('Location: ../pages/my_profile.php'); // Adjust the path as needed
-        exit();
+         $_SESSION['editMessage'] ="<p>UPDATES ARE A SUCCESSS</p>";
+       exit( header('Location: ../pages/my_profile.php')); // Adjust the path as needed
+      
+        
     } else {
         // Optional: Handle the case where no updates were made
         echo 'No updates were provided or changes made.';
-        header('Location: ../pages/my_profile.php'); // Redirect back to the edit profile page or another appropriate page
-        exit();
+        exit(header('Location: ../pages/my_profile.php')); // Redirect back to the edit profile page or another appropriate page
+        
     }
 } catch (mysqli_sql_exception $e) {
    $_SESSION['editMessage'] ="<p>error => UID UPDATE errorMessage => $e </p>";
