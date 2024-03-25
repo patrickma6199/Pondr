@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-require_once '../scripts/header.php';
+$pageTitle = "My Profile";
 ?>
 
 <!DOCTYPE html>
@@ -18,15 +18,15 @@ require_once '../scripts/header.php';
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="icon" href="../img/logo.png">
+        <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
-
+        <?php require_once '../scripts/header.php'; //for dynamic header ?>
+        <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
-                
-
                 $sql = "SELECT fName,lName,uName,bio,pfp FROM users WHERE userId = ?";
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $uid);
@@ -71,13 +71,23 @@ require_once '../scripts/header.php';
                     echo " </article>";
                     echo "<img src=\"$img \">";
                     echo "</div>";
-
-
+                    echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                    while ($prstmt->fetch()) {
+                        echo "<div class=\"mini-thread\">";
+                        echo "<article>";
+                        echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                        echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                        echo "<p> $text </p>";
+                        echo " </article>";
+                        echo "<img src=\"$img \">";
+                        echo "</div>";
+                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                    }
                 } else {
-                    echo "No threads";
+                    echo "<p>No threads yet! Go make one!</p>";
                 }
                 $prstmt->close();
-
+                $conn->close();
                 ?>
                
 

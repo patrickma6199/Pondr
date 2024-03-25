@@ -3,6 +3,36 @@ session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+if (isset ($_GET['postId'])) {
+    $postId = $_GET['postId'];
+} else {
+    exit (header("Location: ../index.php"));
+}
+
+// for likes script
+if (isset ($_SESSION['uid'])) {
+    echo "<script>let loggedIn = true;</script>";
+} else {
+    echo "<script>let loggedIn = false;</script>";
+}
+
+// for breadcrumbs
+$sql = "SELECT title FROM posts WHERE postId = ?;";
+
+try{
+    $prstmt = $conn->prepare($sql);
+    $prstmt->bind_param('s', $postId);
+    $prstmt->bind_result($title);
+    $prstmt->execute();
+    if ($prstmt->fetch()) {
+        $pageTitle = $title;
+    } else {
+        $pageTitle = "Post";
+    }
+    $prstmt->close();
+} catch(mysqli_sql_exception $e) {
+    $pageTitle = "Post";
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,14 +56,10 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     <body>
         <?php require_once '../scripts/header.php'; ?>
+        <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <div class="thread-container">
                 <?php
-                if (isset ($_GET['postId'])) {
-                    $postId = $_GET['postId'];
-                }
-
-
                  $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
 
 
@@ -45,13 +71,15 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a>  On <time>$postDate</time></i?";
+                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time></i>";
                     echo "Under <a href=\"./discussion.php?catId=$catId\">$category</a>";
                     echo "<a href=\"$link\" target=\"_blank\"> $link </a>";
                     echo "<p> $postText </p>";
                     echo " </article>";
 
                 } else {
+                    $pageTitle = 'Post';
+                    require_once '../scripts/header.php';
                     echo "Post Does Not Exist";
                 }
                 $prstmt->close();
