@@ -64,7 +64,7 @@ try{
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a>  On <time>$postDate</time></i?";
+                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a>  On <time>$postDate</time></i>";
                     echo "Under <a href=\"./discussion.php?catId=$catId\">$category</a>";
                     echo "<a href=\"$link\" target=\"_blank\"> $link </a>";
                     echo "<p> $postText </p>";
