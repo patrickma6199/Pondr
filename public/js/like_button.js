@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
     setInterval(getLikeCount, 5000);
+    getLikeCount();
     if (loggedIn) {
         updateLikeButton();
-        getLikeCount();
     
         $('#like-button').click(function(e) {
             e.preventDefault();
