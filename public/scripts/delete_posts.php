@@ -5,8 +5,9 @@ require_once './dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $utype = isset ($_SESSION['utype']) ?? null;
 $uid = $_SESSION['uid'];
+$utype = $_SESSION['utype'] ?? null;
 
-
+if($utype == 0 || $utype == 1) {
 
 if (isset ($_GET['postId'])) {
     $pid = $_GET['postId'];
@@ -31,5 +32,8 @@ if (isset ($_GET['postId'])) {
     echo"Uname = $uName";
 }
 $conn->close();
+}else{
+    echo json_encode(['error' => 'NOT AN ADMIN OR USER.']);
+}
 
 ?>
