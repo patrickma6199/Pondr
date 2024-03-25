@@ -147,6 +147,7 @@ if (!isset($utype)) {
     }
 } else {
     //reroutes user to discussion page router if they are logged in already
+    $conn->close();
     exit(header('Location: ../index.php'));
 }
 

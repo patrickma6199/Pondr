@@ -12,9 +12,9 @@
 
         //this is the sql query using prepared statements for sanitization of requests
         $sql = "SELECT userId, utype, pass FROM users WHERE uName = ?;";
-        $prstmt = $conn->prepare($sql);
-        $prstmt->bind_param('s',$username);
         try{
+            $prstmt = $conn->prepare($sql);
+            $prstmt->bind_param('s',$username);
             $prstmt->execute();
             $prstmt->bind_result($uid, $utype, $pass);
             if ($prstmt->fetch()) {
@@ -39,12 +39,12 @@
         } catch (mysqli_sql_exception $e) {
             $_SESSION['loginMessage'] = '<p>Error occurred in the login process. Please try again.</p>';
         }
-
         $prstmt->close();
         $conn->close();
         exit(header('Location: ../pages/login.php'));
 
     } else {
+        $conn->close();
         exit (header("Location: ../index.php"));
     }
 

@@ -29,6 +29,7 @@ if (isset ($_POST['postId'])) { //implied request method is POST
     }
     $conn->close();
 } else {
+    $conn->close();
     exit (header("Location: ../index.php"));
 }
 ?>

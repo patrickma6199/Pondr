@@ -23,10 +23,11 @@ if (isset ($_GET['postId'])) {
         if (isset ($stmt)) {
             $stmt->close();
         }
+        $conn->close();
     }
 } 
 else {
+    $conn->close();
     exit (header("Location: ../index.php"));
 }
-$conn->close();
 ?>

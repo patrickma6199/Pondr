@@ -33,6 +33,7 @@ if (isset($_POST['search']) && isset($_POST['catId']) && isset($_POST['lastPost'
     }
     $conn->close();
 } else {
+    $conn->close();
     exit (header("Location: ../index.php"));
 }
 ?>

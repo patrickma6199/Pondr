@@ -44,6 +44,7 @@
 
         exit(header("Location: ../pages/forget_password.php"));
     } else {
+        $conn->close();
         exit(header('Location: ../index.php'));
     }
 
