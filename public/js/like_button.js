@@ -17,7 +17,7 @@ $(document).ready(function() {
                 data: {postId: postId, action: action},
                 success: function (data) {
                     if (data.error !== undefined) {
-                        console.log(data.error);
+                        console.error(data.error);
                     }
                     else {
                         if (data.success) {
@@ -52,7 +52,7 @@ function getLikeCount(){
         data: serializedData,
         success: function(data) {
             if (data.error !== undefined) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 $('#like-count').text(data.likes);
             }
@@ -76,7 +76,7 @@ function updateLikeButton() {
         data: serializedData,
         success: function (data) {
             if (data.error !== undefined) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 if (data.liked) {
                     $('#like-button').addClass('liked');

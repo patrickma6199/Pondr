@@ -32,69 +32,87 @@ if (!isset ($uid)) {
             <section class="profile-container">
                 <?php
                 $sql = "SELECT fName,lName,uName,bio,pfp FROM users WHERE userId = ?";
-                $prstmt = $conn->prepare($sql);
-                $prstmt->bind_param("i", $uid);
-                $prstmt->execute();
-                $prstmt->bind_result($fName, $lName, $uName, $bio, $pfp);
-                if ($prstmt->fetch()) {
-                    echo " <div class=\"profile-img\">";
-                    echo "<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
-                    echo "</div>";
-                    echo "<div class=\"profile-text\">";
-                    echo "<p><b>Name:</b> $fName $lName </p> ";
-                    echo "<p><b>Username:</b> $uName </p>";
-                    echo "<p> <b>Bio:</b> $bio </p>";
-                    echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
-                    echo "<br>";
-                    echo "<a href=\"my_profile_edit.php\" class=\"link-button\">Edit</a>";
-                    echo "</div>";
-                } else {
-                    echo "NO PROFILE INFO";
+                try {
+                    $prstmt = $conn->prepare($sql);
+                    $prstmt->bind_param("i", $uid);
+                    $prstmt->execute();
+                    $prstmt->bind_result($fName, $lName, $uName, $bio, $pfp);
+                    if ($prstmt->fetch()) {
+                        echo " <div class=\"profile-img\">";
+                        echo "<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
+                        echo "</div>";
+                        echo "<div class=\"profile-text\">";
+                        echo "<p><b>Name:</b> $fName $lName </p> ";
+                        echo "<p><b>Username:</b> $uName </p>";
+                        echo "<p> <b>Bio:</b> $bio </p>";
+                        echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
+                        echo "<br>";
+                        echo "<a href=\"my_profile_edit.php\" class=\"link-button\">Edit</a>";
+                        echo "</div>";
+                    } else {
+                        echo "NO PROFILE INFO";
+                    }
+                    $prstmt->close();
+                } catch(mysqli_sql_exception $e) {
+                    $code = $e->getCode();
+                    echo "Failed to load profile. Error: $code";
+                    if (isset ($prstmt)) {
+                        $prstmt->close();
+                    }
                 }
-                $prstmt->close();
                 ?>
             </section>
             <section class="discussion-container">
                 <h2>Your Threads</h2>
                 <?php
                 $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE p.userId=? ORDER BY p.postDate DESC";
-                $prstmt = $conn->prepare($sql1);
-                $prstmt->bind_param("i", $uid);
-                $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img, $uName, $pid, $catId, $catName);
-                if ($prstmt->fetch()) {
-                    echo "<div class=\"mini-thread\">";
-                    echo "<article>";
-                    echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
-                    echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
-                    echo "<p> $text </p>";
-                    echo " </article>";
-                    if (isset($postImg)) { echo "<img src=\"$postImg\">";}
-                    if ($utype === 0) {
-                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
-                    }
-                    echo "</div>";
-                    while ($prstmt->fetch()) {
+                try {
+                    $prstmt = $conn->prepare($sql1);
+                    $prstmt->bind_param("i", $uid);
+                    $prstmt->execute();
+                    $prstmt->bind_result($postDate, $title, $text, $img, $uName, $pid, $catId, $catName);
+                    if ($prstmt->fetch()) {
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
-                        echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
-                        echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                        echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
+                        echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         echo "<p> $text </p>";
                         echo " </article>";
-                        if (isset($postImg)) { echo "<img src=\"$postImg\">";}
+                        if (isset ($postImg)) {
+                            echo "<img src=\"$postImg\">";
+                        }
                         if ($utype === 0) {
                             echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                         }
                         echo "</div>";
+                        while ($prstmt->fetch()) {
+                            echo "<div class=\"mini-thread\">";
+                            echo "<article>";
+                            echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
+                            echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                            echo "<p> $text </p>";
+                            echo " </article>";
+                            if (isset ($postImg)) {
+                                echo "<img src=\"$postImg\">";
+                            }
+                            if ($utype === 0) {
+                                echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                            }
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<p>No threads yet! Go make one!</p>";
                     }
-                } else {
-                    echo "<p>No threads yet! Go make one!</p>";
+                    $prstmt->close();
+                } catch (mysqli_sql_exception $e){
+                    $code = $e->getCode();
+                    echo "Failed to load your posts. Error: $code";
+                    if (isset ($prstmt)) {
+                        $prstmt->close();
+                    }
                 }
-                $prstmt->close();
                 $conn->close();
                 ?>
-
-
             </section>
         </main>
     </body>

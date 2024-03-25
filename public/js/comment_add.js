@@ -25,9 +25,11 @@ $(document).ready(function(){
             url: "../scripts/add_comment.php",
             data: { postId: postId, commentText: commentText },
             success: function(data){
-                console.log("Comment submitted successfully!");
-                
-                location.reload(true);
+                if (data.error !== undefined) {
+                    console.error(data.error);
+                } else {
+                    location.reload(true);
+                }
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -60,9 +62,11 @@ $(document).ready(function(){
             url: "../scripts/add_comment.php", 
             data: { postId: postId, parentComId: parentComId, commentText: replyText },
             success: function(data){
-                console.log("Reply submitted successfully!");
-                
-                location.reload(true);
+                if (data.error !== undefined) {
+                    console.error(data.error);
+                } else {
+                    location.reload(true);
+                }
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
