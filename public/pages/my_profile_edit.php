@@ -23,7 +23,7 @@ ini_set('display_errors', 1);
                  <a href="../img/pfp-3.jpg"><img src="../img/pfp-3.jpg" alt="profile picture" ></a> 
             </div> -->
             <section class="form-container">
-                <form action="../scripts/edit_profile.php" method="post" class="edit-container">
+                <form action="../scripts/edit_profile.php" method="post" class="edit-container" enctype="multipart/form-data">
                     <legend>Edit Profile Info</legend>
                      <?php
                     if (isset($_SESSION['editMessage'])) {
@@ -33,7 +33,7 @@ ini_set('display_errors', 1);
                     ?>
                         <div class="form-item">
                             <label for="img">Enter a new Profile Picture: </label>
-                            <input type="file" name="img" accept="image/*" >
+                            <input type="file" name="pfp" accept="image/*" >
                         </div>
                         <div class="form-item">
                             <label for="firstName">First Name: </label>
