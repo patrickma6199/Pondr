@@ -6,7 +6,6 @@ $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $pageTitle = $_GET['uName'] ?? "Profile";
 $utype = $_SESSION['utype'] ?? null;
-$uid = $_SESSION['uid'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +30,10 @@ $uid = $_SESSION['uid'] ?? null;
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
-                $uName = $_GET['uName'];
+                $uName = $_GET['uName'] ?? null;
+                if (!isset ($uName)) {
+                    exit(header("Location: ../index.php"));
+                }
                 $sql = "SELECT fName,lName,bio,pfp FROM users WHERE uName = ?";
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $uName);
@@ -68,16 +70,16 @@ $uid = $_SESSION['uid'] ?? null;
                 <h2>Your Threads</h2>
 
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId, u.userId FROM posts p JOIN users u ON p.userId = u.userId WHERE u.uName=?";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
                 $prstmt = $conn->prepare($sql1);
                 $prstmt->bind_param("s", $uName);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId);
+                $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId, $catId, $catName);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
                     echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
-                    echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                    echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                     echo "<p> $text </p>";
                     echo " </article>";
                     if (isset($postImg)) { echo "<img src=\"$postImg\">";}
@@ -89,7 +91,7 @@ $uid = $_SESSION['uid'] ?? null;
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
                         echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
-                        echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                        echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         echo "<p> $text </p>";
                         echo " </article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}

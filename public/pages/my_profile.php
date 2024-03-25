@@ -57,16 +57,16 @@ if (!isset ($uid)) {
             <section class="discussion-container">
                 <h2>Your Threads</h2>
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId FROM posts p JOIN users u ON p.userId = u.userId WHERE p.userId=?";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE p.userId=? ORDER BY p.postDate DESC";
                 $prstmt = $conn->prepare($sql1);
                 $prstmt->bind_param("i", $uid);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img, $uName, $pid);
+                $prstmt->bind_result($postDate, $title, $text, $img, $uName, $pid, $catId, $catName);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
                     echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
-                    echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                    echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                     echo "<p> $text </p>";
                     echo " </article>";
                     if (isset($postImg)) { echo "<img src=\"$postImg\">";}
@@ -78,7 +78,7 @@ if (!isset ($uid)) {
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
                         echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
-                        echo "<i>Posted by: $uName on <time> $postDate </time></i>";
+                        echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         echo "<p> $text </p>";
                         echo " </article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}

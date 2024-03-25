@@ -143,7 +143,7 @@ try {
 
             <?php
 
-            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL";
+            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL ORDER BY c.comDate DESC";
             try {
                 $prstmt = $conn->prepare($sql1);
 
@@ -169,7 +169,7 @@ try {
                         echo "<div> <a href=\"\" class=\"link-button reply-icon\" onclick=\"showLoginAlert(event)\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
                     }
 
-                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ?";
+                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
                     try {
                         $prstmt2 = $conn->prepare($sql2);
                         $prstmt2->bind_param("i", $comId);
