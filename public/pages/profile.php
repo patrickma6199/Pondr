@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 $uid = $_SESSION['uid'] ?? null;
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-require_once '../scripts/header.php';
+$pageTitle = $_GET['uName'] ?? "Profile";
 ?>
 
 <!DOCTYPE html>
@@ -18,23 +18,25 @@ require_once '../scripts/header.php';
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="icon" href="../img/logo.png">
+        <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src="../js/delete_profile.js"></script>
     </head>
 
     <body>
-
+        <?php require_once '../scripts/header.php'; //for dynamic header ?>
+        <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php
-                $uName = $_GET['uName'] ;
-                
-
+                $uName = $_GET['uName'];
                 $sql = "SELECT fName,lName,bio,pfp FROM users WHERE uName = ?";
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $uName);
                 $prstmt->execute();
                 $prstmt->bind_result($fName, $lName, $bio, $pfp);
                 if ($prstmt->fetch()) {
-                    echo " <div class=\"profile-img\">";
+                    echo "<div class=\"profile-img\">";
                     echo "<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
                     echo "</div>";
                     echo "<div class=\"profile-text\">";
@@ -44,13 +46,15 @@ require_once '../scripts/header.php';
                     echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
                     echo "<br>";
                     echo "</div>";
-
-
                 } else {
                     echo "NO PROFILE INFO";
                 }
                 $prstmt->close();
                 ?>
+                <div id="icon-buttons">
+                    <a href="" class="link-button" id="delete-profile-button"><i
+                            class="fa-regular fa-trash-can"></i></a>
+                </div>
 
             </section>
             <section class="discussion-container">
@@ -59,9 +63,9 @@ require_once '../scripts/header.php';
                 <?php
                 $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId FROM posts p JOIN users u ON p.userId = u.userId WHERE u.uName=?";
                 $prstmt = $conn->prepare($sql1);
-                $prstmt->bind_param("i", $uName);
+                $prstmt->bind_param("s", $uName);
                 $prstmt->execute();
-                $prstmt->bind_result($postDate, $title, $text, $img,$pid);
+                $prstmt->bind_result($postDate, $title, $text, $img, $pid);
                 if ($prstmt->fetch()) {
                     echo "<div class=\"mini-thread\">";
                     echo "<article>";
@@ -71,6 +75,9 @@ require_once '../scripts/header.php';
                     echo " </article>";
                     echo "<img src=\"$img \">";
                     echo "</div>";
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"../scripts/delete_posts.php?postId=$pid&uName=$uName\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a>
+                </div>";
 
 
                 } else {
@@ -79,7 +86,8 @@ require_once '../scripts/header.php';
                 $prstmt->close();
 
                 ?>
-               
+
+
 
             </section>
         </main>
