@@ -42,7 +42,12 @@ input[type="text"], input[type="password"], input[type="email"], button, .link-b
     font-weight:bold;
     outline: none;
 }
+.link-button.reply-icon{
+    
+    float:right;
+    margin-bottom: 0.5em;
 
+}
 
 
 input[type="text"]:hover, input[type="password"]:hover,input[type="email"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover, .form-container select { 

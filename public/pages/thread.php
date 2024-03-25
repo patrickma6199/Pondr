@@ -3,6 +3,9 @@ session_start();
 ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$utype = $_SESSION['utype'] ?? null;
+
+
 if (isset ($_GET['postId'])) {
     $postId = $_GET['postId'];
 } else {
@@ -19,7 +22,7 @@ if (isset ($_SESSION['uid'])) {
 // for breadcrumbs
 $sql = "SELECT title FROM posts WHERE postId = ?;";
 
-try{
+try {
     $prstmt = $conn->prepare($sql);
     $prstmt->bind_param('s', $postId);
     $prstmt->bind_result($title);
@@ -30,7 +33,7 @@ try{
         $pageTitle = "Post";
     }
     $prstmt->close();
-} catch(mysqli_sql_exception $e) {
+} catch (mysqli_sql_exception $e) {
     $pageTitle = "Post";
 }
 ?>
@@ -52,6 +55,13 @@ try{
         <script src="../js/comment_add.js"></script>
 
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
+        <script>
+            
+            function showLoginAlert(e) {
+                e.preventDefault();
+                alert("Please log in to use this feature.");
+            }
+        </script>
     </head>
 
     <body>
@@ -60,22 +70,23 @@ try{
         <main class="column-container margin-down">
             <div class="thread-container">
                 <?php
-                 $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
+
+                $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
 
 
                 $prstmt = $conn->prepare($sql);
                 $prstmt->bind_param("i", $postId);
                 $prstmt->execute();
-                $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId,$link);
+                $prstmt->bind_result($postId, $userId, $postDate, $postTitle, $postText, $postImg, $userName, $category, $catId, $link);
                 if ($prstmt->fetch()) {
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time></i>";
-                    echo "Under <a href=\"./discussion.php?catId=$catId\">$category</a>";
-                    echo "<a href=\"$link\" target=\"_blank\"> $link </a>";
+                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                    
                     echo "<p> $postText </p>";
                     echo " </article>";
+                    echo "<a href=\"$link\" target=\"_blank\"> $link </a>";
 
                 } else {
                     $pageTitle = 'Post';
@@ -85,14 +96,22 @@ try{
                 $prstmt->close();
 
                 ?>
+                <?php
+                if ($utype === 0 || $utype === 1) {
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"\" class=\"link-button\" id=\"like-button\"><i class=\"fa-regular fa-heart\"></i> Like | <span
+                            id=\"like-count\"> 0 </span></a>
+                    <a href=\"\" class=\"link-button\" id=\"add-comment\" ><i class=\"fa-solid fa-comment\" ></i> Comment | <span
+                            id=\"comment-count\"> 0 </span> </a> </div>";
+                } else {
+                    echo "<div id=\"icon-buttons\">
+                    <a href=\"#\" class=\"link-button\" onclick=\"showLoginAlert(event)\"><i class=\"fa-regular fa-heart\"></i> Like | <span id=\"like-count\"> 0 </span></a>
+                    <a href=\"#\" class=\"link-button\" onclick=\"showLoginAlert(event)\"><i class=\"fa-solid fa-comment\"></i> Comment | <span id=\"comment-count\"> 0 </span></a> </div>";
+                }
+                ?>
 
-                <div id="icon-buttons">
-                    <a href="" class="link-button" id="like-button"><i class="fa-regular fa-heart"></i> Like | <span
-                            id="like-count"> 0 </span></a>
-                    <a href="" class="link-button" id="add-comment" ><i class="fa-solid fa-comment" ></i> Comment | <span
-                            id="comment-count"> 0 </span> </a>
 
-                </div>
+
             </div>
 
             <?php
@@ -111,24 +130,27 @@ try{
                 echo '<article class="thread-comment-container">';
                 echo '<div class="thread-comment-profile">';
                 echo " <img src=\"$pfp\" alt=\"profile photo\">";
-                echo "<i> $userName on <time>$comDate</time></i>";
+                echo "<i><a href=\"./profile.php?uName=$userName\"> $userName </a> on <time>$comDate</time></i>";
                 echo "</div>";
                 echo "<p class=\"thread-comment\">";
                 echo "$comText";
                 echo "</p>";
-                echo "<div> <a href=\"\" class=\"link-button reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
-
+                if ($utype === 0 || $utype === 1) {
+                    echo "<div> <a href=\"\" class=\"link-button reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+                } else {
+                    echo "<div> <a href=\"\" class=\"link-button reply-icon\" onclick=\"showLoginAlert(event)\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+                }
 
                 $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ?";
                 $prstmt2 = $conn->prepare($sql2);
                 $prstmt2->bind_param("i", $comId);
                 $prstmt2->execute();
                 $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp);
-                while ($prstmt2->fetch() &&  $subComId != NULL){
+                while ($prstmt2->fetch() && $subComId != NULL) {
                     echo "<div class=\"thread-comment-container\">";
                     echo "<div class=\"thread-comment-profile\">";
                     echo " <img src=\"$subPfp\" alt=\"profile photo\">";
-                    echo "<i> $subUserName on <time>$subComDate</time></i>";
+                    echo "<i> <a href=\"./profile.php?uName=$subUserName\">$subUserName</a> on <time>$subComDate</time></i>";
                     echo "</div>";
                     echo "<p class=\"thread-comment\">";
                     echo "$subComText";
