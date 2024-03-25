@@ -71,7 +71,7 @@ if (!isset ($uid)) {
                     echo " </article>";
                     if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                     if ($utype === 0) {
-                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                     }
                     echo "</div>";
                     while ($prstmt->fetch()) {
@@ -83,7 +83,7 @@ if (!isset ($uid)) {
                         echo " </article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                         if ($utype === 0) {
-                            echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                            echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                         }
                         echo "</div>";
                     }
