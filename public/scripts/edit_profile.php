@@ -244,7 +244,6 @@ $conn->close();
 if ($updatesMade) {
     exit( header('Location: ../pages/my_profile.php'));
 } else {
-    $conn->close();
     $_SESSION['editMessage'] = "<p>No changes were made.</p>";
     exit(header('Location: ../pages/my_profile_edit.php'));
 }
