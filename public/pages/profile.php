@@ -35,10 +35,10 @@ $utype = $_SESSION['utype'] ?? null;
                     exit (header("Location: ../index.php"));
                 }
 
-                $sql = "SELECT fName,lName,bio,pfp,utype FROM users WHERE uName = ?";
+                $sql = "SELECT fName,lName,bio,pfp,utype FROM users WHERE uName = ?;";
                 try {
                     $prstmt = $conn->prepare($sql);
-                    $prstmt->bind_param("i", $uName);
+                    $prstmt->bind_param("s", $uName);
                     $prstmt->execute();
                     $prstmt->bind_result($fName, $lName, $bio, $pfp, $userType);
                     if ($prstmt->fetch()) {
