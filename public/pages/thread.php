@@ -57,6 +57,7 @@ try{
         <main class="column-container margin-down">
             <div class="thread-container">
                 <?php
+       
                  $sql = "SELECT p.postId, p.userId, p.postDate, p.title, p.text, p.img, u.uName AS userName, c.name, c.catId, p.link FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId=c.catId WHERE p.postId = ?";
 
 
@@ -91,8 +92,10 @@ try{
                             id=\"comment-count\"> 0 </span> </a> </div>";
                 } else {
                     echo "<div id=\"icon-buttons\">
-                    <a href=\"\" class=\"link-button\" ><i class=\"fa-regular fa-heart\"></i> Like </a>
-                    <a href=\"\" class=\"link-button\" ><i class=\"fa-solid fa-comment\" ></i> Comment </a> </div>";
+                    <a href=\"\" class=\"link-button\" ><i class=\"fa-regular fa-heart\"></i> Like | <span
+                            id=\"like-count\"> 0 </span></a>
+                    <a href=\"\" class=\"link-button\" ><i class=\"fa-solid fa-comment\" ></i> Comment | <span
+                            id=\"comment-count\"> 0 </span></a> </div>";
                         }
                 ?>
 
