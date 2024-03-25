@@ -31,26 +31,27 @@ ini_set('display_errors', 1);
                         unset($_SESSION['editMessage']);
                     }
                     ?>
-                        <div class="form-item">
-                            <label for="img">Enter a new Profile Picture: </label>
-                            <input type="file" name="pfp" accept="image/*" >
-                        </div>
-                        <div class="form-item">
-                            <label for="firstName">First Name: </label>
-                            <input type="text" placeholder="Enter your new First Name" name="firstName" >
-                        </div>
-                        <div class="form-item">
-                            <label for="lastName">Last Name: </label>
-                            <input type="text" placeholder="Enter your new Last Name" name="lastName" >
-                        </div>
-                        <div class="form-item">
-                            <label for="bio">Bio: </label>
-                            <textarea placeholder="Enter your new Bio" name="bio" cols="40" rows="4 "></textarea>
-                        </div>
-                        <div class="form-item">
-                            <button type="submit" class="form-button">Confirm Changes</a>
-                            <button type="reset" class="form-button">Reset</button>
-                        </div>
+                    <div class="form-item">
+                        <label for="img">Enter a new Profile Picture: </label>
+                        <input type="file" name="pfp" accept="image/*" >
+                    </div>
+                    <div class="form-item">
+                        <label for="firstName">First Name: </label>
+                        <input type="text" placeholder="Enter your new First Name" name="firstName" >
+                    </div>
+                    <div class="form-item">
+                        <label for="lastName">Last Name: </label>
+                        <input type="text" placeholder="Enter your new Last Name" name="lastName" >
+                    </div>
+                    <div class="form-item">
+                        <label for="bio">Bio: </label>
+                        <textarea placeholder="Enter your new Bio" name="bio" cols="40" rows="4 "></textarea>
+                    </div>
+                    <div class="form-item">
+                        <button type="submit" class="form-button">Confirm Changes</a>
+                        <button type="reset" class="form-button">Reset</button>
+                    </div>
+                    <p>Enter only what you wish to change</p>
                 </form>
             </section>
         </div>
