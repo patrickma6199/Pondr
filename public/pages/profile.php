@@ -46,7 +46,7 @@ $utype = $_SESSION['utype'] ?? null;
                         echo "<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
                         echo "</div>";
                         echo "<div class=\"profile-text\">";
-                        echo "<p><b>Name:</b> $fName $lName </p> ";
+                        echo "<h2> $fName $lName </h2>";
                         if ($userType == 1) {
                             echo "<p><b>Username:</b> $uName" . "[MOD]</p>";
                         } else {
