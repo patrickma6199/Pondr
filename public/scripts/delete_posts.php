@@ -33,6 +33,7 @@ if ($utype == 0 || $utype == 1) {
     }
     $conn->close();
 } else {
+    $conn->close();
     exit (header("Location: ../index.php"));
 }
 

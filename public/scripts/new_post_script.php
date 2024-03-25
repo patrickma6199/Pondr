@@ -55,21 +55,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 } else {
                     $_SESSION['newPostMessage'] = "<p>Your post image must be a maximum of 10MB in size.</p>";
+                    $conn->close();
                     exit(header("Location: ../pages/new_post.php"));
                 }
             } else {
                 $_SESSION['newPostMessage'] = "<p>Your post image needs to be in jpeg or png format.</p>";
+                $conn->close();
                 exit(header("Location: ../pages/new_post.php"));
             }
         } else {
             if ($_FILES['post_image']['error'] == UPLOAD_ERR_FORM_SIZE) {
                 $_SESSION['newPostMessage'] = "<p>Your post image must be a maximum of 10MB in size.</p>";
+                $conn->close();
                 exit(header("Location: ../pages/new_post.php"));
             } else if ($_FILES['post_image']['error'] == UPLOAD_ERR_NO_FILE) {
                 $imgUrl = null;
                 $imageSet = false;
             } else {
                 $_SESSION['newPostMessage'] = "<p>An error occured while trying to retrieve the post image from your submission. Please try again.</p>";
+                $conn->close();
                 exit (header("Location: ../pages/new_post.php"));
             }
         }
@@ -153,10 +157,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $prstmt->close();
     $conn->close();
-
     exit(header('Location: ../pages/discussion.php'));
 
 } else {
+    $conn->close();
     exit (header('Location: ../index.php'));
 }
 

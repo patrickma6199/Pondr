@@ -21,7 +21,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $code = $e->getCode();
         echo json_encode(['error' => "Error occurred: pulling categories. Error: $code"]);
     }
+    $conn->close();
 } else {
+    $conn->close();
     exit(header('Location: ../index.php'));
 }
 

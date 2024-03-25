@@ -41,7 +41,9 @@ if(isset($_POST['postId']) && isset($_POST['commentText']) && isset($_SESSION['u
         $code = $e->getCode();
         echo json_encode(['error' => "SQL Error: $code"]);
     }
+    $conn->close();
 } else {
     echo json_encode(['error' => "Error: Invalid request."]);
+    $conn->close();
 }
 ?>

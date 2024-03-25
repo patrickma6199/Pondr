@@ -82,6 +82,7 @@ if (isset ($_POST['postId'])) {
         $conn->close();
     }
 } else {
+    $conn->close();
     exit (header("Location: ../index.php"));
 }
 ?>
