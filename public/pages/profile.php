@@ -36,7 +36,7 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                 $prstmt->execute();
                 $prstmt->bind_result($fName, $lName, $bio, $pfp);
                 if ($prstmt->fetch()) {
-                    echo " <div class=\"profile-img\">";
+                    echo "<div class=\"profile-img\">";
                     echo "<a href=\"$pfp\"><img src=\"$pfp\" alt=\"profile picture\"></a>";
                     echo "</div>";
                     echo "<div class=\"profile-text\">";
@@ -46,10 +46,6 @@ $pageTitle = $_GET['uName'] ?? "Profile";
                     echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
                     echo "<br>";
                     echo "</div>";
-
-
-
-
                 } else {
                     echo "NO PROFILE INFO";
                 }
