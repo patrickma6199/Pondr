@@ -21,7 +21,6 @@ CREATE TABLE users (
 ) ENGINE = InnoDB;
 
 
-
 -- INSERT INTO users() VALUES();
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'John', 'Doe', 'john_doe', 'john.doe@example.com', 'password123', 'No Bio Made');
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'Jane', 'Doe', 'jane_doe', 'jane.doe@example.com', 'securePass', 'No Bio Made');
@@ -30,7 +29,7 @@ INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'Emily', 'Jo
 INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(0, 'Chris', 'Brown', 'chris_brown', 'chris.brown@example.com', 'chrisPass', 'No Bio Made');
 
 -- Create new admin account
-INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(1, 'Admin', 'Scott', 'admin_scott', 'admin.scott@example.com', 'Testtest123?', 'You can find me @ The office ;)');
+INSERT INTO users(utype,fName,lName,uName,email,pass,bio) VALUES(1, 'Admin', 'Scott', 'admin_scott', 'admin.scott@example.com', 'password', 'You can find me @ The office ;)');
 
 
 CREATE TABLE categories (

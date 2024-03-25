@@ -9,20 +9,19 @@ if (isset ($_POST['postId'])) { //implied request method is POST
     $postId = $_POST['postId'];
 
     $sql = "SELECT comment FROM posts WHERE postId = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $postId);
-    $stmt->execute();
-    $result = $stmt->get_result();
     // Fetch the count
     try {
-
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $postId);
+        $stmt->execute();
+        $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
             echo json_encode(['count' => $row['comment']]); // Return the new like count
+        } else {
+            echo json_encode(['error' => "Table row doesn't seem to exist."]);
         }
-
     } catch (mysqli_sql_exception $e) {
-        echo ("FAILED COUNT");
-        // echo $e;
+        echo json_encode(['error' => "SQL error occured."]);
     }
 
     // Display the comment count

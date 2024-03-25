@@ -12,6 +12,12 @@ if (isset ($_GET['postId'])) {
     exit (header("Location: ../index.php"));
 }
 
+// for likes script
+if (isset ($_SESSION['uid'])) {
+    echo "<script>let loggedIn = true;</script>";
+} else {
+    echo "<script>let loggedIn = false;</script>";
+}
 
 // for breadcrumbs
 $sql = "SELECT title FROM posts WHERE postId = ?;";
@@ -76,8 +82,7 @@ try {
                     echo "<article>";
                     echo "<img src=\"$postImg\" class =\"thread-img\" >";
                     echo "<h1> $postTitle </h1>";
-                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a>  On <time>$postDate</time></i>";
-                    echo "Under <a href=\"./discussion.php?catId=$catId\">$category</a>";
+                    echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
                     
                     echo "<p> $postText </p>";
                     echo " </article>";

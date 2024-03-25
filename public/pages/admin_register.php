@@ -19,7 +19,7 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
     <script src = "../js/jquery-3.1.1.min.js"> </script>
-    <script src = "../js/register_verification.js"></script>
+    <script src = "../js/admin_reg_verification.js"></script>
 </head>
 
 <body>
@@ -27,8 +27,8 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
     <div class="center-container margin-down">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
-            <form id="regform" method="POST" action="../scripts/register_script.php" enctype="multipart/form-data" >
-                <legend>Register</legend>
+            <form id="admin-regform" method="POST" action="../scripts/admin_register_script.php" enctype="multipart/form-data" >
+                <legend>Register as an Admin</legend>
                 <?php
                 if (isset($_SESSION['registerMessage'])) {
                     echo $_SESSION['registerMessage'];
@@ -71,6 +71,11 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                  <div class="error-message" id="error-repassword">Please re-enter your password.</div>
                 </div>
                 <div class="form-item">
+                    <label for="master-password">Master Password: </label>
+                    <input type="password" placeholder="Enter your given Master Password" name="master-password" id ="master-password" >
+                 <div class="error-message" id="error-masterpassword">Please enter your given Master Password.</div>
+                </div>
+                <div class="form-item">
                     <label for="pfp">Upload your profile picture (will be made square): </label>
                     <!-- Max file size for profile photo is 10MB -->
                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
@@ -79,7 +84,6 @@ if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, f
                 <div class="form-item">
                     <button type="submit" class="form-button"> Register </button>
                     <button type="reset" class="form-button">Reset</button>
-                    <button type="button" class="form-button" onclick="window.location.href='admin_register.php';"> Are you a Pondr Admin? </button>
                 </div>
              
                 <?php
