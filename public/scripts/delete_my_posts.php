@@ -14,7 +14,6 @@ if (isset ($_GET['postId'])) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $pid);
         $stmt->execute();
-        $stmt->close();
         exit(header("Location: ../pages/my_profile.php"));
     }catch (mysqli_sql_exception $e) {
         error_log("SQL Error: ", $e->getMessage());
