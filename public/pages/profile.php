@@ -67,7 +67,7 @@ $utype = $_SESSION['utype'] ?? null;
 
             </section>
             <section class="discussion-container">
-                <h2>Your Threads</h2>
+                <h2>Threads</h2>
 
                 <?php
                 $sql1 = "SELECT p.postDate,p.title,p.text,p.img,u.uName,p.postId, c.catId, c.name FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
