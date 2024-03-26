@@ -12,12 +12,15 @@ $(document).ready(function() {
             success: function (data) {
                 if (data.error !== undefined) {
                     console.error(data.error);
+                } else {
+                    console.log(data.success);
+                    window.location.href = "./discussion.php";
                 }
-
             },
             error: function (xhr, status, error) {
                 console.error('Error: ', error);
                 console.log("Status: ", status);
+                console.log("Message: ", xhr.responseText);
             }
         });
 
