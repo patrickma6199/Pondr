@@ -114,16 +114,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $prstmt->execute();
         $_SESSION['registerMessage'] = "<p>Admin registration successful! Please login.</p>";
         $_SESSION['recovery'] = "<p>Here is your recovery key: $newKey</p>";
-        // Redirect to the login page or admin dashboard
-        exit(header('Location: ../pages/admin_register.php'));
     } catch (mysqli_sql_exception $e) {
         // Handle SQL errors
-        $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
-        exit(header('Location: ../pages/admin_register.php'));
+        if($e->getCode() == 1062){      #duplicate values for unique fields (email or username)
+            $_SESSION['registerMessage'] = "<p>Email or Username is already taken.</p>";
+        } else {
+            $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
+        }
     } finally {
         $prstmt->close();
         $conn->close();
     }
+
+    // resizing and saving image (getting to this portion of the code means that the pfp was of valid size and type)
+    if ($imageSet) {
+        $original = $_FILES['pfp']['tmp_name'];
+        if (extension_loaded('gd')) {
+            $oSize = getimagesize($original);
+            $oWidth = $oSize[0];
+            $oHeight = $oSize[1];
+            $resizeDim = 960; //to make it into a square (960pxx960px)
+            if ($extension == "jpeg" || $extension == "jpg") {
+                $oImage = imagecreatefromjpeg($original);
+                $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+                imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
+                imagejpeg($rImage, $pfp);
+            } else { // must be a png if not jpg
+                $oImage = imagecreatefrompng($original);
+                $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
+                imagealphablending($rImage, false);
+                imagesavealpha($rImage, true);
+                imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
+                imagepng($rImage, $pfp);
+            }
+        } else {
+            move_uploaded_file($original, $pfp);
+        }
+    }
+    // Redirect to the login page or admin dashboard
+    exit(header('Location: ../pages/admin_register.php'));
 } else {
     exit(header("Location: ../pages/admin_register.php"));
 }
