@@ -112,12 +112,12 @@ $uid = $_SESSION['uid'] ?? null;
 
 <?php
 // for breadcrumbs
-if (!isset ($_SESSION['bc_title']) || $pageTitle == "REMOVE") { //REMOVE means restart the breadcrumbs
+if (!isset ($_SESSION['bc_title'])) { //REMOVE means restart the breadcrumbs
     $_SESSION['bc_title'] = ['Home'];
     $_SESSION['bc_link'] = ['./landing.php'];
 }
 
-if ($pageTitle != "REMOVE") {
+if ($pageTitle != "IGNORE") {
     echo '<ul class="breadcrumb">';
     $lastIndex = array_search($pageTitle, array_reverse($_SESSION['bc_title'], true));
     if ($lastIndex !== false) {

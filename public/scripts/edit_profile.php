@@ -141,6 +141,7 @@ if (isset($pfp)) {
                 throw new Exception("Failed to move uploaded file.");
             }
         }
+        $updatesMade = true;
     } catch (Exception $e) {
         $conn->rollback();
         $conn->close();

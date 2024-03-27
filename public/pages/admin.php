@@ -5,7 +5,7 @@ $utype = $_SESSION['utype'] ?? "";
 if ($utype != 1) {
     exit(header('./index.php')); // bad navigation
 }
-$pageTitle = "Admin";
+$pageTitle = "IGNORE";
 ?>
 
 <!DOCTYPE html>
