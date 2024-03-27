@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 if (!isset ($_SESSION['uid'])) {
     exit (header("Location: ../index.php"));
 }
-
+$pageTitle = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">

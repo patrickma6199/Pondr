@@ -28,6 +28,7 @@ $(document).ready(function(){
                 if (data.error !== undefined) {
                     console.error(data.error);
                 } else {
+                    console.log(data.success);
                     location.reload(true);
                 }
             },
