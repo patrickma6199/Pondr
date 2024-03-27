@@ -112,3 +112,35 @@
     display: block; 
     flex-direction: column;
 }
+
+@media only screen and (max-width: 480px) {
+
+    .mini-thread {
+        /* Increase the font size for better readability on small screens */
+        font-size: 0.8em; 
+        
+    }
+
+    .discussion-container .mini-thread article {
+        /* Add more padding around each post for emphasis */
+        padding: 20px;
+        margin-bottom: 20px; /* Add more space between posts */
+        
+    }
+
+    .discussion-container .mini-thread img {
+        max-width: 100%; /* Ensure images in posts are fully visible */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: contain;
+        
+    }
+    a.create-community-btn {
+        /* Make the "Join a community?" button smaller and less prominent */
+        font-size: 0.8em;
+        padding: 5px;
+        margin-top: 20px;
+    }
+
+
+
+}
