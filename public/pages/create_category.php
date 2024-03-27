@@ -1,7 +1,7 @@
-<?php require_once '../scripts/creating_category.php'; 
-
-if (!isset ($_SESSION['uid'])) {
-    exit (header("Location: ../index.php"));
+<?php
+session_start();
+if (!isset($_SESSION['uid'])) {
+    exit(header("Location: ../index.php"));
 }
 $pageTitle = "IGNORE";
 ?>
