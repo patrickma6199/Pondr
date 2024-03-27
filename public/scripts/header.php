@@ -104,5 +104,40 @@ $uid = $_SESSION['uid'] ?? null;
         echo "<a href=\"register.php\" class=\"link-button\">Sign Up</a>";
 
     }
+
+    
     ?>
+
 </nav>
+
+<?php
+// for breadcrumbs
+if (!isset ($_SESSION['bc_title']) || $pageTitle == "REMOVE") { //REMOVE means restart the breadcrumbs
+    $_SESSION['bc_title'] = ['Home'];
+    $_SESSION['bc_link'] = ['./landing.php'];
+}
+
+if ($pageTitle != "REMOVE") {
+    echo '<ul class="breadcrumb">';
+    $lastIndex = array_search($pageTitle, array_reverse($_SESSION['bc_title'], true));
+    if ($lastIndex !== false) {
+        $_SESSION['bc_title'] = array_slice($_SESSION['bc_title'], 0, $lastIndex + 1);
+        $_SESSION['bc_link'] = array_slice($_SESSION['bc_link'], 0, $lastIndex + 1);
+    } else {
+        array_push($_SESSION['bc_title'],$pageTitle);
+        array_push($_SESSION['bc_link'],$_SERVER['REQUEST_URI']);
+    }
+
+    for($i = 0; $i < count($_SESSION['bc_title']); $i++) {
+        if ($i > 0) {
+            echo '<span>&nbsp;&gt;&nbsp;</span>';
+        }
+        $title = $_SESSION['bc_title'][$i];
+        $link = $_SESSION['bc_link'][$i];
+        echo "<li><a href=\"$link\">$title</a></li>";
+    }
+
+    echo '</ul>';
+}
+?>
+

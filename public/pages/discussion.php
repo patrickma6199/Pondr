@@ -42,7 +42,6 @@ $pageTitle = "Discussions";
 
     <body>
         <?php require_once '../scripts/header.php'; //for dynamic header  ?>
-        <?php require_once '../scripts/breadcrumbs.php'; ?>
         <?php
         if (isset ($_SESSION['discussionMessage'])) {
             echo $_SESSION['discussionMessage'];
