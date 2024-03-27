@@ -137,7 +137,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     margin: 0 1rem;
 }
 
-
+/* screens: desktop, phone, tablet */
 
 @media (max-width: 700px) {
     #top-bar {
@@ -160,6 +160,29 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 
     
 }
+@media only screen and (max-width: 480px) {
+    #top-bar {
+        flex-direction: flex;
+        align-items: inline;
+        text-align: center;
+    }
+
+    #top-bar > *{
+        width: 70%;
+    }
+
+    #top-bar .link-button {
+        margin: 0.5em 0;
+        width:50%;
+    }
+
+    #top-search-bar {
+        margin: 10px 0;
+        margin-bottom: 10em;
+    }
+}
+
+
 /* Breadcrumb navigation styling */
 .breadcrumb {
     padding-left: 0;
