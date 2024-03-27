@@ -80,7 +80,6 @@ try {
 
     <body>
         <?php require_once '../scripts/header.php'; ?>
-        <?php require_once '../scripts/breadcrumbs.php'; ?>
         <main class="column-container margin-down">
             <div class="thread-container">
                 <?php
