@@ -95,11 +95,11 @@ try {
                         echo "<article>";
                         echo "<img src=\"$postImg\" class =\"thread-img\" >";
                         echo "<h1> $postTitle </h1>";
-                        if ($userType == 1) {
-                            echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName" . "[MOD]</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                            if ($userType == 1) {
+                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "<span class=\"mod\"> [MOD]</span></a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
 
                         } else {
-                            echo "<i>Posted by: <a href=\"./profile.php?uName=$userName\">$userName</a> On <time>$postDate</time> Under <a href=\"./discussion.php?catId=$catId\">$category</a></i>";
+                            echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($category) . "</a>" : "") . "</i>";
                         }
                         echo "<p> $postText </p>";
                         echo " </article>";
@@ -115,7 +115,7 @@ try {
                     error_log("Thread error", $e->getMessage());
 
                 } catch (Exception $e) {
-                    error_log("Thread errort", $e->getMessage());
+                    error_log("Thread error", $e->getMessage());
                 }
 
                 ?>
@@ -146,14 +146,14 @@ try {
 
             <?php
 
-            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId,u.utype FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL ORDER BY c.comDate DESC";
+            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId,u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL ORDER BY c.comDate DESC";
             try {
                 $prstmt = $conn->prepare($sql1);
 
                 $prstmt->bind_param("i", $postId);
                 $prstmt->execute();
                 $prstmt->store_result();
-                $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId, $userType);
+                $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId, $userType, $userId);
 
                 echo '<div class="thread-comments">';
                 while ($prstmt->fetch()) {
@@ -162,10 +162,9 @@ try {
                     echo '<div class="thread-comment-profile">';
                     echo " <img src=\"$pfp\" alt=\"profile photo\">";
                     if ($userType == 1) {
-                        echo "<i><a href=\"./profile.php?uName=$userName\"> $userName"."[MOD] </a> on <time>$comDate</time></i>";
-
+                        echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "<span class=\"mod\"> [MOD]</span></a>" . " on <time>$comDate</time></i>";
                     }else{
-                    echo "<i><a href=\"./profile.php?uName=$userName\"> $userName </a> on <time>$comDate</time></i>";
+                        echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$comDate</time></i>";
                     }
                     echo "</div>";
                     echo "<p class=\"thread-comment\">";
@@ -177,21 +176,21 @@ try {
                         echo "<div> <a href=\"\" class=\"link-button reply-icon\" onclick=\"showLoginAlert(event)\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
                     }
 
-                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp,u.utype FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
+                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp,u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
                     try {
                         $prstmt2 = $conn->prepare($sql2);
                         $prstmt2->bind_param("i", $comId);
                         $prstmt2->execute();
-                        $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp,$subUserType);
+                        $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp,$subUserType, $subUserId);
                         while ($prstmt2->fetch() && $subComId != NULL) {
                             echo "<div class=\"thread-comment-container\">";
                             echo "<div class=\"thread-comment-profile\">";
                             echo " <img src=\"$subPfp\" alt=\"profile photo\">";
                             if($subUserType == 1) {
-                            echo "<i> <a href=\"./profile.php?uName=$subUserName\">$subUserName"."[MOD]</a> on <time>$subComDate</time></i>";
+                            echo "<i>" . ($subUserId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$subUserName\">") . htmlspecialchars($subUserName) . "<span class=\"mod\">[MOD]</span></a> on <time>$subComDate</time></i>";
 
                             }else{
-                            echo "<i> <a href=\"./profile.php?uName=$subUserName\">$subUserName</a> on <time>$subComDate</time></i>";
+                            echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . " on <time>$subComDate</time></i>";
                             }
                             echo "</div>";
                             echo "<p class=\"thread-comment\">";

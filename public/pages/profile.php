@@ -47,7 +47,7 @@ $utype = $_SESSION['utype'] ?? null;
                         echo "<div class=\"profile-text\">";
                         echo "<h2> $fName $lName </h2>";
                         if ($userType == 1) {
-                            echo "<p><b>Username:</b> $uName" . "[MOD]</p>";
+                            echo "<p><b>Username:</b> $uName" . "<span class=\"mod\"> [MOD]</span></p>";
                         } else {
                             echo "<p><b>Username:</b> $uName </p>";
                         }
@@ -79,22 +79,23 @@ $utype = $_SESSION['utype'] ?? null;
                 <h2>Threads</h2>
 
                 <?php
-                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId, u.userId, c.catId, c.name, u.utype FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
+                $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId, u.userId, c.catId, c.name, u.utype, p.likes, p.comment FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
                 try{
                   $prstmt = $conn->prepare($sql1);
                   $prstmt->bind_param("s", $uName);
                   $prstmt->execute();
-                  $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId, $catId, $catName, $userType);
+                  $prstmt->bind_result($postDate, $title, $text, $img, $pid, $userId, $catId, $catName, $userType, $likeCount, $comCount);
                   if ($prstmt->fetch()) {
                       echo "<div class=\"mini-thread\">";
                       echo "<article>";
                       echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
                       if ($userType == 1) {
-                          echo "<i>Posted by: $uName"."[MOD] on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                          echo "<i>Posted by: $uName"."<span class=\"mod\">[MOD] on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                       } else {
                           echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                       }
                       echo "<p> $text </p>";
+                      echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                       echo " </article>";
                       if (isset ($img)) {
                           echo "<img src=\"$img\">";
@@ -108,11 +109,12 @@ $utype = $_SESSION['utype'] ?? null;
                           echo "<article>";
                           echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
                           if ($userType == 1) {
-                              echo "<i>Posted by: $uName"."[MOD] on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                              echo "<i>Posted by: $uName"."<span class=\"mod\">[MOD]</span> on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                           } else {
                               echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                           }
                         echo "<p> $text </p>";
+                        echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                         echo " </article>";
                         if (isset($postImg)) { echo "<img src=\"$postImg\">";}
                         if (($utype === 0 && $uid == $userId) || $utype === 1) {
