@@ -29,6 +29,7 @@ $pageTitle = "Discussions";
         <title>Pondr</title>
         <script src="../js/jquery-3.1.1.min.js"></script>
         <script src="../js/load_discussions.js"></script>
+        <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
                 let post_success = $('#post-success');
@@ -65,7 +66,7 @@ $pageTitle = "Discussions";
                 <?php
                 $highestPostId = 0;
                 // query depends on if catId is set and if search string is empty (return all discussion posts)
-                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype
+                $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
                 WHERE" . (isset ($catId) ? " p.catId = ? AND " : " ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END
@@ -79,7 +80,7 @@ $pageTitle = "Discussions";
                 }
                 try {
                     $prstmt->execute();
-                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId, $userId, $userType);
+                    $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId, $userId, $userType, $likeCount, $comCount);
                     if ($prstmt->fetch()) {
                         echo "<div class=\"mini-thread\">";
                         echo "<article>";
@@ -91,6 +92,7 @@ $pageTitle = "Discussions";
                             echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         }
                         echo "<p>$text</p>";
+                        echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                         echo "</article>";
                         if (isset ($postImg)) {
                             echo "<img src=\"$postImg\">";
@@ -110,6 +112,7 @@ $pageTitle = "Discussions";
                                 echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                             }
                             echo "<p>$text</p>";
+                            echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                             echo "</article>";
                             if (isset ($postImg)) {
                                 echo "<img src=\"$postImg\">";
