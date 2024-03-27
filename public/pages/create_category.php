@@ -3,7 +3,7 @@
 if (!isset ($_SESSION['uid'])) {
     exit (header("Location: ../index.php"));
 }
-$pageTitle = "Category Create";
+$pageTitle = "IGNORE";
 ?>
 
 <!DOCTYPE html>

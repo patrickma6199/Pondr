@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
     exit(header("Location: ../index.php"));
 }
-$pageTitle = "REMOVE";
+$pageTitle = "IGNORE";
 ?>
 
 <!DOCTYPE html>

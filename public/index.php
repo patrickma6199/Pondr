@@ -8,9 +8,8 @@
     if (isset($utype)) {
         switch ($utype) {
             case 0:
-                exit(header('Location: pages/discussion.php'));
             case 1:
-                exit(header('Location: pages/admin.php'));
+                exit(header('Location: pages/discussion.php'));
             default:
                 exit(header('Location: pages/landing.php'));
         }

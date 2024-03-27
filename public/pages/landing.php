@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 unset($_SESSION['bc_title']);
 unset($_SESSION['bc_link']);
 
-$pageTitle = "REMOVE";
+$pageTitle = "IGNORE";
 ?>
 <!DOCTYPE html>
 <html lang="en">
