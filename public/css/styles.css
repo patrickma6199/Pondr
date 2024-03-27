@@ -115,7 +115,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 
 /* for containers that require scrolling */
 .margin-down {
-    margin-top: 2vw;
+    margin-top: 1vw;
     align-items:flex-start;
     margin-bottom: 5em;
 }
@@ -137,44 +137,14 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     margin: 0 1rem;
 }
 
-
 /* Breadcrumb navigation styling */
 .breadcrumb {
-    padding-left: 0;
     background: var(--background-color);
-    padding: 1rem; 
-    border-radius: 10px; 
-    margin-bottom: 20px; 
+    padding-top: 1em;
+    border-radius: 10px;  
     display: inline-flex; 
     list-style-type: none;
 }
-
-.breadcrumb-item {
-    color: var(--text-color); 
-    font-size: 0.9rem; 
-    text-transform: capitalize;
-}
-
-.breadcrumb-item a {
-    color: var(--highlight-color); 
-    text-decoration: none; 
-    transition: color 0.2s; 
-}
-
-.breadcrumb-item a:hover {
-    color: var(--text-color); 
-}
-
-.breadcrumb-item:not(:last-child)::after {
-    content: ' > '; 
-    color: var(--text-color); 
-    margin: 0 5px; 
-}
-
-.breadcrumb-item:last-child {
-    font-weight: bold; 
-}
-
 
 .fading-message {
     margin:auto;
