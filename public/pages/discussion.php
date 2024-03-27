@@ -57,7 +57,7 @@ $pageTitle = "Discussions";
                     echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
                 }
                 ?>
-                <h3>Trending Categories</h3>
+                <h3 class="trending-title">Trending Categories</h3>
                 <ul id="cat-list"></ul>
             </section>
 

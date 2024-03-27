@@ -36,6 +36,10 @@
     max-height: 4em;
 }
 
+.trending-title {
+    text-align: center;
+}
+
 @supports(-webkit-line-clamp: 3){
     .mini-thread p {
         max-height: none;
