@@ -75,4 +75,26 @@
     margin-top: 2em;
 }
 
+@media only screen and (max-width: 480px) {
+   .thread-img {
+    float: none;
+    max-width: 100%;
+    margin: 0 auto; /* Center the image */
+}
 
+   .thread-comments, .thread-container, .thread-comment-reply, .thread-comment-box {
+    width: 100%; /* Use full width */
+    padding: 1em; /* Adjust padding */
+}
+
+    .thread-comment-container .thread-comment-container {
+        margin-left: 2rem; /* Reduce indentation for sub-comments */
+    }
+
+    a.link-button{
+    /*Adjust spacing */
+    margin-left: 1rem; 
+    size:30%;
+    width:30%
+}
+}
