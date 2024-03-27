@@ -25,7 +25,7 @@ $pageTitle = "IGNORE";
 
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
-    <div class="center-container margin-down">
+    <div class="center-container margin-down" style="margin-top:5vw;">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
             <form id="regform" method="POST" action="../scripts/register_script.php" enctype="multipart/form-data" >
