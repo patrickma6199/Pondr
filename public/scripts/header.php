@@ -15,6 +15,23 @@ $uid = $_SESSION['uid'] ?? null;
 
 
 <nav id="top-bar">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <script>
+        $(document).ready(function () {
+            // Toggle dropdown on profile picture click
+            $("#top-search-bar-pfp").click(function (event) {
+                event.preventDefault(); // Prevent click from immediately propagating to the window
+                $("#dropdown-menu").toggle("show");
+            });
+
+
+        });
+
+
+    </script>
+
     <a href="../index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
     <div id="top-search-bar">
         <form method="GET" action="discussion.php">
@@ -49,9 +66,34 @@ $uid = $_SESSION['uid'] ?? null;
     if (isset ($utype)) {
         switch ($utype) {
             case 0:
+                echo "<div id=\"dropdown\">";
+                echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
+                echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
+               
+                echo "<a href=\"../pages/new_post.php\">New Post</a>";
+                echo "<a href=\"../pages/create_category.php\">New Categories</a>";
+                echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
+                echo "<a href=\"../pages/my_profile_edit.php\">Edit Profile</a>";
+                echo "<a href=\"../scripts/logout.php\">Logout</a>";
+                echo "</div>";
+                echo "</div>";
+                break;
             case 1:
-                echo "<a href=\"my_profile.php\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
-                echo "<a href=\"../scripts/logout.php\" class=\"link-button\">Logout</a>";
+                echo "<div id=\"dropdown\">";
+                echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
+                echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
+                echo "<a href=\"../pages/admin.php\">Admin Dashboard</a>";
+                echo "<a href=\"../pages/new_post.php\">New Post</a>";
+                echo "<a href=\"../pages/create_category.php\">New Categories</a>";
+                echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
+                echo "<a href=\"../pages/my_profile_edit.php\">Edit Profile</a>";
+                echo "<a href=\"../scripts/logout.php\">Logout</a>";
+                echo "</div>";
+                echo "</div>";
+
+                // echo "<a href=\"../scripts/logout.php\" class=\"link-button\">Logout</a>";
+    
+
                 break;
             default:
                 echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
@@ -60,9 +102,7 @@ $uid = $_SESSION['uid'] ?? null;
     } else {
         echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
         echo "<a href=\"register.php\" class=\"link-button\">Sign Up</a>";
-        
+
     }
     ?>
-    </nav>
-
-   
+</nav>
