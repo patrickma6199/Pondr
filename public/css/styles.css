@@ -181,6 +181,10 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
   display: block; 
 }
 
+.mod {
+    color: grey;
+}
+
 #dropdown-menu a:hover {background-color: #3d3d3d}
 
 /* screens: desktop, phone, tablet */

@@ -90,7 +90,7 @@ $utype = $_SESSION['utype'] ?? null;
                       echo "<article>";
                       echo "<a href=\"./thread.php?postId=$pid\"><h2>$title</h2></a>";
                       if ($userType == 1) {
-                          echo "<i>Posted by: $uName"."<span class=\"mod\">[MOD] on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                          echo "<i>Posted by: $uName"."<span class=\"mod\"> [MOD]</span> on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                       } else {
                           echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                       }
@@ -109,7 +109,7 @@ $utype = $_SESSION['utype'] ?? null;
                           echo "<article>";
                           echo "<a href=\"./thread.php?postId=$pid\"><h2> $title </h2></a>";
                           if ($userType == 1) {
-                              echo "<i>Posted by: $uName"."<span class=\"mod\">[MOD]</span> on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                              echo "<i>Posted by: $uName"."<span class=\"mod\"> [MOD]</span> on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                           } else {
                               echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                           }

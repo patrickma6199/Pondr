@@ -96,7 +96,7 @@ try {
                         echo "<img src=\"$postImg\" class =\"thread-img\" >";
                         echo "<h1> $postTitle </h1>";
                             if ($userType == 1) {
-                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "<span class=\"mod\"> [MOD]</span></a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a><span class=\"mod\"> [MOD]</span> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
 
                         } else {
                             echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($category) . "</a>" : "") . "</i>";
@@ -162,7 +162,7 @@ try {
                     echo '<div class="thread-comment-profile">';
                     echo " <img src=\"$pfp\" alt=\"profile photo\">";
                     if ($userType == 1) {
-                        echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "<span class=\"mod\"> [MOD]</span></a>" . " on <time>$comDate</time></i>";
+                        echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a><span class=\"mod\"> [MOD]</span>" . " on <time>$comDate</time></i>";
                     }else{
                         echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$comDate</time></i>";
                     }
@@ -187,7 +187,7 @@ try {
                             echo "<div class=\"thread-comment-profile\">";
                             echo " <img src=\"$subPfp\" alt=\"profile photo\">";
                             if($subUserType == 1) {
-                            echo "<i>" . ($subUserId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$subUserName\">") . htmlspecialchars($subUserName) . "<span class=\"mod\">[MOD]</span></a> on <time>$subComDate</time></i>";
+                            echo "<i>" . ($subUserId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$subUserName\">") . htmlspecialchars($subUserName) . "</a><span class=\"mod\">[MOD]</span> on <time>$subComDate</time></i>";
 
                             }else{
                             echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . " on <time>$subComDate</time></i>";
