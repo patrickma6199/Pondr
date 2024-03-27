@@ -6,14 +6,14 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 header('Content-Type: application/json');
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    $sql = "SELECT catId, name FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
+    $sql = "SELECT catId, name, count FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
     $prstmt = $conn->prepare($sql);
     try {
         $prstmt->execute();
-        $prstmt->bind_result($catListId,$catName);
+        $prstmt->bind_result($catListId,$catName, $catCount);
         $categories = array();
         while ($prstmt->fetch()) {
-            array_push($categories,array('catId' => $catListId, 'catName' => $catName));
+            array_push($categories,array('catId' => $catListId, 'catName' => $catName, 'catCount' => $catCount));
         }
         echo json_encode(['categories' => $categories]);
         $prstmt->close();

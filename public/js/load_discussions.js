@@ -24,13 +24,25 @@ function load_categories() {
                     data.categories.forEach(function (category) {
                         let li = $('<li>');
                         let a = $('<a>');
+                        let p1 = $('<p>');
+                        let p2 = $('<p>');
                     
                         let href = "./discussion.php?catId=" + category.catId;
                         if (search) {
                             href += "&search=" + encodeURIComponent(search);
                         }
+                        p1.text(category.catName);
+                        p1.css("font-weight", "bold");
+                        p1.css("font-size", "1.1em");
+                        p1.css("margin-bottom", "0");
+                        p1.css("padding-bottom","0");
+                        p2.text(`Posts made: ${category.catCount}`);
+                        p2.css("font-size", "0.7em");
+                        p2.css("margin-top", "0");
+                        p2.css("padding-top","0");
                         a.attr('href', href);
-                        a.text(category.catName);
+                        a.append(p1);
+                        a.append(p2);
                         li.append(a);
                         cat_list.append(li);
                     });

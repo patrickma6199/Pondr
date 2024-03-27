@@ -77,8 +77,8 @@ if (!isset ($uid)) {
                         echo "<i>Posted by: $uName on <time> $postDate </time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         echo "<p> $text </p>";
                         echo " </article>";
-                        if (isset ($postImg)) {
-                            echo "<img src=\"$postImg\">";
+                        if (isset ($img)) {
+                            echo "<img src=\"$img\">";
                         }
                         if ($utype === 0) {
                             echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
