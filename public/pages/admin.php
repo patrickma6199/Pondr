@@ -1,6 +1,10 @@
 <?php
 session_start();
 ini_set('display_errors', 1);
+$utype = $_SESSION['utype'] ?? "";
+if ($utype != 1) {
+    exit(header('./index.php')); // bad navigation
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +26,7 @@ ini_set('display_errors', 1);
     <?php require_once '../scripts/dbconfig.php';
 
     $userListHTML = '';
-    $searchTerm = isset($_POST['user_search']) ? trim($_POST['user_search']) : '';
+    $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
     
     if (!empty($searchTerm)) {
         // SQL query to search users by name or email
@@ -58,9 +62,9 @@ ini_set('display_errors', 1);
     <main class="center-container">
         <section class="side-container">
             <h2>User Management</h2>
-            <form method="POST" action="admin.php">
-                <?php $userSearchValue = isset($_POST['user_search']) ? htmlspecialchars($_POST['user_search'], ENT_QUOTES) : ''; ?>
-                <input type="text" name="user_search" placeholder="Search by Username!" value = "<?php echo $userSearchValue; ?>"/>
+            <form method="GET" action="admin.php">
+                <?php $userSearchValue = isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES) : ''; ?>
+                <input type="text" name="search" placeholder="Search by Username" value = "<?php echo $userSearchValue; ?>"/>
                 <button type="submit" class="form-button">Search</button>
             </form>
             <div id="user-list"> 
