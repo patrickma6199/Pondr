@@ -5,6 +5,7 @@ $utype = $_SESSION['utype'] ?? "";
 if ($utype != 1) {
     exit(header('./index.php')); // bad navigation
 }
+$pageTitle = "Admin";
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +25,7 @@ if ($utype != 1) {
 <body>
     <?php require_once '../scripts/header.php'; //for dynamic header ?>
     <?php require_once '../scripts/dbconfig.php';
+    
 
     $userListHTML = '';
     $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
