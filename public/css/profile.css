@@ -73,6 +73,18 @@
     max-height: 4em;
 }
 
+@supports(-webkit-line-clamp: 3) {
+    .mini-thread p {
+        max-height: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+    }
+}
+
 @media only screen and (max-width: 480px) {
     .profile-container{
     width: 80%;
@@ -127,15 +139,14 @@
     padding: 0 0.5em;
     background: var(--input-background);
 }
-
-.mini-thread img {
+.mini-thread img{
     width: 100px;
     height: 100px;
-    object-fit: cover;
+    object-fit:cover;
 }
 
 .mini-thread article {
-    flex-grow: 1;
+    flex-grow:1;
     margin-right: 1em;
 }
 
@@ -146,6 +157,18 @@
 .mini-thread p {
     overflow: hidden;
     max-height: 4em;
+}
+
+@supports(-webkit-line-clamp: 3){
+    .mini-thread p {
+        max-height: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+    }
 }
 
 }
