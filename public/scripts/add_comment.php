@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $stmt1->execute();
             $stmt1->close();
             $conn->commit();
+            echo json_encode(['success' => 'Your comment was submitted successfully!']);
         } catch (mysqli_sql_exception $e) {
             $conn->rollback();
             if (isset ($stmt)) {
