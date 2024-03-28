@@ -28,7 +28,7 @@ $uid = $_SESSION['uid'] ?? null;
         });
     </script>
 
-    <a href="../index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
+    <a href="../index.php"><img src="../img/mainLogo.png" alt="Pondr Logo" id="top-bar-logo"></a>
     <div id="top-search-bar">
         <form method="GET" action="discussion.php">
             <?php
