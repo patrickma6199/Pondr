@@ -24,7 +24,7 @@ $pageTitle = "IGNORE";
 </head>
 
 <body>
-    <?php require_once '../scripts/header.php'; r ?>
+    <?php require_once '../scripts/header.php'; ?>
     <div class="center-container margin-down" style="margin-top:5vw;">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->
