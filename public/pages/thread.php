@@ -182,7 +182,7 @@ try {
                         echo "<div class=\"dropdown-com-{$comId}\" id=\"dropdown-menu\" style=\"top:3em;\">";
                         echo "<a href=\"\" class=\"reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\">Reply</a>";
                         if($userId == $uid){
-                            echo "<a href=\"../scripts/delete_comment.php\">Delete</a>";
+                            echo "<a href=\"../scripts/delete_comment.php?postId=$postId&comId=$comId\">Delete</a>";
                         }
                         echo "</div>";
                     }
@@ -209,7 +209,7 @@ try {
                             if($uid == $subUserId){
                                 echo "<div class=\"com-more-options\" data-commentid=\"{$subComId}\"><i class=\"fa-solid fa-ellipsis\"></div></i>";
                                 echo "<div class=\"dropdown-com-{$subComId}\" id=\"dropdown-menu\" style=\"top:3em;\">";
-                                echo "<a href=\"../scripts/delete_comment.php\">Delete</a>";
+                                echo "<a href=\"../scripts/delete_comment.php?postId=$postId&comId=$subComId\">Delete</a>";
                                 echo "</div>";
                             }
                             echo "</div>";
