@@ -78,6 +78,7 @@
 
 .com-more-options {
     position: absolute;
+    cursor: pointer;
     display: inline-block;
     top: 0.5em;
     right: 0.5em;
