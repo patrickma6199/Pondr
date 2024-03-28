@@ -3,7 +3,7 @@
     width: 80%;
     background: var(--dark-blue);
     padding: 1em 2em;
-    border-left: var(--button-border) solid 0.1em; 
+    border-left: var(--button-border) solid 0.1em;
 }
 
 .mini-thread {
@@ -16,14 +16,15 @@
     padding: 0 0.5em;
     background: var(--input-background);
 }
-.mini-thread img{
+
+.mini-thread img {
     width: 100px;
     height: 100px;
-    object-fit:cover;
+    object-fit: cover;
 }
 
 .mini-thread article {
-    flex-grow:1;
+    flex-grow: 1;
     margin-right: 1em;
 }
 
@@ -40,7 +41,7 @@
     text-align: center;
 }
 
-@supports(-webkit-line-clamp: 3){
+@supports(-webkit-line-clamp: 3) {
     .mini-thread p {
         max-height: none;
         overflow: hidden;
@@ -81,13 +82,13 @@
 .side-container ul {
     padding-left: 0;
     list-style-type: none;
-    width:100%;
+    width: 100%;
 }
 
 .side-container li {
     margin: 1em 0;
-    width:100%;
-    display:flex;
+    width: 100%;
+    display: flex;
     justify-content: center;
 }
 
@@ -108,26 +109,40 @@
 }
 
 .clear-category-btn {
-    font-weight: bolder; 
-    margin-top: auto; 
-    padding: 10px; 
-    display: block; 
+    font-weight: bolder;
+    margin-top: auto;
+    padding: 10px;
+    display: block;
     flex-direction: column;
 }
 
 @media only screen and (max-width: 480px) {
 
     .mini-thread {
-        /* Increase the font size for better readability on small screens */
-        font-size: 0.8em; 
-        position: relative;
+
+        font-size: 0.8em;
+        position: flex;
+    }
+
+    .side-container {
+        margin-left: 1em;
+        border-radius: 1em;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2.6vw;
+        position: flex;
+        justify-content: space-between;
+
     }
 
     .discussion-container .mini-thread article {
-        /* Add more padding around each post for emphasis */
+
         padding: 2em;
-        margin-bottom: 20px; /* Add more space between posts */
-        
+        margin-bottom: 20px;
+
+
     }
 
     .discussion-container .mini-thread img {
