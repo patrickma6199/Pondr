@@ -81,8 +81,8 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     box-shadow: var(--box-shadow);
 }
 #top-bar-logo{
-    width: 150px;
-    margin: 0 1rem;
+    width: 125px;
+    margin: 0.5em 2em 0em 2em;
 }
 
 #top-search-bar {
