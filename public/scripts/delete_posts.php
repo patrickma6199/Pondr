@@ -36,7 +36,7 @@ if (isset ($_GET['postId'])) {
             $stmt->bind_result($postImg);
             $stmt->execute();
             if ($stmt->fetch()) {
-                if (isset ($postImg)) {
+                if (isset ($postImg) && file_exists($postImg)) {
                     if (!unlink($postImg)) {
                         throw new Exception("Could not delete post image.");
                     }

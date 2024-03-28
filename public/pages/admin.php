@@ -61,7 +61,7 @@ $pageTitle = "IGNORE";
 }
   
     ?>
-    <main class="center-container">
+    <main class="main-container">
         <section class="side-container">
             <h2>User Management</h2>
             <form method="GET" action="admin.php">

@@ -25,7 +25,7 @@ $pageTitle = "IGNORE";
             <?php if (!empty($message)): ?>
                 <p><?php echo $message; ?></p>
             <?php endif; ?>
-            <form method="post" action="">
+            <form method="post" action="../scripts/creating_category.php">
                 <legend>Create New Category</legend>
                 <div class="form-item">
                     <label for="categoryName">Category Name:</label>
