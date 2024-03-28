@@ -2,7 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 
-// Stop bad navigation
+
 if (isset($_SESSION['uid'])) {
     exit(header("Location: ../index.php"));
 }
@@ -20,7 +20,7 @@ $pageTitle = "IGNORE";
     <link rel="icon" href="../img/logo.png">
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php';  ?>
     <main class="center-container">
         <div class="form-container">
             <form action="../scripts/forget_password_script.php" method="POST">

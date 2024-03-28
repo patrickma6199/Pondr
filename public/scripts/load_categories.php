@@ -6,7 +6,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 header('Content-Type: application/json');
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    $sql = "SELECT catId, name, count FROM categories ORDER BY count DESC LIMIT 10;";       // for listing top 10 categories to search under
+    $sql = "SELECT catId, name, count FROM categories ORDER BY count DESC LIMIT 10;";       
     $prstmt = $conn->prepare($sql);
     try {
         $prstmt->execute();

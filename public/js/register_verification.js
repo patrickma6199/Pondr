@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#regform').on('submit', function(e) {
-        e.preventDefault(); // Prevent form from submitting until checks are done
+        e.preventDefault(); 
 
         var firstName = $('#firstName').val().trim();
         var lastName = $('#lastName').val().trim();
@@ -10,7 +10,7 @@ $(document).ready(function() {
         var password = $('#password').val();
         var confirmPassword = $('#re-password').val();
         
-        // Regex for validation
+        
         var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -58,13 +58,13 @@ $(document).ready(function() {
             validationFailed = true;
         }
 
-        // If no validation has failed, submit the form
+       
         if (!validationFailed) {
             this.submit();
         }
     });
 
-    // Clear the error message when the input is corrected
+    
     $('input').on('input', function() {
         $(this).next('.error-message').hide();
     });

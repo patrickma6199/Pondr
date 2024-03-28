@@ -14,7 +14,7 @@ if (isset ($_POST['postId'])) {
         $conn->begin_transaction();
 
         if ($action == 'fetch') {
-            // Existing fetching logic
+            
             $sql = "SELECT likes FROM posts WHERE postId = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $postId);
@@ -70,7 +70,7 @@ if (isset ($_POST['postId'])) {
         }
     } catch (mysqli_sql_exception $e) {
         $conn->rollback();
-        error_log($e->getMessage()); // Log error to server log
+        error_log($e->getMessage()); 
         echo json_encode(['error' => 'SQL Exception occurred.']);
     } finally {
         if (isset ($stmt)) {
