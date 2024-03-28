@@ -82,7 +82,7 @@ if (!isset ($uid)) {
                         if (isset ($img)) {
                             echo "<img src=\"$img\">";
                         }
-                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_my_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
+                        echo "<div id=\"icon-buttons\"> <a href=\"../scripts/delete_posts.php?postId=$pid\" class=\"link-button\" id=\"delete-post-button\" onclick=\"return confirm('Are you sure?')\"><i class=\"fa-regular fa-trash-can\"></i></a></div>";
                         echo "</div>";
                         while ($prstmt->fetch()) {
                             echo "<div class=\"mini-thread\">";

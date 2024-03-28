@@ -64,9 +64,9 @@ $uid = $_SESSION['uid'] ?? null;
             case 0:
                 echo "<div id=\"dropdown\">";
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
-                echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
-                echo "<a href=\"../pages/new_post.php\">New Post</a>";
-                echo "<a href=\"../pages/create_category.php\">New Categories</a>";
+                echo "<div id=\"dropdown-menu\">";
+                echo "<a href=\"../pages/new_post.php\">Create A Thread</a>";
+                echo "<a href=\"../pages/create_category.php\">Create A Category</a>";
                 echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
                 echo "<a href=\"../pages/my_profile_edit.php\">Edit Profile</a>";
                 echo "<a href=\"../scripts/logout.php\">Logout</a>";
@@ -76,10 +76,10 @@ $uid = $_SESSION['uid'] ?? null;
             case 1:
                 echo "<div id=\"dropdown\">";
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
-                echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
+                echo "<div id=\"dropdown-menu\">";
                 echo "<a href=\"../pages/admin.php\">Admin Dashboard</a>";
-                echo "<a href=\"../pages/new_post.php\">New Post</a>";
-                echo "<a href=\"../pages/create_category.php\">New Categories</a>";
+                echo "<a href=\"../pages/new_post.php\">Create A Thread</a>";
+                echo "<a href=\"../pages/create_category.php\">Create A Category</a>";
                 echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
                 echo "<a href=\"../pages/my_profile_edit.php\">Edit Profile</a>";
                 echo "<a href=\"../scripts/logout.php\">Logout</a>";

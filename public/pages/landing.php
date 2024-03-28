@@ -47,17 +47,18 @@ $pageTitle = "IGNORE";
                 width: 150px;
                 margin: 2em auto 0;
                 text-align: center;
-                background-color: transparent; /* Transparent background */
-                border: 2px solid white; /* White border */
+                background-color: transparent; 
+                border: 2px solid white; 
                 padding: 0.5em 1em;
-                color: white; /* Text color */
-                text-decoration: none; /* Removes underline from link */
+                color: white; 
+                text-decoration: none; 
                 transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
             }
 
                 .explore-button:hover {
-                background-color: white; 
+                background-color: transparent; 
                 color: var(--background-color); 
+                color: white;
             }
           </style>
     </head>
