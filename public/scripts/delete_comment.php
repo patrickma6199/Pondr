@@ -59,7 +59,7 @@ if (isset ($_GET['postId']) && isset ($_GET['comId'])) {
         }
         $conn->close();
     }
-    exit(header("Location: ../pages/my_profile.php"));
+    exit(header("Location: ../pages/thread.php?postId=$pid"));
 } else {
     $conn->close();
     exit (header("Location: ../index.php"));
