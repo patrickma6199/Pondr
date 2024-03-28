@@ -23,7 +23,7 @@ $pageTitle = "IGNORE";
     <link rel="icon" href="../img/logo.png">
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php';  ?>
     <?php require_once '../scripts/dbconfig.php';
     
 
@@ -31,7 +31,7 @@ $pageTitle = "IGNORE";
     $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
     
     if (!empty($searchTerm)) {
-        // SQL query to search users by name or email
+        
         $query = "SELECT userId, fName, lName, uName, email, pfp FROM users WHERE fName LIKE ? OR lName LIKE ? OR email LIKE ?";
         $stmt = $conn->prepare($query);
         $searchTerm = '%' . $searchTerm . '%';
@@ -55,7 +55,7 @@ $pageTitle = "IGNORE";
     $stmt->close();
 
     } else {
-    // SQL query to get all users if no search term provided
+    
     $query = "SELECT userId, fName, lName, uName, email, pfp FROM users";
     $stmt = $conn->prepare($query);
 }

@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:100%; /* for more dynamic sizing of certain forms */
+    width:100%; 
 }
 
 .form-item {
@@ -61,7 +61,7 @@
 }
 
 .error-message {
-    display: none; /* Hidden by default */
+    display: none; 
     position: relative;
     margin-top: 5px;
     background-color: #fff0f4; 
@@ -88,7 +88,7 @@
     padding-bottom: 45px;
 } */
 
-/* highlight the input field when there is an error */
+
 .form-item.c-error input,
 .form-item.c-error select {
     background: #fff0f4; 
@@ -96,7 +96,7 @@
     color: #c51244;
 }
 
-/* Add styles for your label to indicate an error, if needed */
+
 .c-label.c-error:after {
     content: '*';
     color: #c51244;

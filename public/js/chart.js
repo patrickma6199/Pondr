@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // context for the chart
     const ctx = document.getElementById('myChart').getContext('2d');
 
-    fetch('../scripts/chart_script.php') // Adjust the path if necessary
+    fetch('../scripts/chart_script.php') 
         .then(response => response.json())
         .then(data => {
             console.log(data);

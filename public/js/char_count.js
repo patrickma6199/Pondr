@@ -17,7 +17,7 @@ $(document).ready(function(){
     $("form").on('submit', (e) => { 
         if (curLen > maxLen) {
             e.preventDefault();
-            // can change later to match styling of register page
+           
             alert("Post text cannot have more than 3000 characters.");
         }
     });

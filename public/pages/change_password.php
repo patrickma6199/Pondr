@@ -2,7 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 
-// check to see user is logged in
+
 if (!isset($_SESSION['uid'])) {
     header("Location: login.php");
     exit();

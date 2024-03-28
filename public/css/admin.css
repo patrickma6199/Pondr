@@ -1,11 +1,11 @@
-/* Container Styling */
+
 .main-container {
     display: flex;
     align-items: flex-start;
     padding: 2.5em 1.25em 1.25em 1.25em;
 }
 
-/* Sidebar Styling */
+
 .side-container {
     flex: 0 0 auto;
     padding: 0em 1.25em 1.25em 1.25em;
@@ -73,7 +73,7 @@ form .form-button {
     margin-left:  -0.625em; 
 }
 
-/* Responsive design adjustments */
+
 @media (max-width: 48em) {
     .center-container {
         flex-direction: column; /
@@ -91,7 +91,7 @@ form .form-button {
 
     .side-container {
         border-right: none;
-        border-bottom: 0.125em solid #ccc; /* Separation bar at the bottom for small screens */
+        border-bottom: 0.125em solid #ccc; 
     }
 
     form {

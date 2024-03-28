@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#admin-regform').on('submit', function(e) {
-        e.preventDefault(); // Prevent form from submitting until checks are done
+        e.preventDefault(); 
 
         var firstName = $('#firstName').val().trim();
         var lastName = $('#lastName').val().trim();

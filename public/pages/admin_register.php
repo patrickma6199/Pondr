@@ -2,7 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 
-if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
+if (isset($_SESSION['uid'])) { 
     exit(header("Location: ../index.php"));
 }
 $pageTitle = "IGNORE";
@@ -24,10 +24,10 @@ $pageTitle = "IGNORE";
 </head>
 
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php';  ?>
     <div class="center-container margin-down" style="margin-top:5vw;">
         <div class="form-container">
-            <!-- check if enctype can be done with file and text data -->
+            >
             <form id="admin-regform" method="POST" action="../scripts/admin_register_script.php" enctype="multipart/form-data" >
                 <legend>Register as an Admin</legend>
                 <?php
@@ -78,7 +78,7 @@ $pageTitle = "IGNORE";
                 </div>
                 <div class="form-item">
                     <label for="pfp">Upload your profile picture (will be made square): </label>
-                    <!-- Max file size for profile photo is 10MB -->
+                    
                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
                     <input type="file"  name="pfp" accept="image/*">
                 </div>

@@ -106,7 +106,7 @@ if (!isset($utype)) {
             $_SESSION['recovery'] = "<p>Here is your recovery key: $newKey</p>";
                 
         } catch (mysqli_sql_exception $e) {
-            if($e->getCode() == 1062){      #duplicate values for unique fields (email or username)
+            if($e->getCode() == 1062){      
                 $_SESSION['registerMessage'] = "<p>Email or Username is already taken.</p>";
             } else {
                 $_SESSION['registerMessage'] = "<p>An error occurred in the registration process. Please try again.</p>";
@@ -125,13 +125,13 @@ if (!isset($utype)) {
                 $oSize = getimagesize($original);
                 $oWidth = $oSize[0];
                 $oHeight = $oSize[1];
-                $resizeDim = 960; //to make it into a square (960pxx960px)
+                $resizeDim = 960; 
                 if ($extension == "jpeg" || $extension == "jpg") {
                     $oImage = imagecreatefromjpeg($original);
                     $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
                     imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
                     imagejpeg($rImage, $pfp);
-                } else { // must be a png if not jpg
+                } else { 
                     $oImage = imagecreatefrompng($original);
                     $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
                     imagealphablending($rImage, false);

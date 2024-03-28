@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#loginform').on('submit', function(e) {
-        e.preventDefault(); // Prevent form from submitting until checks are done
+        e.preventDefault(); 
 
         var validationFailed = false;
         var username = $('#username').val().trim();
@@ -19,13 +19,13 @@ $(document).ready(function() {
             validationFailed = true;
         }
 
-        // If no validation has failed, submit the form
+       
         if (!validationFailed) {
             this.submit();
         }
     });
 
-    // Clear the error message when the input is corrected
+    
     $('input').on('input', function() {
         $(this).next('.error-message').hide();
     });

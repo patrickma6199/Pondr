@@ -79,7 +79,7 @@ try {
             $(document).ready(function () {
                 // Toggle dropdown on profile picture click
                 $(".com-more-options").click(function (event) {
-                    event.preventDefault(); // Prevent click from immediately propagating to the window
+                    event.preventDefault(); 
                     let commentid = $(this).data('commentid');
                     $(`.dropdown-com-${commentid}`).toggle("show");
                 });

@@ -7,12 +7,12 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $hashedMasterPassword = '$2y$10$TatMDSVNoez84Y0Stn0gPuudmXkXCUwYez2pQiuucsAy8OG5faGee'; 
 
 if (isset($_SESSION['uid'])) {
-    // If already logged in, redirect to the index page
+    
     exit(header("Location: ../index.php"));
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Extract form data
+    
     $firstName = $_POST['firstName'] ?? null;
     $lastName = $_POST['lastName'] ?? null;
     $email = $_POST['email'] ?? null;
@@ -102,11 +102,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $conn->close();
             exit(header('Location: ../pages/admin_register.php'));
         }
-    // Prepare SQL statement to insert new admin
+    
     $sql = "INSERT INTO users(utype, fName, lName, uName, email, pass, bio, pfp, recoveryKey) VALUES (1, ?, ?, ?, ?, ?, 'No Bio Provided.', ?, ?);";
     $prstmt = $conn->prepare($sql);
     $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-    $hashedRKey = password_hash($newKey, PASSWORD_DEFAULT); // assuming $newKey is generated above
+    $hashedRKey = password_hash($newKey, PASSWORD_DEFAULT); 
     $userType = 1;
     $prstmt->bind_param('sssssss', $firstName, $lastName, $username, $email, $hashedPass, $pfp, $hashedRKey);
     
@@ -133,13 +133,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $oSize = getimagesize($original);
             $oWidth = $oSize[0];
             $oHeight = $oSize[1];
-            $resizeDim = 960; //to make it into a square (960pxx960px)
+            $resizeDim = 960; 
             if ($extension == "jpeg" || $extension == "jpg") {
                 $oImage = imagecreatefromjpeg($original);
                 $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
                 imagecopyresampled($rImage, $oImage, 0, 0, 0, 0, $resizeDim, $resizeDim, $oWidth, $oHeight);
                 imagejpeg($rImage, $pfp);
-            } else { // must be a png if not jpg
+            } else { 
                 $oImage = imagecreatefrompng($original);
                 $rImage = imagecreatetruecolor($resizeDim, $resizeDim);
                 imagealphablending($rImage, false);

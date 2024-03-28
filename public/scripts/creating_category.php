@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
         }
         $conn->close();
-        exit (header("Location: ../pages/create_category.php")); //redirect back to the category page
+        exit (header("Location: ../pages/create_category.php")); 
     } else {
         $_SESSION['message'] = "Category Name not Provided.";
         $conn->close();

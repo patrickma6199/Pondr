@@ -53,7 +53,7 @@ if (isset ($_GET['postId'])) {
             $conn->commit();
         } else {
             $conn->rollback();
-            exit(header("Location: ../index.php")); // user was not allowed to delete this post (wasn't their's/ wasn't logged in)
+            exit(header("Location: ../index.php")); 
         }
     }catch (mysqli_sql_exception $e) {
         $conn->rollback();

@@ -1,14 +1,14 @@
 <?php
-require_once ('dbconfig.php'); // Ensure this file sets up $conn properly
+require_once ('dbconfig.php');
 session_start();
 ini_set('display_errors', 1);
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if (isset ($_SESSION['uid'])) {
     $uid = $_SESSION['uid'];
-    $updatesMade = false; // Flag to check if any updates were made
+    $updatesMade = false; 
 } else {
-    exit(header("Location: ../index.php")); // bad navigation
+    exit(header("Location: ../index.php")); 
 }
 // Handle file upload and set $newImgName if a new image is uploaded
 $conn->begin_transaction();
@@ -20,7 +20,7 @@ try {
             $filenameArray = explode(".", $_FILES['pfp']['name']);
             $extension = end($filenameArray);
             if (in_array($_FILES['pfp']['type'], $validMime) && in_array($extension, $validExt)) {
-                if ($_FILES['pfp']['size'] <= 10485760) { // if they bypass the hidden form item
+                if ($_FILES['pfp']['size'] <= 10485760) { 
                     $sql = "SELECT uName, pfp FROM users WHERE userId = ?;";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("s", $uid);
@@ -58,7 +58,7 @@ try {
                 $conn->rollback();
                 $conn->close();
                 exit (header("Location: ../pages/my_profile_edit.php"));
-            } else if ($_FILES['pfp']['error'] != UPLOAD_ERR_NO_FILE) { // if no file provided, do nothing
+            } else if ($_FILES['pfp']['error'] != UPLOAD_ERR_NO_FILE) { 
                 $_SESSION['editMessage'] = "<p>An error occured while trying to retrieve the profile photo from your submission. No changes have been made.</p>";
                 $conn->rollback();
                 $conn->close();
@@ -94,14 +94,14 @@ if (isset($pfp)) {
             }
             $oWidth = $oSize[0];
             $oHeight = $oSize[1];
-            $resizeDim = 960; //to make it into a square (960px x 960px)
+            $resizeDim = 960; 
 
             if ($extension == "jpeg" || $extension == "jpg") {
                 $oImage = imagecreatefromjpeg($original);
                 if (!$oImage) {
                     throw new Exception("Failed to create JPEG image from file.");
                 }
-            } else { // must be a png if not jpg
+            } else { 
                 $oImage = imagecreatefrompng($original);
                 if (!$oImage) {
                     throw new Exception("Failed to create PNG image from file.");
@@ -126,7 +126,7 @@ if (isset($pfp)) {
                 if (!imagejpeg($rImage, $pfp)) {
                     throw new Exception("Failed to save JPEG image.");
                 }
-            } else { // must be a png if not jpg
+            } else { 
                 imagealphablending($rImage, false);
                 imagesavealpha($rImage, true);
                 if (!imagepng($rImage, $pfp)) {
@@ -241,7 +241,7 @@ try{
 
 $conn->commit();
 $conn->close();
-// Redirect only once after attempting all updates
+
 if ($updatesMade) {
     exit( header('Location: ../pages/my_profile.php'));
 } else {

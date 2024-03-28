@@ -4,7 +4,7 @@ require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ini_set('display_errors', 1);
 
-// Stop bad navigation
+
 if (!isset ($_SESSION['uid'])) {
     exit (header("Location: ../index.php"));
 }
@@ -25,7 +25,7 @@ $pageTitle = "IGNORE";
     <script src="../js/new_post_verification.js"></script>
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php';  ?>
     <main class="center-container">
         <section class="form-container" style="width: 60%;">
             <form action="../scripts/new_post_script.php" method="POST" enctype="multipart/form-data" id="post-form">

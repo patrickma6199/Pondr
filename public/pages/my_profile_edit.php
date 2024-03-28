@@ -3,7 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 $pageTitle = "IGNORE";
 
-// check to see user is logged in
+
 if (!isset($_SESSION['uid'])) {
     header("Location: login.php");
     exit();
@@ -23,7 +23,7 @@ if (!isset($_SESSION['uid'])) {
     <link rel="icon" href="../img/logo.png">
 </head>
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php'; ?>
     <main class="center-container">
         <div class="form-container">
             <!-- <div class="profile-img">

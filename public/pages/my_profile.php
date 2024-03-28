@@ -26,7 +26,7 @@ if (!isset ($uid)) {
     </head>
 
     <body>
-        <?php require_once '../scripts/header.php'; //for dynamic header  ?>
+        <?php require_once '../scripts/header.php';  ?>
         <main class="column-container margin-down">
             <section class="profile-container">
                 <?php

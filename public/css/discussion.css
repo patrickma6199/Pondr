@@ -1,4 +1,4 @@
-/* Discussion Post Container (for home page discussion thread list) */
+
 .discussion-container {
     width: 80%;
     background: var(--dark-blue);
@@ -59,14 +59,14 @@
 }
 
 
-/* overwriting */
+
 
 .margin-down {
     justify-content: space-around;
 }
 
 
-/* styles for category box of home page */
+
 .side-container {
     border-radius: 10px;
     flex-grow: 1;
