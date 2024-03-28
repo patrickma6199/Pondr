@@ -13,7 +13,7 @@ if ($_SESSION['utype'] != 1) {
 
 // array to initialize chart data
 $chartData = [
-    'labels' => ['Accounts Created', 'Total Likes', 'Accounts Deleted', 'Posts Made', 'Total Comments', 'Admins Available'],
+    'labels' => ['Accounts Created', 'Total Likes', 'Total Categories', 'Posts Made', 'Total Comments', 'Admins Available'],
     'datasets' => [
         [
             'label' => 'Counts',
@@ -51,6 +51,11 @@ try {
     $row = $result->fetch_assoc();
     $chartData['datasets'][0]['data'][] = (int)$row['total'];
 
+    // posts deleted
+    $result = $conn->query("SELECT COUNT(*) AS total FROM categories");
+    $row = $result->fetch_assoc();
+    $chartData['datasets'][0]['data'][] = (int)$row['total']; 
+
     // total number of posts made
     $query = "SELECT COUNT(*) AS total FROM posts";
     $result = $conn->query($query);
@@ -67,15 +72,10 @@ try {
     $row = $result->fetch_assoc();
     $chartData['datasets'][0]['data'][] = (int)$row['total'];
 
-    // posts deleted
-    $chartData['datasets'][0]['data'][] = 1; 
-
     echo json_encode($chartData);
 
 } catch (Exception $e) {
     echo json_encode(['error' => 'Query failed: ' . $e->getMessage()]);
-    exit;
-
 } finally {
     $conn->close();
 }
