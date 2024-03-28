@@ -20,9 +20,9 @@ $uid = $_SESSION['uid'] ?? null;
 
     <script>
         $(document).ready(function () {
-            // Toggle dropdown on profile picture click
+            
             $("#top-search-bar-pfp").click(function (event) {
-                event.preventDefault(); // Prevent click from immediately propagating to the window
+                event.preventDefault(); 
                 $(".dropdown-content").toggle("show");
             });
         });
@@ -33,7 +33,7 @@ $uid = $_SESSION['uid'] ?? null;
         <form method="GET" action="discussion.php">
             <?php
             if (isset ($_GET['catId'])) {
-                echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";    //if category was selected, send category into get request to discussion.php
+                echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";    
             }
             echo "<input type=\"text\" name=\"search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset ($search)) ? $search : "") . "\"/>";
             ?>
@@ -49,11 +49,11 @@ $uid = $_SESSION['uid'] ?? null;
         try {
             $prstmt->execute();
             $prstmt->bind_result($pfpPath);
-            if (!$prstmt->fetch()) { // if user's profile image is not set
+            if (!$prstmt->fetch()) { 
                 echo "ERROR: user does not have a profile image set.";
             }
         } catch (mysqli_sql_exception $e) {
-            $pfpPath = "../img/pfp.png";    // if error occurs, use default image
+            $pfpPath = "../img/pfp.png";    
         } finally {
             $prstmt->close();
         }
@@ -101,7 +101,7 @@ $uid = $_SESSION['uid'] ?? null;
 
 <?php
 // for breadcrumbs
-if (!isset ($_SESSION['bc_title'])) { //REMOVE means restart the breadcrumbs
+if (!isset ($_SESSION['bc_title'])) { 
     $_SESSION['bc_title'] = ['Home'];
     $_SESSION['bc_link'] = ['./landing.php'];
 }

@@ -7,7 +7,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 if (isset($_SESSION['uid'])) {
     $uid = $_SESSION['uid'];
 } else {
-    exit(header("Location: ../index.php")); // Redirect if not logged in
+    exit(header("Location: ../index.php")); 
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn->begin_transaction();
     try {
-        // Fetch the existing password hash from the database
+        
         $sql = "SELECT pass FROM users WHERE userId = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $uid);

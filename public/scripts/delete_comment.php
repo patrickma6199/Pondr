@@ -45,7 +45,7 @@ if (isset ($_GET['postId']) && isset ($_GET['comId'])) {
             $conn->commit();
         } else {
             $conn->rollback();
-            exit(header("Location: ../index.php")); // user was not allowed to delete this comment (wasn't their's/ wasn't logged in)
+            exit(header("Location: ../index.php")); 
         }
     }catch (mysqli_sql_exception $e) {
         $conn->rollback();

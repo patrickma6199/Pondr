@@ -4,7 +4,7 @@
     require_once 'dbconfig.php';
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if (isset($_POST['email']) && isset($_POST['new-pass']) && isset($_POST['recovery-key'])) { //implies request method in POST
+    if (isset($_POST['email']) && isset($_POST['new-pass']) && isset($_POST['recovery-key'])) { 
 
         $email = $_POST['email'];
         $newPass = $_POST['new-pass'];

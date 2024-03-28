@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 
 $uid = $_SESSION['uid'] ?? null;
 
-if (isset ($_GET["search"])) {               //remove search if searched value is empty
+if (isset ($_GET["search"])) {              
     if ($_GET["search"] == "") {
         unset($_GET["search"]);
     }
@@ -42,7 +42,7 @@ $pageTitle = "Discussions";
     </head>
 
     <body>
-        <?php require_once '../scripts/header.php'; //for dynamic header  ?>
+        <?php require_once '../scripts/header.php';   ?>
         <?php
         if (isset ($_SESSION['discussionMessage'])) {
             echo $_SESSION['discussionMessage'];
@@ -53,7 +53,7 @@ $pageTitle = "Discussions";
         <main class="center-container margin-down">
             <section class="side-container">
                 <?php
-                // if logged in, add button for new posts and joining a community
+                
                 if (isset ($uid)) {
                     echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
                 }
@@ -65,7 +65,7 @@ $pageTitle = "Discussions";
             <section class="discussion-container">
                 <?php
                 $highestPostId = 0;
-                // query depends on if catId is set and if search string is empty (return all discussion posts)
+                
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 

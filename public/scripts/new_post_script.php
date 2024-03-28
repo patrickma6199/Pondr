@@ -25,20 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $filenameArray = explode(".", $_FILES['post_image']['name']);
             $extension = end($filenameArray);
             if (in_array($_FILES['post_image']['type'], $validMime) && in_array($extension,$validExt)) {
-                if ($_FILES['post_image']['size'] <= 10485760) { // if they bypass the hidden form item
+                if ($_FILES['post_image']['size'] <= 10485760) { 
                     //generating unique key as filename
                     $imgUrl = '../img/posts/' . bin2hex(random_bytes(16)) . "." . $extension;
                     $unique = false;
 
                     while(!$unique) {
-                        //check if key exists already for another user
+                        
                         $sql = "SELECT * FROM posts WHERE img = ?;";
                         $prstmt = $conn->prepare($sql);
                         $prstmt->bind_param("s",$imgUrl);
                         
                         try{
                             $prstmt->execute();
-                            // if already used, regenerate
+                            
                             if ($prstmt->fetch()) {
                                 $imgUrl = '../img/posts/' . bin2hex(random_bytes(16)) . "." . $extension;
                             } else {
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($imageSet) {
             if (extension_loaded('gd')) {
-                // resizing and saving image (getting to this portion of the code means that the post image was of valid size and type)
+               
                 $original = $_FILES['post_image']['tmp_name'];
                 $oSize = getimagesize($original);
                 if (!$oSize) {
@@ -105,14 +105,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 $oWidth = $oSize[0];
                 $oHeight = $oSize[1];
-                $resizeDim = 960; //to make it into a square (960px x 960px)
+                $resizeDim = 960; 
 
                 if ($extension == "jpeg" || $extension == "jpg") {
                     $oImage = imagecreatefromjpeg($original);
                     if (!$oImage) {
                         throw new Exception("Failed to create JPEG image from file.");
                     }
-                } else { // must be a png if not jpg
+                } else { 
                     $oImage = imagecreatefrompng($original);
                     if (!$oImage) {
                         throw new Exception("Failed to create PNG image from file.");
@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if (!imagejpeg($rImage, $imgUrl)) {
                         throw new Exception("Failed to save JPEG image.");
                     }
-                } else { // must be a png if not jpg
+                } else { 
                     imagealphablending($rImage, false);
                     imagesavealpha($rImage, true);
                     if (!imagepng($rImage, $imgUrl)) {
