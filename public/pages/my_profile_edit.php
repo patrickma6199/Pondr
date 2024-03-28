@@ -2,6 +2,12 @@
 session_start();
 ini_set('display_errors', 1);
 $pageTitle = "IGNORE";
+
+// check to see user is logged in
+if (!isset($_SESSION['uid'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +57,8 @@ $pageTitle = "IGNORE";
                     <div class="form-item">
                         <button type="submit" class="form-button">Confirm Changes</a>
                         <button type="reset" class="form-button">Reset</button>
+                        <button type="button" class="form-button" onclick="window.location.href='change_password.php';"> Change password? </button>
+
                     </div>
                     <p>Enter only what you wish to change</p>
                 </form>
