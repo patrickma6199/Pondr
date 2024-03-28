@@ -91,9 +91,6 @@ $uid = $_SESSION['uid'] ?? null;
                 echo "</div>";
                 echo "</div>";
 
-                // echo "<a href=\"../scripts/logout.php\" class=\"link-button\">Logout</a>";
-    
-
                 break;
             default:
                 echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
