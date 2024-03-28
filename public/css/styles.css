@@ -3,18 +3,17 @@
 /* global variables to keep colors and fonts consistent */
 :root {
     --background-color: #161616;    
-    --navbar-dark: linear-gradient(145deg, #0A0A0A, #161616); /* Gradient for navbar */
-    --button-border: rgba(255, 255, 255, 0.2); /* Subtle border for buttons */
-    --text-color: #ffffff; /* White text for contrast */
-    --button-hover-bg: #2A2A2A; /* Darker for button hover */
-    --input-background: #1E1E1E; /* Input fields background */
-    --input-hover: rgba(255, 255, 255, 0.1); /* Highlight input on hover */
-    --highlight-color: #3A7FFB; /* Highlights */
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    --navbar-dark: linear-gradient(145deg, #0A0A0A, #161616); 
+    --button-border: rgba(255, 255, 255, 0.2); 
+    --text-color: #ffffff; 
+    --button-hover-bg: #2A2A2A; 
+    --input-background: #1E1E1E; 
+    --input-hover: rgba(255, 255, 255, 0.1); 
+    --highlight-color: #10437c; 
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
     --pondr-font: 'Quicksand', sans-serif;
 }
 
-/* General a tag styling to change color for all links */
 a {
     color: white;
 } 
@@ -23,9 +22,9 @@ body {
     margin: 0;
     padding: 0;
     font-family: var(--pondr-font);
-    background-color: var(--background-color); /* Solid color  background */
+    background-color: var(--background-color); 
     color:var(--text-color);
-    transition: all 0.2s ease; /* Smooth transition for color changes */
+    transition: all 0.2s ease; 
 }
 
 /*Styling for inputs, buttons links */
@@ -48,7 +47,6 @@ input[type="text"], input[type="password"], input[type="email"], button, .link-b
     margin-bottom: 0.5em;
 
 }
-
 
 input[type="text"]:hover, input[type="password"]:hover,input[type="email"]:hover, button:hover, .link-button:hover, .form-button:hover, .form-container textarea:hover, .form-container select { 
     background-color: var(--button-hover-bg);
@@ -188,7 +186,6 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 #dropdown-menu a:hover {background-color: #3d3d3d}
 
 /* screens: desktop, phone, tablet */
-
 @media only screen and (max-width: 700px) {
     #top-bar {
         flex-direction: column;
