@@ -23,13 +23,9 @@ $uid = $_SESSION['uid'] ?? null;
             // Toggle dropdown on profile picture click
             $("#top-search-bar-pfp").click(function (event) {
                 event.preventDefault(); // Prevent click from immediately propagating to the window
-                $("#dropdown-menu").toggle("show");
+                $(".dropdown-content").toggle("show");
             });
-
-
         });
-
-
     </script>
 
     <a href="../index.php"><img src="../img/logo.png" alt="Pondr Logo" id="top-bar-logo"></a>
@@ -69,7 +65,6 @@ $uid = $_SESSION['uid'] ?? null;
                 echo "<div id=\"dropdown\">";
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
                 echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
-               
                 echo "<a href=\"../pages/new_post.php\">New Post</a>";
                 echo "<a href=\"../pages/create_category.php\">New Categories</a>";
                 echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
@@ -90,10 +85,6 @@ $uid = $_SESSION['uid'] ?? null;
                 echo "<a href=\"../scripts/logout.php\">Logout</a>";
                 echo "</div>";
                 echo "</div>";
-
-                // echo "<a href=\"../scripts/logout.php\" class=\"link-button\">Logout</a>";
-    
-
                 break;
             default:
                 echo "<a href=\"login.php\" class=\"link-button\">Login</a>";
@@ -104,8 +95,6 @@ $uid = $_SESSION['uid'] ?? null;
         echo "<a href=\"register.php\" class=\"link-button\">Sign Up</a>";
 
     }
-
-    
     ?>
 
 </nav>
