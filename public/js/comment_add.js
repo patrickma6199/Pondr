@@ -41,10 +41,10 @@ $(document).ready(function(){
     $(document).on('click', '.reply-icon', function(e){
         e.preventDefault();
         var parentComId = $(this).data('commentid');
-        var replyTextarea = '<br> <br> <textarea class="thread-comment-box" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'">Submit</button>';
+        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="width:20em;">Submit</button></div>';
 
         if ($('#reply-text-'+ parentComId).length === 0) {
-            $(this).parent().append(replyTextarea);
+            $(this).parent().parent().append(replyTextarea);
         } else {
             $('#reply-text-'+ parentComId).focus();
         }

@@ -25,6 +25,7 @@
     flex-direction: column;
     font-size: 0.9rem;
     border-top: 0.1em solid var(--button-border);
+    position: relative;
    
 }
 
@@ -73,6 +74,15 @@
 /* for the icons */
 #icon-buttons{
     margin-top: 2em;
+}
+
+.com-more-options {
+    position: absolute;
+    display: inline-block;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: 1.2em;
+    padding:1em;
 }
 
 @media only screen and (max-width: 480px) {
