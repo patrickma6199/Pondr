@@ -5,18 +5,18 @@ header('Content-Type: application/json');
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
 
-if (isset ($_POST['postId'])) { //implied request method is POST
+if (isset ($_POST['postId'])) { 
     $postId = $_POST['postId'];
 
     $sql = "SELECT comment FROM posts WHERE postId = ?";
-    // Fetch the count
+    
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $postId);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
-            echo json_encode(['count' => $row['comment']]); // Return the new like count
+            echo json_encode(['count' => $row['comment']]); 
         } else {
             echo json_encode(['error' => "Table row doesn't seem to exist."]);
         }

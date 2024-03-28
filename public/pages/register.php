@@ -2,7 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 
-if (isset($_SESSION['uid'])) { // if logged in user tried to access this page, forward them
+if (isset($_SESSION['uid'])) { 
     exit(header("Location: ../index.php"));
 }
 $pageTitle = "IGNORE";
@@ -24,7 +24,7 @@ $pageTitle = "IGNORE";
 </head>
 
 <body>
-    <?php require_once '../scripts/header.php'; //for dynamic header ?>
+    <?php require_once '../scripts/header.php'; r ?>
     <div class="center-container margin-down" style="margin-top:5vw;">
         <div class="form-container">
             <!-- check if enctype can be done with file and text data -->

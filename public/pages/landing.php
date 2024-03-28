@@ -52,7 +52,7 @@ $pageTitle = "IGNORE";
                 padding: 0.5em 1em;
                 color: white; 
                 text-decoration: none; 
-                transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+                transition: all 0.3s ease-in-out; 
             }
 
                 .explore-button:hover {
