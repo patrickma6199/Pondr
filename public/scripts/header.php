@@ -68,7 +68,7 @@ $uid = $_SESSION['uid'] ?? null;
             case 0:
                 echo "<div id=\"dropdown\">";
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
-                echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
+                echo "<div id=\"dropdown-menu\">";
                
                 echo "<a href=\"../pages/new_post.php\">Create A Thread</a>";
                 echo "<a href=\"../pages/create_category.php\">Create A Category</a>";
@@ -81,7 +81,7 @@ $uid = $_SESSION['uid'] ?? null;
             case 1:
                 echo "<div id=\"dropdown\">";
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
-                echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
+                echo "<div id=\"dropdown-menu\">";
                 echo "<a href=\"../pages/admin.php\">Admin Dashboard</a>";
                 echo "<a href=\"../pages/new_post.php\">Create A Thread</a>";
                 echo "<a href=\"../pages/create_category.php\">Create A Category</a>";
