@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $utype = $_SESSION['utype'] ?? null;
-
+$uid = $_SESSION['uid'] ?? null;
 try {
     if (isset ($_GET['postId'])) {
         $postId = $_GET['postId'];
@@ -75,6 +75,16 @@ try {
                 e.preventDefault();
                 alert("Please log in to use this feature.");
             }
+
+            $(document).ready(function () {
+                // Toggle dropdown on profile picture click
+                $(".com-more-options").click(function (event) {
+                    event.preventDefault(); // Prevent click from immediately propagating to the window
+                    let commentid = $(this).data('commentid');
+                    $(`.dropdown-com-${commentid}`).toggle("show");
+                });
+            });
+
         </script>
     </head>
 
@@ -139,9 +149,6 @@ try {
                     error_log("Tlike or Comment icon error", $e->getMessage());
                 }
                 ?>
-
-
-
             </div>
 
             <?php
@@ -170,12 +177,15 @@ try {
                     echo "<p class=\"thread-comment\">";
                     echo "$comText";
                     echo "</p>";
-                    if ($utype === 0 || $utype === 1) {
-                        echo "<div> <a href=\"\" class=\"link-button reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
-                    } else {
-                        echo "<div> <a href=\"\" class=\"link-button reply-icon\" onclick=\"showLoginAlert(event)\"><i class=\"fa-solid fa-reply\"></i> Reply </a> </div>";
+                    if(isset($uid)){
+                        echo "<div class=\"com-more-options\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-ellipsis\"></div></i>";
+                        echo "<div class=\"dropdown-com-{$comId}\" id=\"dropdown-menu\" style=\"top:3em;\">";
+                        echo "<a href=\"\" class=\"reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\">Reply</a>";
+                        if($userId == $uid){
+                            echo "<a href=\"../scripts/delete_comment.php?postId=$postId&comId=$comId\">Delete</a>";
+                        }
+                        echo "</div>";
                     }
-
                     $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp,u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
                     try {
                         $prstmt2 = $conn->prepare($sql2);
@@ -190,24 +200,29 @@ try {
                             echo "<i>" . ($subUserId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$subUserName\">") . htmlspecialchars($subUserName) . "</a><span class=\"mod\">[MOD]</span> on <time>$subComDate</time></i>";
 
                             }else{
-                            echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . " on <time>$subComDate</time></i>";
+                            echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$subComDate</time></i>";
                             }
                             echo "</div>";
                             echo "<p class=\"thread-comment\">";
                             echo "$subComText";
                             echo "</p>";
+                            if($uid == $subUserId){
+                                echo "<div class=\"com-more-options\" data-commentid=\"{$subComId}\"><i class=\"fa-solid fa-ellipsis\"></div></i>";
+                                echo "<div class=\"dropdown-com-{$subComId}\" id=\"dropdown-menu\" style=\"top:3em;\">";
+                                echo "<a href=\"../scripts/delete_comment.php?postId=$postId&comId=$subComId\">Delete</a>";
+                                echo "</div>";
+                            }
                             echo "</div>";
                         }
                         $prstmt2->close();
-                        echo "</article>";
                     } catch (mysqli_sql_exception $e) {
                         error_log("Sub reply error", $e->getMessage());
 
                     } catch (Exception $e) {
                         error_log("Sub reply error error", $e->getMessage());
                     }
+                    echo "</article>";
                 }
-                echo "</div>";
                 $prstmt->free_result();
                 $prstmt->close();
 
