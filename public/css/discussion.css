@@ -155,10 +155,10 @@
     background: var(--input-hover);
 }
 
-.clear-category-btn {
+#clear-category-btn {
     font-weight: bolder;
     margin-top: auto;
-    padding: 10px;
+    padding: 1em;
     display: block;
     flex-direction: column;
 }

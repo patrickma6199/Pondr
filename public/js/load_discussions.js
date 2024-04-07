@@ -54,7 +54,7 @@ function load_categories() {
                     }
                     a.attr('href', href);
                     a.text("Clear Category");
-                    a.addClass('clear-category-btn'); 
+                    a.attr('id','clear-category-btn'); 
                     li.append(a);
                     cat_list.append(li);
                 }
