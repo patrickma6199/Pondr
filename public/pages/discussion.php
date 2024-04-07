@@ -37,6 +37,15 @@ $pageTitle = "Discussions";
                 setTimeout(function () {
                     post_success.fadeOut();
                 }, 5000);
+
+                $(".profile").on('click', function() {
+                    let userId = $(this).data('userid');
+                    let uid = $(this).data('uid');
+                    let uName = $(this).data('uname');
+                    console.log(`userId: ${userId}\n uid: ${uid}\nuName: ${uName}`);
+                    if(userId == uid) window.location.href = "./my_profile.php";
+                    else window.location.href = `./profile.php?uName=${uName}`;
+                });
             });
         </script>
     </head>
@@ -58,25 +67,52 @@ $pageTitle = "Discussions";
                     echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
                 }
                 ?>
-                <h3 class="trending-title">Trending Categories</h3>
+                <h3 class="trending-title">TRENDING CATEGORIES</h3>
                 <ul id="cat-list"></ul>
             </section>
 
             <section class="discussion-container">
                 <?php
+
+                $searchString = (isset ($search)) ? $search : "";
+                // for listing matching users by displaying profile in a block
+                try{
+                    $sql = "SELECT uName, fName, lName, pfp, userId FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') END;";
+                    $prstmt = $conn->prepare($sql);
+                    $prstmt->bind_param("sssss",$searchString, $searchString, $searchString, $searchString, $searchString);
+                    $prstmt->execute();
+                    $prstmt->bind_result($uName, $fName, $lName, $pfp, $userId);
+                    if ($prstmt->fetch()) {
+                        echo "<div class =\"profiles-container\">";
+                        echo "<div class =\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><p>$uName</p><p>$fName $lName</p></div>";
+                        while ($prstmt->fetch()) {
+                            echo "<div class =\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><p>$uName</p><p>$fName $lName</p></div>";
+                        }
+                        echo "</div>";
+                    }
+                    $prstmt->close();
+                }catch(mysqli_sql_exception $e) {
+                    $code = $e->getCode();
+                    if(isset($prstmt)){
+                        $prstmt->close();
+                    }
+                    echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
+                }
+
+
+                // Block for listing posts
                 $highestPostId = 0;
-                
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE" . (isset ($catId) ? " p.catId = ? AND " : " ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END
+                WHERE" . (isset ($catId) ? " p.catId = ? AND " : " ") . "(p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%'))
                 ORDER BY p.postDate DESC;";
                 $prstmt = $conn->prepare($sql);
-                $searchString = (isset ($search)) ? $search : "";
+                
                 if (isset ($catId)) {
-                    $prstmt->bind_param("sssss", $catId, $searchString, $searchString, $searchString, $searchString);
+                    $prstmt->bind_param("ssss", $catId, $searchString, $searchString, $searchString);
                 } else {
-                    $prstmt->bind_param("ssss", $searchString, $searchString, $searchString, $searchString);
+                    $prstmt->bind_param("sss", $searchString, $searchString, $searchString);
                 }
                 try {
                     $prstmt->execute();
@@ -123,14 +159,18 @@ $pageTitle = "Discussions";
                             }
                         }
                     } else {
-                        echo "<p>Looks like theres no posts currently in Pondr. Be the first to post!</p>";
+                        echo "<p>Looks like theres no posts under your search parameters... Be the first to post!</p>";
                     }
                     $prstmt->close();
+                    //To be accessible in the load discussions js script to check when new posts are made.
                     echo "<script>";
                     echo "var lastPostId = $highestPostId;";
                     echo "</script>";
                 } catch (mysqli_sql_exception $e) {
                     $code = $e->getCode();
+                    if(isset($prstmt)){
+                        $prstmt->close();
+                    }
                     echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
                 }
                 $conn->close();

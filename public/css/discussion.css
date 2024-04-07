@@ -39,6 +39,10 @@
 
 .trending-title {
     text-align: center;
+    border-bottom: var(--button-border) solid 0.1em;
+    padding: 0 2em;
+    margin: 0;
+    margin-top: 3em;
 }
 
 @supports(-webkit-line-clamp: 3) {
@@ -58,8 +62,49 @@
     max-width: 200px;
 }
 
+.profiles-container {
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    flex-direction: row;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+    border-bottom: var(--button-border) solid 0.1em;
+    width: 100%;
+}
 
+.profile {
+    border: 0.1em solid var(--button-border);
+    padding: 1em 1.5em;
+    display: flex;
+    flex-direction: column;
+    background: var(--input-background);
+    border-radius: 0.5em;
+    text-align: center;
+    transition: background-color 0.1s ease-in;
+    margin-right: 1.5em;
+    overflow-wrap: break-word;
+    width: 10em;
+    height: 16em;
+}
 
+.profile:hover {
+    background: var(--input-hover);
+    cursor: pointer;
+}
+
+.profile>p:first-of-type {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0;
+    margin-top: 1em;
+}
+
+.profile>img {
+    border-radius: 10em;
+    margin-top: 0.5em;
+    max-width: 150px;
+}
 
 .margin-down {
     justify-content: space-around;
@@ -80,9 +125,10 @@
 
 
 .side-container ul {
-    padding-left: 0;
     list-style-type: none;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .side-container li {
@@ -102,6 +148,7 @@
     padding: 0.2em 0;
     transition: background-color 0.1s ease-in;
     border-radius: 0.5em;
+    background: var(--input-background);
 }
 
 .side-container a:hover {
