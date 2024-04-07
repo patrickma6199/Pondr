@@ -183,6 +183,22 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     color: grey;
 }
 
+/* Custom scrolling bar */
+
+::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--input-hover);
+    border-radius: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--input-background);
+}
+
 #dropdown-menu a:hover {background-color: #3d3d3d}
 
 /* screens: desktop, phone, tablet */
