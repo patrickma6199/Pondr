@@ -1,10 +1,13 @@
 $(document).ready(function () { 
     load_comments();
-    setInterval(load_comments, 5000); // update the comments every 5 seconds
+    setInterval(check_comments, 5000); // update the comments every 5 seconds
 });
 
 const get_params = new URLSearchParams(window.location.search);
 let postId = get_params.get('postId');
+let last_commentid = 0;
+let uid = undefined;
+let 
 
 //write load_comments
 function load_comments() {
@@ -26,8 +29,9 @@ function load_comments() {
                     comments.append($('<p>').text("No comments have been made for this post."));
                 } else {
                     data.comments.forEach(function (comment) {
+                        last_commentid = comment.comId;
                         //main comment container
-                        let comment_container = $('<div>');
+                        let comment_container = $('<div>').attr('id', comment.comId);
                         comment_container.addClass('thread-comment-container');
                         
                         //profile info container
@@ -89,8 +93,9 @@ function load_comments() {
                                     comments.append($('<p>').text(data.error));
                                 } else {
                                     data.subcomments.forEach(function (subcomment) {
+                                        last_commentid = subcomment.comId;
                                         //main comment container
-                                        let subcomment_container = $('<div>');
+                                        let subcomment_container = $('<div>').attr('data-commentid', subcomment.comId);
                                         subcomment_container.addClass('thread-comment-container');
                                         
                                         //profile info container
@@ -158,6 +163,25 @@ function load_comments() {
         error: function(xhr, status, error) {
             console.error('Comment Error:', error);
             console.log("status:", status);
+        }
+    });
+}
+
+function check_comments() {
+    $.ajax({
+        type: 'POST',
+        url: '../scripts/append_comments.php',
+        data: { postId: postId, lastComId: last_commentid},
+        success: function (data) {
+            if (data.error !== undefined) {
+                console.error(data.error);
+            } else {
+                // Update the comment count display
+                
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
         }
     });
 }
