@@ -33,7 +33,7 @@ $(document).ready(function(){
         var parentComId = $(this).data('commentid');
         var userName = $(this).data('username');
         console.log();
-        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'" style="flex-grow: 2;">' + ((userName != undefined) ? `@${userName} ` : '') + '</textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="cursor: pointer; flex-grow:1;">Submit</button></div>';
+        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'" style="flex: 2;">' + ((userName != undefined) ? `@${userName} ` : '') + '</textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="cursor: pointer; flex:1;">Submit</button></div>';
 
         if ($('#reply-text-'+ parentComId).length === 0) {
             $(this).parent().parent().append(replyTextarea);
