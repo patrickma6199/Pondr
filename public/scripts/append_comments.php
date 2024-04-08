@@ -9,17 +9,17 @@ $utype = $_SESSION['utype'] ?? null;
 
 if (isset($_POST['postId']) && isset($_POST['lastComId'])) {
     $postId = $_POST['postId'];
-    $lastComId = $_POST['postId'];
+    $lastComId = $_POST['lastComId'];
     $comments = array();
 
-    $sql = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp, u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.comId > ? ORDER BY c.comDate DESC;";
+    $sql = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp, c.parentComId, u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.comId > ? ORDER BY c.comDate DESC;";
     try {
         $prstmt = $conn->prepare($sql);
         $prstmt->bind_param('ss', $postId, $lastComId);
         $prstmt->execute();
-        $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $userType, $userId);
+        $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId, $userType, $userId);
         while ($prstmt->fetch()) {
-            array_push($comments, array('comId' => $comId, 'userName' => $userName, 'comDate' => $comDate, 'comText' => $comText, 'pfp' => $pfp, 'userType' => $userType, 'userId' => $userId));
+            array_push($comments, array('comId' => $comId, 'userName' => $userName, 'comDate' => $comDate, 'comText' => $comText, 'pfp' => $pfp, 'parentComId' => $parentComId, 'userType' => $userType, 'userId' => $userId));
         }
         echo json_encode(['comments' => $comments]);
         $prstmt->close();

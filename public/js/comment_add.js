@@ -2,6 +2,16 @@ $(document).ready(function(){
     const pid_param = new URLSearchParams(window.location.search);
     var postId = pid_param.get('postId');
 
+    $('#add-comment').off().on('click', function(e){
+        e.preventDefault();
+        if ($('#comment-text').length === 0) {
+            var textarea = '<br><br><div style="display:flex;"><textarea class="thread-comment-box" id="comment-text" style="flex:3;"></textarea><button id="submit-comment" style="cursor: pointer; flex:1;">Submit</button></div>';
+            $(this).after(textarea);
+        } else {
+            $('#comment-text').focus();
+        }
+    });
+
     $(document).on('click', '#submit-comment', function(e){
         var commentText = $('#comment-text').val().trim(); 
         if (commentText === '') {
@@ -33,7 +43,7 @@ $(document).ready(function(){
         var parentComId = $(this).data('commentid');
         var userName = $(this).data('username');
         console.log();
-        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'" style="flex: 2;">' + ((userName != undefined) ? `@${userName} ` : '') + '</textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="cursor: pointer; flex:1;">Submit</button></div>';
+        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'" style="flex: 3;">' + ((userName != undefined) ? `@${userName} ` : '') + '</textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="cursor: pointer; flex:1;">Submit</button></div>';
 
         if ($('#reply-text-'+ parentComId).length === 0) {
             $(this).parent().parent().append(replyTextarea);
