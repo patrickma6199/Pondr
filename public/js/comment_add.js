@@ -2,16 +2,6 @@ $(document).ready(function(){
     const pid_param = new URLSearchParams(window.location.search);
     var postId = pid_param.get('postId');
 
-    $('#add-comment').off().on('click', function(e){
-        e.preventDefault();
-        if ($('#comment-text').length === 0) {
-            var textarea = '<br><br><textarea class="thread-comment-box" id="comment-text"></textarea><button id="submit-comment">Submit</button>';
-            $(this).after(textarea);
-        } else {
-            $('#comment-text').focus();
-        }
-    });
-
     $(document).on('click', '#submit-comment', function(e){
         var commentText = $('#comment-text').val().trim(); 
         if (commentText === '') {
@@ -41,7 +31,9 @@ $(document).ready(function(){
     $(document).on('click', '.reply-icon', function(e){
         e.preventDefault();
         var parentComId = $(this).data('commentid');
-        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'"></textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="width:20em;">Submit</button></div>';
+        var userName = $(this).data('username');
+        console.log();
+        var replyTextarea = '<br> <br> <div style="display:flex;"><textarea class="thread-comment-box" id="reply-text-'+ parentComId +'" style="flex-grow: 2;">' + ((userName != undefined) ? `@${userName} ` : '') + '</textarea><button class="submit-reply" data-parentid="'+ parentComId +'" style="cursor: pointer; flex-grow:1;">Submit</button></div>';
 
         if ($('#reply-text-'+ parentComId).length === 0) {
             $(this).parent().parent().append(replyTextarea);

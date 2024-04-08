@@ -5,33 +5,19 @@ require_once '../scripts/dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $utype = $_SESSION['utype'] ?? null;
 $uid = $_SESSION['uid'] ?? null;
-try {
-    if (isset ($_GET['postId'])) {
-        $postId = $_GET['postId'];
-    } else {
-        exit (header("Location: ../index.php"));
-    }
-} catch (mysqli_sql_exception $e) {
-    error_log("PostId not set", $e->getMessage());
 
-} catch (Exception $e) {
-    error_log("PostId not set", $e->getMessage());
+if (isset ($_GET['postId'])) {
+    $postId = $_GET['postId'];
+} else {
+    exit (header("Location: ../index.php"));
 }
 
 // for likes script
-try {
-    if (isset ($_SESSION['uid'])) {
-        echo "<script>let loggedIn = true;</script>";
-    } else {
-        echo "<script>let loggedIn = false;</script>";
-    }
-} catch (mysqli_sql_exception $e) {
-    error_log("UID not set", $e->getMessage());
-
-} catch (Exception $e) {
-    error_log("UID not set", $e->getMessage());
+if (isset ($_SESSION['uid'])) {
+    echo "<script>let loggedIn = true;</script>";
+} else {
+    echo "<script>let loggedIn = false;</script>";
 }
-
 
 // for breadcrumbs
 $sql = "SELECT title FROM posts WHERE postId = ?;";
@@ -55,7 +41,6 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,6 +52,7 @@ try {
         <script src="../js/like_button.js"></script>
         <script src="../js/comment_count.js"></script>
         <script src="../js/comment_add.js"></script>
+        <script src="../js/load_comments.js"></script>
 
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
@@ -75,15 +61,6 @@ try {
                 e.preventDefault();
                 alert("Please log in to use this feature.");
             }
-
-            $(document).ready(function () {
-                // Toggle dropdown on profile picture click
-                $(".com-more-options").click(function (event) {
-                    event.preventDefault(); 
-                    let commentid = $(this).data('commentid');
-                    $(`.dropdown-com-${commentid}`).toggle("show");
-                });
-            });
 
         </script>
     </head>
@@ -150,91 +127,8 @@ try {
                 }
                 ?>
             </div>
-
-            <?php
-
-            $sql1 = "SELECT c.comId,u.uName,c.comDate,c.text,u.pfp,c.parentComId,u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.postId = ? AND c.parentComId IS NULL ORDER BY c.comDate DESC";
-            try {
-                $prstmt = $conn->prepare($sql1);
-
-                $prstmt->bind_param("i", $postId);
-                $prstmt->execute();
-                $prstmt->store_result();
-                $prstmt->bind_result($comId, $userName, $comDate, $comText, $pfp, $parentComId, $userType, $userId);
-
-                echo '<div class="thread-comments">';
-                while ($prstmt->fetch()) {
-
-                    echo '<article class="thread-comment-container">';
-                    echo '<div class="thread-comment-profile">';
-                    echo " <img src=\"$pfp\" alt=\"profile photo\">";
-                    if ($userType == 1) {
-                        echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a><span class=\"mod\"> [MOD]</span>" . " on <time>$comDate</time></i>";
-                    }else{
-                        echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$comDate</time></i>";
-                    }
-                    echo "</div>";
-                    echo "<p class=\"thread-comment\">";
-                    echo "$comText";
-                    echo "</p>";
-                    if(isset($uid)){
-                        echo "<div class=\"com-more-options\" data-commentid=\"{$comId}\"><i class=\"fa-solid fa-ellipsis\"></div></i>";
-                        echo "<div class=\"dropdown-com-{$comId}\" id=\"dropdown-menu\" style=\"top:3em;\">";
-                        echo "<a href=\"\" class=\"reply-icon\" id=\"reply-icon-{$comId}\" data-commentid=\"{$comId}\">Reply</a>";
-                        if($userId == $uid){
-                            echo "<a href=\"../scripts/delete_comment.php?postId=$postId&comId=$comId\">Delete</a>";
-                        }
-                        echo "</div>";
-                    }
-                    $sql2 = "SELECT c.comId, u.uName, c.comDate, c.text, u.pfp,u.utype, u.userId FROM comments c JOIN users u ON c.userId = u.userId WHERE c.parentComId = ? ORDER BY c.comDate DESC";
-                    try {
-                        $prstmt2 = $conn->prepare($sql2);
-                        $prstmt2->bind_param("i", $comId);
-                        $prstmt2->execute();
-                        $prstmt2->bind_result($subComId, $subUserName, $subComDate, $subComText, $subPfp,$subUserType, $subUserId);
-                        while ($prstmt2->fetch() && $subComId != NULL) {
-                            echo "<div class=\"thread-comment-container\">";
-                            echo "<div class=\"thread-comment-profile\">";
-                            echo " <img src=\"$subPfp\" alt=\"profile photo\">";
-                            if($subUserType == 1) {
-                            echo "<i>" . ($subUserId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$subUserName\">") . htmlspecialchars($subUserName) . "</a><span class=\"mod\">[MOD]</span> on <time>$subComDate</time></i>";
-
-                            }else{
-                            echo "<i>" . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$subComDate</time></i>";
-                            }
-                            echo "</div>";
-                            echo "<p class=\"thread-comment\">";
-                            echo "$subComText";
-                            echo "</p>";
-                            if($uid == $subUserId){
-                                echo "<div class=\"com-more-options\" data-commentid=\"{$subComId}\"><i class=\"fa-solid fa-ellipsis\"></div></i>";
-                                echo "<div class=\"dropdown-com-{$subComId}\" id=\"dropdown-menu\" style=\"top:3em;\">";
-                                echo "<a href=\"../scripts/delete_comment.php?postId=$postId&comId=$subComId\">Delete</a>";
-                                echo "</div>";
-                            }
-                            echo "</div>";
-                        }
-                        $prstmt2->close();
-                    } catch (mysqli_sql_exception $e) {
-                        error_log("Sub reply error", $e->getMessage());
-
-                    } catch (Exception $e) {
-                        error_log("Sub reply error error", $e->getMessage());
-                    }
-                    echo "</article>";
-                }
-                $prstmt->free_result();
-                $prstmt->close();
-
-            } catch (mysqli_sql_exception $e) {
-                error_log("reply error", $e->getMessage());
-
-            } catch (Exception $e) {
-                error_log("Reply error", $e->getMessage());
-            }
-
-            ?>
-            </div>
+             <!-- for loading comments from load_comments.js -->
+            <div class="thread-comments"></div>
         </main>
     </body>
 
