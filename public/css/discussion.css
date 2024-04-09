@@ -84,7 +84,6 @@
     text-align: center;
     transition: background-color 0.1s ease-in;
     margin-right: 0.5em;
-    overflow-wrap: break-word;
     width: 15em;
     height: 7em;
 }
