@@ -88,6 +88,7 @@ try {
                         } else {
                             echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$userName\">") . htmlspecialchars($userName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($category) . "</a>" : "") . "</i>";
                         }
+                        $postText = nl2br($postText);
                         echo "<p> $postText </p>";
                         echo " </article>";
                         echo "<a href=\"$link\" target=\"_blank\"> $link </a>";

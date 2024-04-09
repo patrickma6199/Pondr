@@ -77,15 +77,28 @@
     border: 0.1em solid var(--button-border);
     padding: 1em 1.5em;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background: var(--input-background);
     border-radius: 0.5em;
     text-align: center;
     transition: background-color 0.1s ease-in;
     margin-right: 1.5em;
     overflow-wrap: break-word;
-    width: 10em;
-    height: 16em;
+    width: 25em;
+    height: 10em;
+}
+
+.profile-text {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    margin-left: 2em;
+}
+
+.profile-text > * {
+    margin: 0;
 }
 
 .profile:hover {
@@ -93,11 +106,9 @@
     cursor: pointer;
 }
 
-.profile>p:first-of-type {
+.profile-text>p:first-of-type {
     font-weight: bold;
     font-size: 1.5em;
-    margin: 0;
-    margin-top: 1em;
 }
 
 .profile>img {
