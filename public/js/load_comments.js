@@ -56,7 +56,7 @@ function load_comments() {
                         }
                         a.text(comment.userName);
                         i.append(a);
-                        if (utype == 1) {
+                        if (comment.userType == 1) {
                             let span = $('<span>').addClass("mod").text(" [MOD]");
                             i.append(span);
                         }
@@ -121,7 +121,7 @@ function load_comments() {
                                         }
                                         a.text(subcomment.userName);
                                         i.append(a);
-                                        if (utype == 1) {
+                                        if (subcomment.userType == 1) {
                                             let span = $('<span>').addClass("mod").text(" [MOD]");
                                             i.append(span);
                                         }
@@ -206,7 +206,7 @@ function check_comments() {
                     }
                     a.text(comment.userName);
                     i.append(a);
-                    if (utype == 1) {
+                    if (comment.userType == 1) {
                         let span = $('<span>').addClass("mod").text(" [MOD]");
                         i.append(span);
                     }
