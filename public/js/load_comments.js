@@ -1,6 +1,7 @@
 $(document).ready(function () { 
     load_comments();
     setInterval(check_comments, 5000); // update the comments every 5 seconds
+    setInterval(check_deleted_comments, 5000);
 });
 
 const get_params = new URLSearchParams(window.location.search);
@@ -8,6 +9,7 @@ let postId = get_params.get('postId');
 let last_commentid = 0;
 let uid = undefined;
 let utype = undefined;
+let commentids = new Set();
 
 //write load_comments
 function load_comments() {
@@ -29,6 +31,7 @@ function load_comments() {
                     comments.append($('<p>').text("No comments have been made for this post."));
                 } else {
                     data.comments.forEach(function (comment) {
+                        commentids.add(comment.comId);
                         if(last_commentid < comment.comId) last_commentid = comment.comId;
                         //main comment container
                         let comment_container = $('<div>').attr('id', comment.comId);
@@ -93,9 +96,10 @@ function load_comments() {
                                     comments.append($('<p>').text(data.error));
                                 } else {
                                     data.subcomments.forEach(function (subcomment) {
+                                        commentids.add(subcomment.comId);
                                         if(last_commentid < subcomment.comId) last_commentid = subcomment.comId;
                                         //main comment container
-                                        let subcomment_container = $('<div>').attr('data-commentid', subcomment.comId);
+                                        let subcomment_container = $('<div>').attr('id', subcomment.comId);
                                         subcomment_container.addClass('thread-comment-container');
                                         
                                         //profile info container
@@ -177,9 +181,8 @@ function check_comments() {
             if (data.error !== undefined) {
                 console.error(data.error);
             } else {
-                console.log(data);
                 data.comments.forEach(function (comment) {
-                    console.log(comment);
+                    commentids.add(comment.comId);
                     if (last_commentid < comment.comId) last_commentid = comment.comId;
                     let comment_container = $('<div>');
                     comment_container.addClass('thread-comment-container');
@@ -246,5 +249,25 @@ function check_comments() {
             console.log("status:", status);
             console.log(xhr.responseText);
         }
+    });
+}
+
+function check_deleted_comments() {
+    commentids.forEach(function (comId) {
+        $.ajax({
+            type: 'POST',
+            url: '../scripts/check_deleted_comments.php',
+            data: { comId: comId },
+            success: function (data) {
+                if (!data.com_exists) {
+                    $(`#${comId}`).remove();
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                console.log("status:", status);
+                console.log(xhr.responseText);
+            }
+        });
     });
 }
