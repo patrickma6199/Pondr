@@ -75,30 +75,31 @@
 
 .profile {
     border: 0.1em solid var(--button-border);
-    padding: 1em 1.5em;
+    padding: 0.5em 1.5em;
+    /* Adjusted padding */
     display: flex;
     flex-direction: row;
     background: var(--input-background);
     border-radius: 0.5em;
     text-align: center;
     transition: background-color 0.1s ease-in;
-    margin-right: 1.5em;
+    margin-right: 0.5em;
     overflow-wrap: break-word;
-    width: 25em;
-    height: 10em;
+    width: 15em;
+    height: 7em;
 }
 
 .profile-text {
     display: flex;
     width: 100%;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     justify-content: center;
-    margin-left: 2em;
+    margin-left: 1em;
 }
 
-.profile-text > * {
-    margin: 0;
+.profile-text>* {
+    margin: 0.2em 0;
 }
 
 .profile:hover {
@@ -108,13 +109,19 @@
 
 .profile-text>p:first-of-type {
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1em;
+}
+
+.profile-text>p:nth-child(2) {
+    font-size: 0.7em;
 }
 
 .profile>img {
-    border-radius: 10em;
-    margin-top: 0.5em;
-    max-width: 150px;
+    border-radius: 5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    max-height: 80px;
+    max-width: 80px;
 }
 
 .margin-down {
