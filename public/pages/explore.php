@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 
 $uid = $_SESSION['uid'] ?? null;
 
-if (isset ($_GET["search"])) {              
+if (isset($_GET["search"])) {
     if ($_GET["search"] == "") {
         unset($_GET["search"]);
     }
@@ -14,7 +14,7 @@ if (isset ($_GET["search"])) {
 $search = $_GET['search'] ?? null;
 $catId = $_GET['catId'] ?? null;
 
-$pageTitle = "Discussions";
+$pageTitle = "Explore";
 ?>
 
 <!DOCTYPE html>
@@ -24,64 +24,104 @@ $pageTitle = "Discussions";
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/styles.css">
-        <link rel="stylesheet" href="../css/discussion.css">
+        <link rel="stylesheet" href="../css/explore.css">
+        <link rel="stylesheet" href="../css/slick.min.css">
+
         <link rel="icon" href="../img/logo.png">
         <title>Pondr</title>
         <script src="../js/jquery-3.1.1.min.js"></script>
         <script src="../js/load_discussions.js"></script>
+        <script src="../js/slick.min.js"></script>
+
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
-                let post_success = $('#post-success');
+                $('.image-carousel').slick({
+                    autoplay: true,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: false,
+                    infinite: true,
+                    arrows: true
+                });
 
-                setTimeout(function () {
-                    post_success.fadeOut();
-                }, 5000);
+                function adjustCarouselHeight() {
+                    // Get the height of the current slide
+                    var slideHeight = $('.image-carousel .slick-current img').height();
+                    // Set the height of the carousel to match the current slide
+                    $('.image-carousel').height(slideHeight);
+                }
 
-                $(".profile").on('click', function() {
-                    let userId = $(this).data('userid');
-                    let uid = $(this).data('uid');
-                    let uName = $(this).data('uname');
-                    console.log(`userId: ${userId}\n uid: ${uid}\nuName: ${uName}`);
-                    if(userId == uid) window.location.href = "./my_profile.php";
-                    else window.location.href = `./profile.php?uName=${uName}`;
+                // Run once to set initial height, and whenever the slide changes
+                adjustCarouselHeight(); // Adjust on load
+                $('.image-carousel').on('afterChange', function () {
+                    adjustCarouselHeight(); // Adjust whenever the slide changes
                 });
             });
         </script>
     </head>
 
     <body>
-        <?php require_once '../scripts/header.php';   ?>
-        <?php
-        if (isset ($_SESSION['discussionMessage'])) {
-            echo $_SESSION['discussionMessage'];
-            unset($_SESSION['discussionMessage']);
-        }
-        ?>
-        <p class="fading-message" id="new-post" style="display:none;"></p>
+        <?php require_once '../scripts/header.php'; ?>
+
+
         <main class="center-container margin-down">
+
+
             <section class="side-container">
-                <?php
-                
-                if (isset ($uid)) {
-                    echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
-                    echo "<br> ";
-                    echo "<a href=\"./explore.php\"><h3>Explore</h3></a>";
-                }
-                ?>
-                <h3 class="trending-title">TRENDING CATEGORIES</h3>
+
+                <h3 class="trending-title">TRENDING CATEGORIES <br> <br> </h3>
                 <ul id="cat-list"></ul>
             </section>
 
             <section class="discussion-container">
+
+                <div class="image-carousel">
+                    <?php
+
+                    $sql = "SELECT p.title, u.uName, p.img, u.utype, p.postId
+                FROM posts as p JOIN users as u ON p.userId = u.userId 
+                LEFT OUTER JOIN categories as c ON p.catId = c.catId 
+                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 1 DAY)
+                ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 7)) DESC
+                LIMIT 20;";
+                    $prstmt = $conn->prepare($sql);
+                    try {
+                        $prstmt->execute();
+                        $prstmt->bind_result($ImageTitle, $ImageUsername, $Image, $UserType, $ImagePostId);
+                        while ($prstmt->fetch()) {
+                            echo "<div class='carousel-item'>";
+                            echo "<a href=\"./thread.php?postId=$ImagePostId\"><img src='{$Image}' alt='{$ImageTitle}'></a>";
+                            echo "<div class='carousel-caption'>";
+                            echo "<h3>{$ImageTitle}</a></h3>";
+                            echo "<p><a href=\"./profile.php?uName=$ImageUsername\">{$ImageUsername}</a></p>";
+                            echo "</div>";
+                            echo "</div>";
+
+                        }
+                    } catch (mysqli_sql_exception $e) {
+                        $code = $e->getCode();
+                        if (isset($prstmt)) {
+                            $prstmt->close();
+                        }
+                        echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
+                    }
+
+
+
+
+
+                    ?>
+                </div>
+                <h3> TRENDING THREADS </h3>
                 <?php
 
-                $searchString = (isset ($search)) ? $search : "";
+                $searchString = (isset($search)) ? $search : "";
                 // for listing matching users by displaying profile in a block
-                try{
+                try {
                     $sql = "SELECT uName, fName, lName, pfp, userId FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') END;";
                     $prstmt = $conn->prepare($sql);
-                    $prstmt->bind_param("sssss",$searchString, $searchString, $searchString, $searchString, $searchString);
+                    $prstmt->bind_param("sssss", $searchString, $searchString, $searchString, $searchString, $searchString);
                     $prstmt->execute();
                     $prstmt->bind_result($uName, $fName, $lName, $pfp, $userId);
                     if ($prstmt->fetch()) {
@@ -93,9 +133,9 @@ $pageTitle = "Discussions";
                         echo "</div>";
                     }
                     $prstmt->close();
-                }catch(mysqli_sql_exception $e) {
+                } catch (mysqli_sql_exception $e) {
                     $code = $e->getCode();
-                    if(isset($prstmt)){
+                    if (isset($prstmt)) {
                         $prstmt->close();
                     }
                     echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
@@ -107,15 +147,16 @@ $pageTitle = "Discussions";
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE" . (isset ($catId) ? " p.catId = ? AND " : " ") . "(p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%'))
-                ORDER BY p.postDate DESC;";
+                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 1 DAY)
+                ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 2)) DESC
+                LIMIT 20;";
                 $prstmt = $conn->prepare($sql);
-                
-                if (isset ($catId)) {
-                    $prstmt->bind_param("ssss", $catId, $searchString, $searchString, $searchString);
-                } else {
-                    $prstmt->bind_param("sss", $searchString, $searchString, $searchString);
-                }
+
+                // if (isset($catId)) {
+                //     $prstmt->bind_param("ssss", $catId, $searchString, $searchString, $searchString);
+                // } else {
+                //     $prstmt->bind_param("sss", $searchString, $searchString, $searchString);
+                // }
                 try {
                     $prstmt->execute();
                     $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId, $userId, $userType, $likeCount, $comCount);
@@ -124,15 +165,15 @@ $pageTitle = "Discussions";
                         echo "<article>";
                         echo "<a href=\"./thread.php?postId=$postId\"><h2>" . htmlspecialchars($title) . "</h2></a>";
                         if ($userType == 1) {
-                            echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a><span class=\"mod\"> [MOD]</span> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                            echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a><span class=\"mod\"> [MOD]</span> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
 
-                        }else{
-                            echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                        } else {
+                            echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         }
                         echo "<p>$text</p>";
                         echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                         echo "</article>";
-                        if (isset ($postImg)) {
+                        if (isset($postImg)) {
                             echo "<img src=\"$postImg\">";
                         }
                         echo "</div>";
@@ -144,15 +185,15 @@ $pageTitle = "Discussions";
                             echo "<article>";
                             echo "<a href=\"./thread.php?postId=$postId\"><h2>" . htmlspecialchars($title) . "</h2></a>";
                             if ($userType == 1) {
-                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a><span class=\"mod\"> [MOD]</span> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a><span class=\"mod\"> [MOD]</span> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
 
-                            }else{
-                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
+                            } else {
+                                echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                             }
                             echo "<p>$text</p>";
                             echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                             echo "</article>";
-                            if (isset ($postImg)) {
+                            if (isset($postImg)) {
                                 echo "<img src=\"$postImg\">";
                             }
                             echo "</div>";
@@ -170,7 +211,7 @@ $pageTitle = "Discussions";
                     echo "</script>";
                 } catch (mysqli_sql_exception $e) {
                     $code = $e->getCode();
-                    if(isset($prstmt)){
+                    if (isset($prstmt)) {
                         $prstmt->close();
                     }
                     echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
