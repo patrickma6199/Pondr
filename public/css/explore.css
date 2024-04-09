@@ -1,0 +1,255 @@
+.discussion-container {
+    width: 80%;
+    background: var(--dark-blue);
+    padding: 1em 2em;
+    border-left: var(--button-border) solid 0.1em;
+    flex: 3;
+}
+
+.mini-thread {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 0.1em solid var(--button-border);
+    border-radius: 0.5em;
+    margin: 0.5em 0;
+    padding: 0 0.5em;
+    background: var(--input-background);
+}
+
+.mini-thread img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.mini-thread article {
+    flex-grow: 1;
+    margin-right: 1em;
+}
+
+.mini-thread a {
+    color: white;
+}
+
+.mini-thread p {
+    overflow: hidden;
+    max-height: 4em;
+}
+
+.trending-title {
+    text-align: center;
+    border-bottom: var(--button-border) solid 0.1em;
+    padding: 0 2em;
+    margin: 0;
+    margin-top: 0em;
+}
+
+@supports(-webkit-line-clamp: 3) {
+    .mini-thread p {
+        max-height: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+    }
+}
+
+
+.discussion-container img {
+    max-width: 200px;
+}
+
+.profiles-container {
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    flex-direction: row;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+    border-bottom: var(--button-border) solid 0.1em;
+    width: 100%;
+}
+
+.profile {
+    border: 0.1em solid var(--button-border);
+    padding: 1em 1.5em;
+    display: flex;
+    flex-direction: column;
+    background: var(--input-background);
+    border-radius: 0.5em;
+    text-align: center;
+    transition: background-color 0.1s ease-in;
+    margin-right: 1.5em;
+    overflow-wrap: break-word;
+    width: 10em;
+    height: 16em;
+}
+
+.profile:hover {
+    background: var(--input-hover);
+    cursor: pointer;
+}
+
+.profile>p:first-of-type {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0;
+    margin-top: 1em;
+}
+
+.profile>img {
+    border-radius: 10em;
+    margin-top: 0.5em;
+    max-width: 150px;
+}
+
+.margin-down {
+    justify-content: space-between;
+}
+
+
+
+.side-container {
+    border-radius: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2.6vw;
+    padding-left: 1em;
+    position: relative;
+    justify-content: space-between;
+}
+
+
+.side-container ul {
+    list-style-type: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.side-container li {
+    margin: 1em 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.side-container a {
+    color: white;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    width: 90%;
+    text-decoration: none;
+    padding: 0.2em 0;
+    transition: background-color 0.1s ease-in;
+    border-radius: 0.5em;
+    background: var(--input-background);
+}
+
+.side-container a:hover {
+    background: var(--input-hover);
+}
+
+#clear-category-btn {
+    font-weight: bolder;
+    margin-top: auto;
+    padding: 1em;
+    display: block;
+    flex-direction: column;
+}
+
+.image-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+
+}
+
+.carousel-item {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 0 0 auto;
+    margin-right: 1em;
+    margin-left: 1em;
+    width: 500px;
+    max-height: 300px;
+    overflow:hidden; 
+    position: relative;
+    scroll-snap-align: start;
+    border: 0.1em solid var(--button-border);
+    border-radius: 0.5em;
+    margin: 0.5em 0;
+    background: var(--input-background);
+
+}
+
+.image-carousel img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    height: auto;
+    margin: auto;   
+    padding: 5em 5em;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    color: #fff;
+    width: 100%;
+    padding: 1rem;
+    opacity: 0; /* Hide by default */
+    transition: opacity 0.5s ease; /* Smooth transition for the hover effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-item:hover .carousel-caption {
+    opacity: 1; /* Show the caption on hover */
+}
+
+
+
+@media only screen and (max-width: 480px) {
+
+    .mini-thread {
+
+        font-size: 0.8em;
+        position: flex;
+    }
+
+    .side-container {
+        margin-left: 1em;
+        border-radius: 1em;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2.6vw;
+        position: flex;
+        justify-content: space-between;
+
+    }
+
+    .discussion-container .mini-thread article {
+
+        padding: 2em;
+        margin-bottom: 20px;
+
+
+    }
+
+    .discussion-container .mini-thread img {
+        display: none;
+    }
+}
