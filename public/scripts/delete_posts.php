@@ -30,10 +30,10 @@ if (isset ($_GET['postId'])) {
         unset($stmt);
 
         if ($allowed) {
-            $sql = "SELECT img FROM posts WHERE postId = ?";
+            $sql = "SELECT img, catId FROM posts WHERE postId = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $pid);
-            $stmt->bind_result($postImg);
+            $stmt->bind_result($postImg, $catId);
             $stmt->execute();
             if ($stmt->fetch()) {
                 if (isset ($postImg) && file_exists($postImg)) {
@@ -41,11 +41,18 @@ if (isset ($_GET['postId'])) {
                         throw new Exception("Could not delete post image.");
                     }
                 }
+                $stmt->close();
+                unset($stmt);
+                $sql = "UPDATE categories SET count = count - 1 WHERE catId = ?;";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('s', $catId);
+                $stmt->execute();
             } else {
                 throw new Exception("Could not retrieve post image.");
             }
             $stmt->close();
             unset($stmt);
+            
             $sql = "DELETE FROM posts WHERE postId = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $pid);
