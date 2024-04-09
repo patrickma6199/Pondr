@@ -11,6 +11,13 @@ if (isset ($_GET["search"])) {
         unset($_GET["search"]);
     }
 }
+function truncateUName($uName) {
+    if (strlen($uName) > 20) {
+        $uName = substr($uName, 0, 17) . "...";
+    }
+    return $uName;
+}
+
 $search = $_GET['search'] ?? null;
 $catId = $_GET['catId'] ?? null;
 
@@ -77,16 +84,18 @@ $pageTitle = "Discussions";
                 $searchString = (isset ($search)) ? $search : "";
                 // for listing matching users by displaying profile in a block
                 try{
-                    $sql = "SELECT uName, fName, lName, pfp, userId FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') END;";
+                    $sql = "SELECT uName, fName, lName, pfp, userId, utype FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') END;";
                     $prstmt = $conn->prepare($sql);
                     $prstmt->bind_param("sssss",$searchString, $searchString, $searchString, $searchString, $searchString);
                     $prstmt->execute();
-                    $prstmt->bind_result($uName, $fName, $lName, $pfp, $userId);
+                    $prstmt->bind_result($uName, $fName, $lName, $pfp, $userId, $userType);
                     if ($prstmt->fetch()) {
-                        echo "<div class =\"profiles-container\">";
-                        echo "<div class =\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><p>$uName</p><p>$fName $lName</p></div>";
+                        $uName = truncateUName($uName);
+                        echo "<div class=\"profiles-container\">";
+                        echo "<div class=\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><div class=\"profile-text\"><p>$uName" . ($userType == 1 ? "<span class=\"mod\"> [MOD]</span>" : "") . "</p><p>$fName $lName</p></div></div>";
                         while ($prstmt->fetch()) {
-                            echo "<div class =\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><p>$uName</p><p>$fName $lName</p></div>";
+                            $uName = truncateUName($uName);
+                            echo "<div class=\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><div class=\"profile-text\"><p>$uName" . ($userType == 1 ? "<span class=\"mod\"> [MOD]</span>" : "") . "</p><p>$fName $lName</p></div></div>";
                         }
                         echo "</div>";
                     }
@@ -127,6 +136,7 @@ $pageTitle = "Discussions";
                         }else{
                             echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                         }
+                        $text = nl2br($text);
                         echo "<p>$text</p>";
                         echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                         echo "</article>";
@@ -147,6 +157,7 @@ $pageTitle = "Discussions";
                             }else{
                                 echo "<i>Posted by: " . ($userId == $uid ? "<a href=\"./my_profile.php\">" : "<a href=\"./profile.php?uName=$uName\">") . htmlspecialchars($uName) . "</a> on <time>$postDate</time>" . ((isset ($catId)) ? " under <a href=\"./discussion.php?catId=$catId\">" . htmlspecialchars($catName) . "</a>" : "") . "</i>";
                             }
+                            $text = nl2br($text);
                             echo "<p>$text</p>";
                             echo "<p style=\"margin-top:2em;\"><b><i class=\"fa-regular fa-heart\"></i></b> $likeCount   <b><i class=\"fa-solid fa-comment\"></i></b> $comCount</p>";
                             echo "</article>";
