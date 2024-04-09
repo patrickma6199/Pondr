@@ -28,7 +28,7 @@ function load_comments() {
                 uid = data.uid;
                 utype = data.utype;
                 if (data.comments.length == 0) {
-                    comments.append($('<p>').text("No comments have been made for this post."));
+                    comments.append($('<p>').addClass('no-com-msg').text("No comments have been made for this post."));
                 } else {
                     data.comments.forEach(function (comment) {
                         commentids.add(comment.comId);
@@ -182,6 +182,7 @@ function check_comments() {
                 console.error(data.error);
             } else {
                 data.comments.forEach(function (comment) {
+                    $('.no-com-msg').remove();
                     commentids.add(comment.comId);
                     if (last_commentid < comment.comId) last_commentid = comment.comId;
                     let comment_container = $('<div>');
