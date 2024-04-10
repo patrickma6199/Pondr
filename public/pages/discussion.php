@@ -72,6 +72,8 @@ $pageTitle = "Discussions";
                 
                 if (isset ($uid)) {
                     echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
+                    echo "<br> ";
+                    echo "<a href=\"./explore.php\"><h3>Explore</h3></a>";
                 }
                 ?>
                 <h3 class="trending-title">TRENDING CATEGORIES</h3>
