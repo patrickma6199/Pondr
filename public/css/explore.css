@@ -204,18 +204,17 @@
     position: absolute;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent background */
     color: #fff;
     width: 100%;
-    padding: 1rem;
-    opacity: 0; /* Hide by default */
-    transition: opacity 0.5s ease; /* Smooth transition for the hover effect */
+    padding: 0.4rem;
+    opacity: 0;
+     transition: opacity 0.5s ease; 
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .carousel-item:hover .carousel-caption {
-    opacity: 1; /* Show the caption on hover */
+    opacity: 1; 
 }
 
 

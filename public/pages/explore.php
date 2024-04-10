@@ -36,6 +36,7 @@ $pageTitle = "Explore";
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
+                adjustCarouselHeight();
                 $('.image-carousel').slick({
                     autoplay: true,
                     slidesToShow: 2,
@@ -53,10 +54,10 @@ $pageTitle = "Explore";
                 }
 
                 // Run once to set initial height, and whenever the slide changes
-                adjustCarouselHeight(); // Adjust on load
-                $('.image-carousel').on('afterChange', function () {
-                    adjustCarouselHeight(); // Adjust whenever the slide changes
-                });
+                // Adjust on load
+                // $('.image-carousel').on('afterChange', function () {
+                //     adjustCarouselHeight(); // Adjust whenever the slide changes
+                // });
             });
         </script>
     </head>
@@ -75,14 +76,16 @@ $pageTitle = "Explore";
             </section>
 
             <section class="discussion-container">
+                <h3> FOR YOU </h3>
 
                 <div class="image-carousel">
+                    
                     <?php
 
                     $sql = "SELECT p.title, u.uName, p.img, u.utype, p.postId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 1 DAY)
+                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 4 DAY)
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 7)) DESC
                 LIMIT 20;";
                     $prstmt = $conn->prepare($sql);
@@ -91,10 +94,10 @@ $pageTitle = "Explore";
                         $prstmt->bind_result($ImageTitle, $ImageUsername, $Image, $UserType, $ImagePostId);
                         while ($prstmt->fetch()) {
                             echo "<div class='carousel-item'>";
-                            echo "<a href=\"./thread.php?postId=$ImagePostId\"><img src='{$Image}' alt='{$ImageTitle}'></a>";
+                            echo "<a href=\"./thread.php?postId=$ImagePostId\"><img src='{$Image}' alt='an iamge for {$ImageTitle}'></a>";
                             echo "<div class='carousel-caption'>";
-                            echo "<h3>{$ImageTitle}</a></h3>";
-                            echo "<p><a href=\"./profile.php?uName=$ImageUsername\">{$ImageUsername}</a></p>";
+                            echo "<h3>{$ImageTitle}</h3><br>";
+                            // echo "<p><a href=\"./profile.php?uName=$ImageUsername\">{$ImageUsername}</a></p>";
                             echo "</div>";
                             echo "</div>";
 
@@ -147,7 +150,7 @@ $pageTitle = "Explore";
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 1 DAY)
+                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 4 DAY)
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 2)) DESC
                 LIMIT 20;";
                 $prstmt = $conn->prepare($sql);
