@@ -36,15 +36,15 @@ $pageTitle = "Explore";
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
-                adjustCarouselHeight();
-                $('.image-carousel').slick({
-                    autoplay: true,
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    dots: false,
-                    infinite: true,
-                    arrows: true
-                });
+                //adjustCarouselHeight();
+                // $('.image-carousel').slick({
+                //     autoplay: true,
+                //     slidesToShow: 3,
+                //     slidesToScroll: 1,
+                //     dots: false,
+                //     infinite: true,
+                //     arrows: true
+                // });
 
                 function adjustCarouselHeight() {
                     // Get the height of the current slide
@@ -85,7 +85,7 @@ $pageTitle = "Explore";
                     $sql = "SELECT p.title, u.uName, p.img, u.utype, p.postId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 4 DAY) AND p.img IS NOT NULL
+                WHERE  p.img IS NOT NULL
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 7)) DESC
                 LIMIT 20;";
                     $prstmt = $conn->prepare($sql);
@@ -114,11 +114,9 @@ $pageTitle = "Explore";
                 <?php
 
                 // Block for listing posts
-                $highestPostId = 0;
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 4 DAY)
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 2)) DESC
                 LIMIT 20;";
                 $prstmt = $conn->prepare($sql);
@@ -142,9 +140,6 @@ $pageTitle = "Explore";
                             echo "<img src=\"$postImg\">";
                         }
                         echo "</div>";
-                        if ($postId > $highestPostId) {
-                            $highestPostId = $postId;
-                        }
                         while ($prstmt->fetch()) {
                             echo "<div class=\"mini-thread\">";
                             echo "<article>";
@@ -162,9 +157,6 @@ $pageTitle = "Explore";
                                 echo "<img src=\"$postImg\">";
                             }
                             echo "</div>";
-                            if ($postId > $highestPostId) {
-                                $highestPostId = $postId;
-                            }
                         }
                     } else {
                         echo "<p>Looks like theres no posts under your search parameters... Be the first to post!</p>";
