@@ -11,6 +11,13 @@ if (isset ($_GET["search"])) {
         unset($_GET["search"]);
     }
 }
+
+if (isset ($_GET["catName"])) {              
+    if ($_GET["catName"] == "") {
+        unset($_GET["catName"]);
+    }
+}
+
 function truncateUName($uName) {
     if (strlen($uName) > 20) {
         $uName = substr($uName, 0, 17) . "...";
@@ -19,7 +26,7 @@ function truncateUName($uName) {
 }
 
 $search = $_GET['search'] ?? null;
-$catId = $_GET['catId'] ?? null;
+$catName = $_GET['catName'] ?? null;
 
 $pageTitle = "Discussions";
 ?>
@@ -36,6 +43,7 @@ $pageTitle = "Discussions";
         <title>Pondr</title>
         <script src="../js/jquery-3.1.1.min.js"></script>
         <script src="../js/load_discussions.js"></script>
+        <script src="../js/search_cat_results.js"></script>
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
@@ -49,7 +57,6 @@ $pageTitle = "Discussions";
                     let userId = $(this).data('userid');
                     let uid = $(this).data('uid');
                     let uName = $(this).data('uname');
-                    console.log(`userId: ${userId}\n uid: ${uid}\nuName: ${uName}`);
                     if(userId == uid) window.location.href = "./my_profile.php";
                     else window.location.href = `./profile.php?uName=${uName}`;
                 });
@@ -69,19 +76,17 @@ $pageTitle = "Discussions";
         <main class="center-container margin-down">
             <section class="side-container">
                 <?php
-                
                 if (isset ($uid)) {
                     echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
                 }
                 ?>
-                <h3 class="trending-title">TRENDING CATEGORIES</h3>
-                <ul id="cat-list"></ul>
             </section>
 
             <section class="discussion-container">
                 <?php
 
                 $searchString = (isset ($search)) ? $search : "";
+                $catNameString = (isset($catName)) ? $catName : "";
                 // for listing matching users by displaying profile in a block
                 try{
                     $sql = "SELECT uName, fName, lName, pfp, userId, utype FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') END;";
@@ -114,15 +119,11 @@ $pageTitle = "Discussions";
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE" . (isset ($catId) ? " p.catId = ? AND " : " ") . "(p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%'))
+                WHERE (c.name LIKE CONCAT('%',?,'%') OR CASE WHEN ? = \"\" THEN c.name IS NULL ELSE FALSE END) AND (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%'))
                 ORDER BY p.postDate DESC;";
                 $prstmt = $conn->prepare($sql);
                 
-                if (isset ($catId)) {
-                    $prstmt->bind_param("ssss", $catId, $searchString, $searchString, $searchString);
-                } else {
-                    $prstmt->bind_param("sss", $searchString, $searchString, $searchString);
-                }
+                $prstmt->bind_param("sssss", $catNameString, $catNameString, $searchString, $searchString, $searchString);
                 try {
                     $prstmt->execute();
                     $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId, $userId, $userType, $likeCount, $comCount);

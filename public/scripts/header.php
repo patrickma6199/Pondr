@@ -31,11 +31,11 @@ $uid = $_SESSION['uid'] ?? null;
     <a href="../index.php"><img src="../img/mainLogo.png" alt="Pondr Logo" id="top-bar-logo"></a>
     <div id="top-search-bar">
         <form method="GET" action="discussion.php">
+            <div id="category-search-container">
             <?php
-            if (isset ($_GET['catId'])) {
-                echo "<input type=\"hidden\" name=\"catId\" value=\"$catId\">";    
-            }
-            echo "<input type=\"text\" name=\"search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset ($search)) ? $search : "") . "\"/>";
+            echo "<input type=\"text\" name=\"catName\" id=\"cat-search\" placeholder=\"Search Under Categories\" value=\"". ((isset($catName)) ? $catName : "") ."\" autocomplete=\"off\">";
+            echo "<div id=\"category-results\"></div></div>";
+            echo "<input type=\"text\" name=\"search\" style=\"flex: 3;\" id=\"post-search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset ($search)) ? $search : "") . "\"/>";
             ?>
             <button type="submit" class="form-button">Search</button>
         </form>
