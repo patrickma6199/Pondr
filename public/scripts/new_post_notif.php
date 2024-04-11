@@ -5,20 +5,17 @@ require_once 'dbconfig.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 header('Content-Type: application/json');
 // query depends on if catId is set and if search string is empty (return all discussion posts)
-if (isset($_POST['search']) && isset($_POST['catId']) && isset($_POST['lastPost'])) {
+if (isset($_POST['search']) && isset($_POST['catName']) && isset($_POST['lastPost'])) {
     $search = $_POST['search'];
-    $catId = $_POST['catId'];
+    $catName = $_POST['catName'];
     $lastPost = $_POST['lastPost'];
     $sql = "SELECT p.postId
-    FROM posts as p JOIN users as u ON p.userId = u.userId LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-    WHERE" . ($catId != "" ? " p.catId = ? AND ":" ") . "CASE WHEN ? = \"\" THEN TRUE ELSE (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) END AND p.postId > ?;";
+    FROM posts as p JOIN users as u ON p.userId = u.userId 
+    LEFT OUTER JOIN categories as c ON p.catId = c.catId 
+    WHERE (c.name LIKE CONCAT('%',?,'%') OR CASE WHEN ? = \"\" THEN c.name IS NULL ELSE FALSE END) AND (p.title LIKE CONCAT('%',?,'%') OR p.text LIKE CONCAT('%',?,'%') OR u.uName LIKE CONCAT('%',?,'%')) AND p.postId > ?;";
     try {
         $prstmt = $conn->prepare($sql);
-        if ($catId != "") {
-            $prstmt->bind_param("ssssss",$catId,$search,$search,$search,$search,$lastPost);
-        } else {
-            $prstmt->bind_param("sssss",$search,$search,$search,$search,$lastPost);
-        }
+        $prstmt->bind_param("ssssss", $catName, $catName, $search, $search, $search, $lastPost);
         $prstmt->execute();
         $prstmt->bind_result($postId);
         if($prstmt->fetch()){

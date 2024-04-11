@@ -70,16 +70,16 @@ function load_categories() {
 function load_new_notification() {
     const get_params = new URLSearchParams(window.location.search);
     let search = get_params.get('search');
-    let catId = get_params.get('catId');
+    let catName = get_params.get('catName');
 
     if (!search) {
         search = "";
     }
-    if (!catId) {
-        catId = "";
+    if (!catName) {
+        catName = "";
     }
 
-    serializedData = `search=${search}&catId=${catId}&lastPost=${lastPostId}`;
+    serializedData = `search=${search}&catName=${catName}&lastPost=${lastPostId}`;
     let message = $("#new-post");
     $.ajax({
         type: 'POST',

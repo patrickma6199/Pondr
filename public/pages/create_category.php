@@ -22,11 +22,14 @@ $pageTitle = "IGNORE";
     <?php require_once '../scripts/header.php'; ?>
     <main class="center-container">
         <section class="form-container" style="width: 50%;">
-            <?php if (!empty($message)): ?>
-                <p><?php echo $message; ?></p>
-            <?php endif; ?>
             <form method="post" action="../scripts/creating_category.php">
                 <legend>Create New Category</legend>
+                <?php
+                if (isset ($_SESSION['message'])) {
+                echo "<p>" . $_SESSION['message'] . "</p>";
+                unset($_SESSION['message']);
+                } 
+                ?>
                 <div class="form-item">
                     <label for="categoryName">Category Name:</label>
                     <input type="text" placeholder="Enter your Category Name" id="categoryName" name="categoryName" required>
