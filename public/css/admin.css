@@ -38,13 +38,21 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: flex-start; 
     border-left: 0.1em solid rgba(255, 255, 255, 0.2);
+    padding-left: 20px;
 }
+
+.chart-container h2 {
+    align-items: start;
+    margin: 0;
+    padding: 20px 20px 20px 0; 
+}
+
 
 #analytics-dashboard {
     flex: 1;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -73,7 +81,59 @@ form .form-button {
     margin-left:  -0.625em; 
 }
 
+.analytics-button {
+    font-family: var(--pondr-font);
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 0.1em solid var(--button-border);
+    border-radius: 1em;
+    transition: all 0.3s ease-in;
+    padding: 1em; 
+    text-decoration: none;
+    margin-left: auto; 
+    font-weight:bold;
+    outline: none;
+    cursor: pointer; 
+    font-size: 1.25em; 
+    margin: 0em 1em; 
+    flex-shrink: 0; 
+}
 
+.top-container{
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date-selection, .category-selection {
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.date-selection label,
+.category-selection label {
+    margin-right: 5px;
+}
+
+.generate-button {
+    margin-top: 10px;
+}
+
+.line-container {
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+
+
+
+/*responsiveness*/
 @media (max-width: 48em) {
     .center-container {
         flex-direction: column; /
