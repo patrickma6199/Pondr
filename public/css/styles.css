@@ -197,6 +197,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     top: 100%;
     background: var(--input-background);
     left:5px;
+    z-index:1;
 }
 
 #category-results>* {

@@ -6,7 +6,7 @@ $(document).ready(function () {
         checkCategories(catName);
     });
     $('#cat-search').on('focusout', function () {
-        category_timeout = setTimeout(clearCategories,200); // set timeout so that users can still click results
+        category_timeout = setTimeout(clearCategories,100); // set timeout so that users can still click results
     });
 });
 

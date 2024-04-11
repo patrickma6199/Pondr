@@ -30,7 +30,7 @@ $pageTitle = "Explore";
         <link rel="icon" href="../img/logo.png">
         <title>Pondr</title>
         <script src="../js/jquery-3.1.1.min.js"></script>
-        <script src="../js/load_discussions.js"></script>
+        <script src="../js/load_categories.js"></script>
         <script src="../js/slick.min.js"></script>
 
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
@@ -85,7 +85,7 @@ $pageTitle = "Explore";
                     $sql = "SELECT p.title, u.uName, p.img, u.utype, p.postId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 4 DAY)
+                WHERE p.postDate > DATE_SUB(NOW(), INTERVAL 4 DAY) AND p.img IS NOT NULL
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 7)) DESC
                 LIMIT 20;";
                     $prstmt = $conn->prepare($sql);
@@ -97,7 +97,6 @@ $pageTitle = "Explore";
                             echo "<a href=\"./thread.php?postId=$ImagePostId\"><img src='{$Image}' alt='an iamge for {$ImageTitle}'></a>";
                             echo "<div class='carousel-caption'>";
                             echo "<h3>{$ImageTitle}</h3><br>";
-                            // echo "<p><a href=\"./profile.php?uName=$ImageUsername\">{$ImageUsername}</a></p>";
                             echo "</div>";
                             echo "</div>";
 
@@ -109,41 +108,10 @@ $pageTitle = "Explore";
                         }
                         echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
                     }
-
-
-
-
-
                     ?>
                 </div>
                 <h3> TRENDING THREADS </h3>
                 <?php
-
-                $searchString = (isset($search)) ? $search : "";
-                // for listing matching users by displaying profile in a block
-                try {
-                    $sql = "SELECT uName, fName, lName, pfp, userId FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') END;";
-                    $prstmt = $conn->prepare($sql);
-                    $prstmt->bind_param("sssss", $searchString, $searchString, $searchString, $searchString, $searchString);
-                    $prstmt->execute();
-                    $prstmt->bind_result($uName, $fName, $lName, $pfp, $userId);
-                    if ($prstmt->fetch()) {
-                        echo "<div class =\"profiles-container\">";
-                        echo "<div class =\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><p>$uName</p><p>$fName $lName</p></div>";
-                        while ($prstmt->fetch()) {
-                            echo "<div class =\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><p>$uName</p><p>$fName $lName</p></div>";
-                        }
-                        echo "</div>";
-                    }
-                    $prstmt->close();
-                } catch (mysqli_sql_exception $e) {
-                    $code = $e->getCode();
-                    if (isset($prstmt)) {
-                        $prstmt->close();
-                    }
-                    echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
-                }
-
 
                 // Block for listing posts
                 $highestPostId = 0;
@@ -154,12 +122,6 @@ $pageTitle = "Explore";
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 2)) DESC
                 LIMIT 20;";
                 $prstmt = $conn->prepare($sql);
-
-                // if (isset($catId)) {
-                //     $prstmt->bind_param("ssss", $catId, $searchString, $searchString, $searchString);
-                // } else {
-                //     $prstmt->bind_param("sss", $searchString, $searchString, $searchString);
-                // }
                 try {
                     $prstmt->execute();
                     $prstmt->bind_result($postId, $title, $postDate, $text, $uName, $catName, $postImg, $catId, $userId, $userType, $likeCount, $comCount);
@@ -208,10 +170,6 @@ $pageTitle = "Explore";
                         echo "<p>Looks like theres no posts under your search parameters... Be the first to post!</p>";
                     }
                     $prstmt->close();
-                    //To be accessible in the load discussions js script to check when new posts are made.
-                    echo "<script>";
-                    echo "var lastPostId = $highestPostId;";
-                    echo "</script>";
                 } catch (mysqli_sql_exception $e) {
                     $code = $e->getCode();
                     if (isset($prstmt)) {

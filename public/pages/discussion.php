@@ -43,7 +43,6 @@ $pageTitle = "Discussions";
         <title>Pondr</title>
         <script src="../js/jquery-3.1.1.min.js"></script>
         <script src="../js/load_discussions.js"></script>
-        <script src="../js/search_cat_results.js"></script>
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {

@@ -13,7 +13,7 @@ $utype = $_SESSION['utype'] ?? null;
 $uid = $_SESSION['uid'] ?? null;
 ?>
 
-
+<script src="../js/search_cat_results.js"></script>
 <nav id="top-bar">
     <script src="../js/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
