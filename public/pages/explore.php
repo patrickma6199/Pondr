@@ -85,7 +85,7 @@ $pageTitle = "Explore";
                     $sql = "SELECT p.title, u.uName, p.img, u.utype, p.postId
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
                 LEFT OUTER JOIN categories as c ON p.catId = c.catId 
-                WHERE  p.img IS NOT NULL
+                WHERE p.postDate >= DATE_SUB(NOW(), INTERVAL 1 WEEK) AND p.img IS NOT NULL
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 7)) DESC
                 LIMIT 20;";
                     $prstmt = $conn->prepare($sql);
@@ -116,7 +116,8 @@ $pageTitle = "Explore";
                 // Block for listing posts
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment
                 FROM posts as p JOIN users as u ON p.userId = u.userId 
-                LEFT OUTER JOIN categories as c ON p.catId = c.catId 
+                LEFT OUTER JOIN categories as c ON p.catId = c.catId
+                WHERE p.postDate >= DATE_SUB(NOW(), INTERVAL 1 WEEK)
                 ORDER BY ((p.likes * 5) + (p.comment * 2) + (c.count * 2)) DESC
                 LIMIT 20;";
                 $prstmt = $conn->prepare($sql);
