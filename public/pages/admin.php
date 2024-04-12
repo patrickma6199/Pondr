@@ -78,30 +78,28 @@ $pageTitle = "IGNORE";
             <h2>Admin Dashboard</h2>
                 <button class="analytics-button">Analytics</button>
         </div>
+    
         <!-- new line chart stuff -->
-        <div class = "line-container">
-            <div class="date-selection">
-                <label for="start-date">Start Date:</label>
-                <input type="date" id="start-date" name="start-date">
-                <label for="end-date">End Date:</label>
-                <input type="date" id="end-date" name="end-date">
-            </div>
+            <div class="line-container">
+                <div class="date-selection">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" name="start-date" class="date-input">
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" name="end-date" class="date-input">
+                </div>
 
-            <!-- category Selection -->
-            <div class="category-selection">
-                <input type="radio" id="posts" name="category" value="posts">
-                <label for="posts">Posts</label>
-                <input type="radio" id="comments" name="category" value="comments">
-                <label for="comments">Comments</label>
-                <input type="radio" id="likes" name="category" value="likes">
-                <label for="likes">Likes</label>
-            </div>
+                <div class="category-selection">
+                    <button type="button" class="category-button" data-category="posts">Posts</button>
+                    <button type="button" class="category-button" data-category="comments">Comments</button>
+                    <button type="button" class="category-button" data-category="likes">Likes</button>
+                </div>
 
-            <!-- generate Button -->
-            <button id="generate-button" class="generate-button">Generate</button>
+                <button id="generate-button" class="generate-button">Generate</button>
+            </div>
             <div id="analytics-dashboard" style="display:none;">
-                <canvas id="myChart" aria-label="Analytics Chart" role= "img"></canvas>
-            </div>               
+                <canvas id="myChart" aria-label="Analytics Chart" role="img"></canvas>
+            </div>
+              
         </section>    
     </main>
     </body>

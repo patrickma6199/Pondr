@@ -105,6 +105,11 @@ form .form-button {
     align-items: center; 
     justify-content: space-between;
     width: 100%;
+    background-color: #333; 
+    border-radius: 0.5em;
+    padding: 1em;
+
+
 }
 
 .date-selection, .category-selection {
@@ -118,8 +123,21 @@ form .form-button {
 }
 
 .generate-button {
-    margin-top: 10px;
-}
+    font-family: var(--pondr-font);
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 0.1em solid var(--button-border);
+    border-radius: 1em;
+    transition: all 0.3s ease-in;
+    padding: 1em;
+    text-decoration: none;
+    margin-left: auto;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.25em;
+    margin: 0em 1em;
+    flex-shrink: 0;}
 
 .line-container {
     display: flex;
@@ -127,8 +145,81 @@ form .form-button {
     align-items: center; 
     justify-content: space-between;
     width: 100%;
+    margin-top: 1em;
+    padding: 1em;
 }
 
+.date-input {
+    padding: 0.5em;
+    border: 1px solid #555; /* Darker border */
+    border-radius: 0.25em; /* Rounded corners for the inputs */
+    background-color: #222; /* Dark input fields */
+    color: #ddd; /* Light text color */
+    font-size: 1em;
+}
+
+.category-button {
+    background-color: #444; /* Dark buttons */
+    color: white;
+    border: 2px solid #555; /* Solid border to make them stand out */
+    padding: 0.75em 1.5em; /* Larger padding for a bigger button */
+    font-size: 1em; /* Adjust font size as needed */
+    text-transform: uppercase; /* Optional: make the text uppercase */
+    margin: 0 10px; /* Space out the buttons */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.category-button:hover {
+    background-color: var(--button-hover-background);
+}
+
+.category-button.active {
+    background-color: var(--button-active-background);
+    color: var(--button-active-text-color);
+}
+
+.generate-button:hover {
+    background-color: var(--primary-hover-color);
+}
+
+
+
+input[type="date" i] {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    margin-right: 1em;
+    background-color: var(--input-background);
+    color: var(--text-color);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1; /* make the default arrow invisible */
+    display: block;
+    background: url('path-to-your-custom-icon.png') no-repeat;
+    width: 20px; /* make sure the width and height */
+    height: 20px; /* are the same as your icon */
+    border-width: thin;
+}
+
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    background-color: #eee; /* change color on hover */
+}
+
+
+
+/* Adjust responsiveness for smaller screens if necessary */
+@media (max-width: 768px) {
+    .line-container {
+        flex-direction: column;
+    }
+    
+    .date-selection, .category-selection, #generate-button {
+        width: 100%;
+    }
+}
 
 
 

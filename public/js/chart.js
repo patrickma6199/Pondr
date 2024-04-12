@@ -3,6 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var analyticsDashboard = document.getElementById('analytics-dashboard');
     var chartInstance = null; 
 
+    $(document).ready(function() {
+        $('.category-button').click(function() {
+            $('.category-button').removeClass('active'); // Remove active class from all buttons
+            $(this).addClass('active'); // Add active class to the clicked button
+            // Set a hidden form field or use a global variable to track the selected category
+        });
+    });
+    
     function toggleChartDisplay() {
         if (chartInstance !== null) {
             // destroy the current chart
