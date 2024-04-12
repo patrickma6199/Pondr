@@ -33,7 +33,7 @@ if (isset ($_POST['postId'])) {
             $checkResult = $checkStmt->get_result();
             if ($checkResult->num_rows == 0) {
                 // Insert like since it doesn't exist
-                $sql = "INSERT INTO likes (userId, postId) VALUES (?, ?)";
+                $sql = "INSERT INTO likes (userId, postId, likeDate) VALUES (?, ?, NOW());";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ii", $uid, $postId);
                 $stmt->execute();

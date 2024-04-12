@@ -11,6 +11,10 @@ if ($_SESSION['utype'] != 1) {
     exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    exit(header('Location: ../index.php')); // bad navigation
+}
+
 // array to initialize chart data
 $chartData = [
     'labels' => ['Accounts Created', 'Total Likes', 'Total Categories', 'Posts Made', 'Total Comments', 'Admins Available'],
