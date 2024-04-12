@@ -135,9 +135,11 @@ form .form-button {
     font-weight: bold;
     outline: none;
     cursor: pointer;
-    font-size: 1.25em;
-    margin: 0em 1em;
-    flex-shrink: 0;}
+    font-size: 1em;
+    margin: 0em 1.25em;
+    flex-shrink: 0;
+    margin-bottom: 10px;
+}
 
 .line-container {
     display: flex;
@@ -159,7 +161,7 @@ form .form-button {
 }
 
 .category-button {
-    background-color: #444; 
+    background-color: var(--input-background);    
     color: white;
     border: 2px solid #555; 
     padding: 0.75em 1.5em; 
@@ -171,16 +173,19 @@ form .form-button {
 
 .category-button:hover {
     background-color: var(--button-hover-background);
+    transform: translateY(-2px);
 }
 
 .category-button.active {
-    background-color: var(--button-active-background);
+    background-color: #33d1e8;
     color: var(--button-active-text-color);
+    transform: translateY(-2px);
 }
 
 .generate-button:hover {
     background-color: var(--primary-hover-color);
 }
+
 
 
 
@@ -195,10 +200,9 @@ input[type="date" i] {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    color: rgba(0, 0, 0, 0);
+    filter: invert(1);
     opacity: 1;
     display: block;
-    background: url('path-to-your-custom-icon.png') no-repeat;
     width: 20px; 
     height: 20px; 
     border-width: thin;

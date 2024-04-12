@@ -32,10 +32,11 @@ $pageTitle = "IGNORE";
     
     if (!empty($searchTerm)) {
         
-        $query = "SELECT userId, fName, lName, uName, email, pfp FROM users WHERE fName LIKE ? OR lName LIKE ? OR email LIKE ?";
+        $query = "SELECT userId, fName, lName, uName, email, pfp FROM users WHERE CASE WHEN ? = \"\" THEN FALSE ELSE uName LIKE CONCAT('%', ?, '%') OR fName LIKE CONCAT('%', ?, '%') OR lName LIKE CONCAT('%', ? , '%') OR CONCAT(fName,' ',lName) LIKE CONCAT('%',?,'%') OR email LIKE CONCAT('%', ?, '%') END;";
         $stmt = $conn->prepare($query);
-        $searchTerm = '%' . $searchTerm . '%';
-        $stmt->bind_param("sss", $searchTerm, $searchTerm, $searchTerm);
+        $originalSearchTerm = $searchTerm;
+        $wildcardSearchTerm = '%' . $searchTerm . '%';
+        $stmt->bind_param("ssssss", $originalSearchTerm, $wildcardSearchTerm, $wildcardSearchTerm, $wildcardSearchTerm, $wildcardSearchTerm, $wildcardSearchTerm);
         $stmt->execute();
         $result = $stmt->get_result();
     
@@ -63,7 +64,7 @@ $pageTitle = "IGNORE";
     <main class="main-container">
         <section class="side-container">
             <h2>User Management</h2>
-            <form method="GET" action="admin.php">
+            <form method="GET" class= "user-search" action="admin.php">
                 <?php $userSearchValue = isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES) : ''; ?>
                 <input type="text" name="search" placeholder="Search by Username" value = "<?php echo $userSearchValue; ?>"/>
                 <button type="submit" class="form-button">Search</button>
@@ -80,26 +81,29 @@ $pageTitle = "IGNORE";
         </div>
     
         <!-- new line chart stuff -->
-            <div class="line-container">
-                <div class="date-selection">
-                    <label for="start-date">Start Date:</label>
-                    <input type="date" id="start-date" name="start-date" class="date-input">
-                    <label for="end-date">End Date:</label>
-                    <input type="date" id="end-date" name="end-date" class="date-input">
-                </div>
-
-                <div class="category-selection">
-                    <button type="button" class="category-button" data-category="posts">Posts</button>
-                    <button type="button" class="category-button" data-category="comments">Comments</button>
-                    <button type="button" class="category-button" data-category="likes">Likes</button>
-                </div>
-
-                <button id="generate-button" class="generate-button">Generate</button>
+        <form method="GET" action="admin.php" class="line-container">
+            <div class="date-selection">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date" name="start-date" class="date-input" required>
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date" name="end-date" class="date-input" required>
             </div>
+
+            <div class="category-selection">
+                <input type="radio" id="category-posts" name="category" value="posts" hidden required>
+                <input type="radio" id="category-comments" name="category" value="comments" hidden required>
+                <input type="radio" id="category-likes" name="category" value="likes" hidden required>
+                
+                <label for="category-posts" class="category-button">Posts</label>
+                <label for="category-comments" class="category-button">Comments</label>
+                <label for="category-likes" class="category-button">Likes</label>
+            </div>
+
+            <button type="submit" id="generate-button" class="generate-button">Generate</button>
+        </form>
             <div id="analytics-dashboard" style="display:none;">
                 <canvas id="myChart" aria-label="Analytics Chart" role="img"></canvas>
             </div>
-              
         </section>    
     </main>
     </body>
