@@ -93,6 +93,7 @@ CREATE TABLE likes (
     likesId INT AUTO_INCREMENT,
     userId INT NOT NULL,
     postId INT NOT NULL,
+    likeDate DATETIME NOT NULL, -- same thing with GETDATE()
     PRIMARY KEY(likesId),
     FOREIGN KEY(postId) REFERENCES posts(postId)
         ON DELETE CASCADE,

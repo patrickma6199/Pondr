@@ -17,8 +17,8 @@ $pageTitle = "IGNORE";
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Admin Dashboard - Pondr</title>
     <link rel="icon" href="../img/logo.png">
 </head>
