@@ -35,7 +35,7 @@ $uid = $_SESSION['uid'] ?? null;
             <?php
             echo "<input type=\"text\" name=\"catName\" id=\"cat-search\" placeholder=\"Search Under Categories\" value=\"". ((isset($catName)) ? $catName : "") ."\" autocomplete=\"off\">";
             echo "<div id=\"category-results\"></div></div>";
-            echo "<input type=\"text\" name=\"search\" style=\"flex: 3;\" id=\"post-search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset ($search)) ? $search : "") . "\"/>";
+            echo "<input type=\"text\" name=\"search\" style=\"flex: 3;\" id=\"post-search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset ($search)) ? $search : "") . "\" autocomplete=\"off\"/>";
             ?>
             <button type="submit" class="form-button">Search</button>
         </form>
@@ -65,7 +65,7 @@ $uid = $_SESSION['uid'] ?? null;
                 echo "<div id=\"dropdown\">";
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
                 echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
-                echo "<a href=\"../pages/new_post.php\">Create A Thread</a>";
+                echo "<a href=\"../pages/new_post.php\">Create A Pond</a>";
                 echo "<a href=\"../pages/create_category.php\">Create A Category</a>";
                 echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
                 echo "<a href=\"../pages/my_profile_edit.php\">Edit Profile</a>";
@@ -78,7 +78,7 @@ $uid = $_SESSION['uid'] ?? null;
                 echo "<a href=\"\"><img src=\"$pfpPath\" id=\"top-search-bar-pfp\"></a>";
                 echo "<div id=\"dropdown-menu\" class=\"dropdown-content\">";
                 echo "<a href=\"../pages/admin.php\">Admin Dashboard</a>";
-                echo "<a href=\"../pages/new_post.php\">Create A Thread</a>";
+                echo "<a href=\"../pages/new_post.php\">Create A Pond</a>";
                 echo "<a href=\"../pages/create_category.php\">Create A Category</a>";
                 echo "<a href=\"../pages/my_profile.php\">My Profile</a>";
                 echo "<a href=\"../pages/my_profile_edit.php\">Edit Profile</a>";

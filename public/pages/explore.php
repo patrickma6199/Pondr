@@ -34,32 +34,6 @@ $pageTitle = "Explore";
         <script src="../js/slick.min.js"></script>
 
         <script src="https://kit.fontawesome.com/cfd53e539d.js" crossorigin="anonymous"></script>
-        <script>
-            $(document).ready(function () {
-                //adjustCarouselHeight();
-                // $('.image-carousel').slick({
-                //     autoplay: true,
-                //     slidesToShow: 3,
-                //     slidesToScroll: 1,
-                //     dots: false,
-                //     infinite: true,
-                //     arrows: true
-                // });
-
-                function adjustCarouselHeight() {
-                    // Get the height of the current slide
-                    var slideHeight = $('.image-carousel .slick-current img').height();
-                    // Set the height of the carousel to match the current slide
-                    $('.image-carousel').height(slideHeight);
-                }
-
-                // Run once to set initial height, and whenever the slide changes
-                // Adjust on load
-                // $('.image-carousel').on('afterChange', function () {
-                //     adjustCarouselHeight(); // Adjust whenever the slide changes
-                // });
-            });
-        </script>
     </head>
 
     <body>
@@ -99,7 +73,6 @@ $pageTitle = "Explore";
                             echo "<h3>{$ImageTitle}</h3><br>";
                             echo "</div>";
                             echo "</div>";
-
                         }
                     } catch (mysqli_sql_exception $e) {
                         $code = $e->getCode();
@@ -110,7 +83,7 @@ $pageTitle = "Explore";
                     }
                     ?>
                 </div>
-                <h3> TRENDING THREADS </h3>
+                <h3> TRENDING PONDS </h3>
                 <?php
 
                 // Block for listing posts

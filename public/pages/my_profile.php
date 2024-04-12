@@ -79,9 +79,9 @@ if (!isset($uid)) {
                 }
                 ?>
             </section>
-            <div class="toggle-buttons">
-                <button id="show-threads-btn" class="link-button">YOUR THREADS</button>
-                <button id="show-comments-btn" class="link-button">YOUR COMMENTS</button>
+            <div class="toggle-buttons" style="margin-top: 1em;">
+                <button id="show-threads-btn" class="link-button" style="padding: 1em; cursor: pointer;">YOUR PONDS</button>
+                <button id="show-comments-btn" class="link-button" style="padding: 1em; cursor: pointer;">YOUR COMMENTS</button>
             </div>
             <!-- <div class="content-container"> -->
                 <section class="discussion-container" id="threads-section">

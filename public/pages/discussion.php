@@ -78,14 +78,13 @@ $pageTitle = "Discussions";
                 if (isset ($uid)) {
                     echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
                     echo "<br> ";
-                    echo "<a href=\"./explore.php\"><h3>Explore</h3></a>";
                 }
+                echo "<a href=\"./explore.php\"><h3>Explore</h3></a>";
                 ?>
             </section>
 
             <section class="discussion-container">
                 <?php
-
                 $searchString = (isset ($search)) ? $search : "";
                 $catNameString = (isset($catName)) ? $catName : "";
                 // for listing matching users by displaying profile in a block
@@ -96,6 +95,7 @@ $pageTitle = "Discussions";
                     $prstmt->execute();
                     $prstmt->bind_result($uName, $fName, $lName, $pfp, $userId, $userType);
                     if ($prstmt->fetch()) {
+                        echo "<h2>Profiles</h2>";
                         $uName = truncateUName($uName);
                         echo "<div class=\"profiles-container\">";
                         echo "<div class=\"profile\" data-uname=\"{$uName}\" data-userid=\"{$userId}\" data-uid=\"{$uid}\"><img src=\"$pfp\" alt=\"$uName's Profile Photo\"><div class=\"profile-text\"><p>$uName" . ($userType == 1 ? "<span class=\"mod\"> [MOD]</span>" : "") . "</p><p>$fName $lName</p></div></div>";
@@ -114,7 +114,7 @@ $pageTitle = "Discussions";
                     echo "<p>Error while loading discussion posts. Try again. Error: $code</p>";
                 }
 
-
+                echo "<h2>Ponds</h2>";
                 // Block for listing posts
                 $highestPostId = 0;
                 $sql = "SELECT p.postId, p.title, p.postDate, p.text, u.uName, c.name, p.img, c.catId, u.userId, u.utype, p.likes, p.comment

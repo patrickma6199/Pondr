@@ -76,8 +76,7 @@ $utype = $_SESSION['utype'] ?? null;
 
             </section>
             <section class="discussion-container">
-                <h2>Threads</h2>
-
+                <h2>Ponds</h2>
                 <?php
                 $sql1 = "SELECT p.postDate,p.title,p.text,p.img,p.postId, u.userId, c.catId, c.name, u.utype, p.likes, p.comment FROM posts p JOIN users u ON p.userId = u.userId LEFT OUTER JOIN categories c ON p.catId = c.catId WHERE u.uName=? ORDER BY p.postDate DESC";
                 try{
