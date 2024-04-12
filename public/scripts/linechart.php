@@ -64,7 +64,7 @@ if (isset($_POST['sDate']) && isset($_POST['eDate'])) {
     try {
         foreach ($dates as $date) {
             // the total number of user accounts created
-            $sql = "SELECT COUNT(*) FROM Likes WHERE DATE(likeDate) = ?;";
+            $sql = "SELECT COUNT(*) FROM likes WHERE DATE(likeDate) = ?;";
             $prstmt = $conn->prepare($sql);
             $prstmt->bind_param('s', $date);
             $prstmt->execute();
