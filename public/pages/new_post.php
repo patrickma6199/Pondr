@@ -38,11 +38,11 @@ $pageTitle = "IGNORE";
                 ?>
                 <div class="form-item">
                     <label for="post_title">Pond Title</label>
-                    <input type="text" placeholder="Enter your Post Title" name="post_title" required>
+                    <input type="text" placeholder="Enter your Pond Title" name="post_title" required>
                 </div>
                 <div class="form-item">
                     <label for="post_text">Pond Text</label>
-                    <textarea name="post_text" cols="30" rows="10" required placeholder="Enter Post Text Here"></textarea>
+                    <textarea name="post_text" cols="30" rows="10" required placeholder="Enter Pond Text Here"></textarea>
                     <div id="char-count">
                         <span id="curr">0</span>
                         <span id="max">3000</span>
