@@ -81,7 +81,7 @@ function load_comments() {
                             com_more_options.append(icon);
                             let dropdown = $('<div>').addClass(`dropdown-com-${comment.comId}`).attr('id', 'dropdown-menu').css('top', '3em');
                             dropdown.append($('<a>').attr('href', "").addClass('reply-icon').attr('id', `reply-icon-${comment.comId}`).attr('data-commentid', comment.comId).text('Reply'));
-                            if (uid == comment.userId)
+                            if (uid == comment.userId || utype == 1 )
                                 dropdown.append($('<a>').attr('href', `../scripts/delete_comment.php?postId=${postId}&comId=${comment.comId}`).text('Delete'));
                             comment_container.append(com_more_options, dropdown);
                         }
@@ -146,7 +146,7 @@ function load_comments() {
                                             com_more_options.append(icon);
                                             let dropdown = $('<div>').addClass(`dropdown-com-${subcomment.comId}`).attr('id', 'dropdown-menu').css('top', '3em');
                                             dropdown.append($('<a>').attr('href', "").addClass('reply-icon').attr('id', `reply-icon-${comment.comId}`).attr('data-commentid', comment.comId).attr('data-username', subcomment.userName).text('Reply'));
-                                            if (uid == subcomment.userId)
+                                            if (uid == subcomment.userId || utype == 1)
                                                 dropdown.append($('<a>').attr('href', `../scripts/delete_comment.php?postId=${postId}&comId=${subcomment.comId}`).text('Delete'));
                                             subcomment_container.append(com_more_options, dropdown);
                                         }
@@ -232,7 +232,7 @@ function check_comments() {
                         com_more_options.append(icon);
                         let dropdown = $('<div>').addClass(`dropdown-com-${comment.comId}`).attr('id', 'dropdown-menu').css('top', '3em');
                         dropdown.append($('<a>').attr('href', "").addClass('reply-icon').attr('id', `reply-icon-${comment.comId}`).attr('data-commentid', comment.comId).text('Reply'));
-                        if (uid == comment.userId)
+                        if (uid == comment.userId || utype == 1)
                             dropdown.append($('<a>').attr('href', `../scripts/delete_comment.php?postId=${postId}&comId=${comment.comId}`).text('Delete'));
                         comment_container.append(com_more_options, dropdown);
                     }
