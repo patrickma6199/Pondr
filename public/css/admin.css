@@ -151,10 +151,10 @@ form .form-button {
 
 .date-input {
     padding: 0.5em;
-    border: 1px solid #555; /* Darker border */
-    border-radius: 0.25em; /* Rounded corners for the inputs */
-    background-color: #222; /* Dark input fields */
-    color: #ddd; /* Light text color */
+    border: 1px solid #555; 
+    border-radius: 0.25em; 
+    background-color: #222; 
+    color: #ddd; 
     font-size: 1em;
 }
 
@@ -196,11 +196,11 @@ input[type="date" i] {
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
-    opacity: 1; /* make the default arrow invisible */
+    opacity: 1;
     display: block;
     background: url('path-to-your-custom-icon.png') no-repeat;
-    width: 20px; /* make sure the width and height */
-    height: 20px; /* are the same as your icon */
+    width: 20px; 
+    height: 20px; 
     border-width: thin;
 }
 
