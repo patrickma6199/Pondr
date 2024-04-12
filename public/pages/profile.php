@@ -52,7 +52,6 @@ $utype = $_SESSION['utype'] ?? null;
                             echo "<p><b>Username:</b> $uName </p>";
                         }
                         echo "<p> <b>Bio:</b> $bio </p>";
-                        echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
                         echo "<br>";
                         echo "</div>";
                     } else {

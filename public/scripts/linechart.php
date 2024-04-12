@@ -64,31 +64,45 @@ if (isset($_POST['sDate']) && isset($_POST['eDate'])) {
     try {
         foreach ($dates as $date) {
             // the total number of user accounts created
-            $sql = "SELECT COUNT(*) FROM Likes WHERE likeDate = DATE(?);";
+            $sql = "SELECT COUNT(*) FROM Likes WHERE DATE(likeDate) = ?;";
             $prstmt = $conn->prepare($sql);
             $prstmt->bind_param('s', $date);
             $prstmt->execute();
             $prstmt->bind_result($likecount);
+            $prstmt->fetch();
             $chartData['datasets'][0]['data'][] = (int)$likecount;
 
-            $sql = "SELECT COUNT(*) FROM posts WHERE postDate = DATE(?);";
+            $prstmt->close();
+            unset($prstmt);
+
+            $sql = "SELECT COUNT(*) FROM posts WHERE DATE(postDate) = ?;";
             $prstmt = $conn->prepare($sql);
             $prstmt->bind_param('s', $date);
             $prstmt->execute();
             $prstmt->bind_result($postcount);
+            $prstmt->fetch();
             $chartData['datasets'][1]['data'][] = (int)$postcount;
 
-            $sql = "SELECT COUNT(*) FROM comments WHERE comDate = DATE(?);";
+            $prstmt->close();
+            unset($prstmt);
+
+            $sql = "SELECT COUNT(*) FROM comments WHERE DATE(comDate) = ?;";
             $prstmt = $conn->prepare($sql);
             $prstmt->bind_param('s', $date);
             $prstmt->execute();
             $prstmt->bind_result($comcount);
+            $prstmt->fetch();
             $chartData['datasets'][2]['data'][] = (int)$comcount;
+            $prstmt->close();
+            unset($prstmt);
         }
         echo json_encode(['data' => $chartData]);
     } catch (Exception $e) {
         echo json_encode(['error' => 'Query failed: ' . $e->getMessage()]);
     } finally {
+        if (isset($prstmt)) {
+            $prstmt->close();
+        }
         $conn->close();
     }
 } else {

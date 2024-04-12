@@ -89,16 +89,6 @@ $pageTitle = "IGNORE";
                 <input type="date" id="end-date" name="end-date" class="date-input" required>
             </div>
 
-            <div class="category-selection">
-                <input type="radio" id="category-posts" name="category" value="posts" hidden required>
-                <input type="radio" id="category-comments" name="category" value="comments" hidden required>
-                <input type="radio" id="category-likes" name="category" value="likes" hidden required>
-                
-                <label for="category-posts" class="category-button">Posts</label>
-                <label for="category-comments" class="category-button">Comments</label>
-                <label for="category-likes" class="category-button">Likes</label>
-            </div>
-
             <button type="submit" id="generate-button" class="generate-button">Generate</button>
         </form>
             <div id="analytics-dashboard" style="display:none;">

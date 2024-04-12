@@ -2,31 +2,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const form_data = new URLSearchParams(window.location.search);
     let sDate = form_data.get('start-date');
     let eDate = form_data.get('end-date');
-    let category = form_data.get('category');
 
-    $(document).ready(function() {
-        $('.category-button').click(function() {
-            let category = $(this).data('category');
-            $('#category-' + category).prop('checked', true);
-            $('.category-button').removeClass('active'); 
-            $(this).addClass('active'); 
-        });
+    $('.category-button').click(function() {
+        let category = $(this).data('category');
+        $('#category-' + category).prop('checked', true);
+        $('.category-button').removeClass('active'); 
+        $(this).addClass('active'); 
     });
     
-    $(document).ready(function() {
-        $('.category-button').click(function() {
-            $('.category-button').removeClass('active'); //remove active class from  buttons
-            $(this).addClass('active'); //add active class to  clicked button
-        });
+    $('.category-button').click(function() {
+        $('.category-button').removeClass('active'); //remove active class from  buttons
+        $(this).addClass('active'); //add active class to  clicked button
     });
 
     document.querySelector('.analytics-button').addEventListener('click', toggleAnalyticsChartDisplay);
-    var analyticsDashboard = document.getElementById('analytics-dashboard');
     var chartInstance = null;
     var type = null;
 
-    if (sDate != undefined || eDate != undefined || category != undefined) { 
-        createLineChart(sDate, eDate, category);
+    if (sDate != undefined || eDate != undefined) { 
+        createLineChart(sDate, eDate);
     }
 
     $('.line-container').on('submit', function (e) { 
@@ -39,12 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function toggleAnalyticsChartDisplay() {
+        var analyticsDashboard = document.getElementById('analytics-dashboard');
         if (chartInstance !== null) {
             // destroy the current chart
             chartInstance.destroy();
             if (type == "bar") {
                 chartInstance = null;
                 analyticsDashboard.style.display = 'none'; // hide the dashboard
+
             } else {
                 analyticsDashboard.style.display = 'flex';
                 fetchAndCreateChart();
@@ -83,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         plugins: {
                             legend: {
-                                display: true
+                                display: false
                             }
                         },
                         responsive: true,
@@ -97,34 +93,36 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    function createLineChart(sDate, eDate, category) {
+    function createLineChart(sDate, eDate) {
+    var analyticsDashboard = document.getElementById('analytics-dashboard');
+    analyticsDashboard.style.display = 'flex';
         $.ajax({
             type: "POST",
             url: "../scripts/linechart.php",
-            data: {sDate: sDate, eDate: eDate, category: category},
+            data: {sDate: sDate, eDate: eDate},
             success: function (data) {
-                type = "line";
-                chartInstance = new Chart(ctx, {
-                    type: 'line',
-                    data: data,
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: true
-                            }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
+                console.log(data.data);
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                if (data.error !== undefined) {
+                    console.error(data.error);
+                } else {
+                    type = "line";
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    chartInstance = new Chart(ctx, {
+                        type: 'line',
+                        data: data.data,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                }
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
+                console.log(xhr.responseText);
             }
         });
     }

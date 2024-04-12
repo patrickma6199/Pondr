@@ -61,7 +61,6 @@ if (!isset($uid)) {
                         echo "<h2> $fName $lName </h2>";
                         echo "<p><b>Username:</b> $uName </p>";
                         echo "<p> <b>Bio:</b> $bio </p>";
-                        echo "<p><span><b>Followers:</b>    <b>Following:</b>  </span></p>";
                         echo "<br>";
                         echo "<a href=\"my_profile_edit.php\" class=\"link-button\">Edit</a>";
                         echo "</div>";
