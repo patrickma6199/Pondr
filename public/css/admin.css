@@ -159,13 +159,13 @@ form .form-button {
 }
 
 .category-button {
-    background-color: #444; /* Dark buttons */
+    background-color: #444; 
     color: white;
-    border: 2px solid #555; /* Solid border to make them stand out */
-    padding: 0.75em 1.5em; /* Larger padding for a bigger button */
-    font-size: 1em; /* Adjust font size as needed */
-    text-transform: uppercase; /* Optional: make the text uppercase */
-    margin: 0 10px; /* Space out the buttons */
+    border: 2px solid #555; 
+    padding: 0.75em 1.5em; 
+    font-size: 1em; 
+    text-transform: uppercase; 
+    margin: 0 10px; 
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
