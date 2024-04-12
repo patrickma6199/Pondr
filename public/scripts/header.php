@@ -35,7 +35,7 @@ $uid = $_SESSION['uid'] ?? null;
             <?php
             echo "<input type=\"text\" name=\"catName\" id=\"cat-search\" placeholder=\"Search Under Categories\" value=\"". ((isset($catName)) ? $catName : "") ."\" autocomplete=\"off\">";
             echo "<div id=\"category-results\"></div></div>";
-            echo "<input type=\"text\" name=\"search\" style=\"flex: 3;\" id=\"post-search\" placeholder=\"Search for Users and Threads\" value=\"" . ((isset ($search)) ? $search : "") . "\" autocomplete=\"off\"/>";
+            echo "<input type=\"text\" name=\"search\" style=\"flex: 3;\" id=\"post-search\" placeholder=\"Search for Users and Ponds\" value=\"" . ((isset ($search)) ? $search : "") . "\" autocomplete=\"off\"/>";
             ?>
             <button type="submit" class="form-button">Search</button>
         </form>
