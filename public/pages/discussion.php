@@ -76,7 +76,7 @@ $pageTitle = "Discussions";
             <section class="side-container">
                 <?php
                 if (isset ($uid)) {
-                    echo "<a href=\"./new_post.php\"><h3>New Post</h3></a>";
+                    echo "<a href=\"./new_post.php\"><h3>New Pond</h3></a>";
                     echo "<br> ";
                 }
                 echo "<a href=\"./explore.php\"><h3>Explore</h3></a>";

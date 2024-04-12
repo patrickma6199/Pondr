@@ -15,7 +15,7 @@ $pageTitle = "IGNORE";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Post</title>
+    <title>New Pond</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/form.css">
     <link rel="icon" href="../img/logo.png">
@@ -29,7 +29,7 @@ $pageTitle = "IGNORE";
     <main class="center-container">
         <section class="form-container" style="width: 60%;">
             <form action="../scripts/new_post_script.php" method="POST" enctype="multipart/form-data" id="post-form">
-                <legend>New Post</legend>
+                <legend>New Pond</legend>
                 <?php
                 if (isset ($_SESSION['newPostMessage'])) {
                     echo $_SESSION['newPostMessage'];
@@ -37,11 +37,11 @@ $pageTitle = "IGNORE";
                 }
                 ?>
                 <div class="form-item">
-                    <label for="post_title">Post Title</label>
+                    <label for="post_title">Pond Title</label>
                     <input type="text" placeholder="Enter your Post Title" name="post_title" required>
                 </div>
                 <div class="form-item">
-                    <label for="post_text">Post Text</label>
+                    <label for="post_text">Pond Text</label>
                     <textarea name="post_text" cols="30" rows="10" required placeholder="Enter Post Text Here"></textarea>
                     <div id="char-count">
                         <span id="curr">0</span>
@@ -54,7 +54,7 @@ $pageTitle = "IGNORE";
                      <div class="error-message" id="error-postLink">URL is invalid. Please follow this format: https://AAAAAA.AAA/AAA/AAA/</div>
                 </div>
                 <div class="form-item">
-                    <label for="post_image">Any Images to your post? (Optional)</label>
+                    <label for="post_image">Any Images to your Pond? (Optional)</label>
                     <!-- Max image size is 10MB -->
                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
                     <input type="file" name="post_image" accept="image/*" >
